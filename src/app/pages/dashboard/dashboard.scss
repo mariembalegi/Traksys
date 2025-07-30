@@ -1,5 +1,6 @@
-div{
-  height: 100%;
-  width: 100%;
-  background-color: #FFE5E3;
+.full-page{
+  display: flex;
+  .container{
+    width: 100%;
+  }
 }

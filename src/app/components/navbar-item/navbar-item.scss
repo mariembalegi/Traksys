@@ -1,0 +1,25 @@
+.navbar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding-left: 22px;
+  text-decoration: none;
+
+  .item-img {
+    width: 20px;
+  }
+
+  .item-text {
+    font-family: 'Darker Grotesque', serif;
+    font-weight: 500;
+    font-size: 25px;
+    color: #686666;
+
+  }
+  &.active{
+    background-color: #FFE5E3;
+    border-bottom-left-radius:12px ;
+    border-top-left-radius:12px ;
+  }
+}

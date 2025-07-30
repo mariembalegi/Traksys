@@ -1,13 +1,19 @@
 <div class="sidebar">
   <app-header></app-header>
   <nav class="navbar">
-    <ul class="nav-list">
-      <li class="element active"><img src="home.png" class="nav-img"><a class="nav-text" href="#">Home</a></li>
-      <li class="element"><img src="projects.png" class="nav-img"><a class="nav-text" href="#">Projects</a></li>
-      <li class="element"><img src="reports.png" class="nav-img"><a class="nav-text" href="#">Reports</a></li>
-      <li class="element"><img src="notifications.png" class="nav-img"><a class="nav-text" href="#">Notifications</a></li>
-      <li class="element"><img src="stuff.png" class="nav-img"><a class="nav-text" href="#">Stuff</a></li>
-    </ul>
+    <li><app-navbar-item icon="home.png" label="Home" route="/dashboard/home"></app-navbar-item></li>
+    <li><app-navbar-item icon="projects.png" label="Projects" route="/dashboard/projects"></app-navbar-item></li>
+    <li><app-navbar-item icon="reports.png" label="Reports" route="/dashboard/reports"></app-navbar-item></li>
+    <li><app-navbar-item icon="notifications.png" label="Notifications" route="/dashboard/notifications"></app-navbar-item></li>
+    <li><app-navbar-item icon="staff.png" label="Staff" route="/dashboard/staff"></app-navbar-item></li>
   </nav>
   <div class="divider"></div>
+  <div class="user-card">
+    <img src="next.png" alt="go-to-profile" class="go-to-profile">
+    <div class="user-section">
+      <img alt="user-img" src="avatar.png" class="user-img">
+      <p class="user-info"> <span class="user-name">Jane Doe</span><br>
+      <span class="user-post">Project Manager</span></p>
+    </div>
+  </div>
 </div>

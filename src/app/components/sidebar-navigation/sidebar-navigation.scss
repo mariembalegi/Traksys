@@ -1,46 +1,66 @@
 .sidebar {
-  background-color: white;
-  height:100%;
-  width: 20%;
-  min-width: 240px;
+  height: 100vh;
+  width: 18vw;
+  min-width: 260px;
+  background-color: #FFFFFF;
   display: flex;
-  flex-wrap: wrap;
-
-  app-header{
-    padding-left: 70px;
+  flex-direction: column;
+  app-header {
+    padding-left: 50px;
+    padding-bottom: 50px;
   }
+
   .navbar {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 110px;
+    list-style-type: none;
+    margin-left: 30px;
+  }
 
-    .nav-list {
-      list-style-type: none;
+  .divider {
+    background-color: #FFE5E3;
+    height: 3px;
+    bottom: 0;
+  }
+  .user-card{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .go-to-profile{
+      width:8px;
+      align-self: flex-end;
+      padding:10px 20px 0 0;
+    }
+    .user-section{
       display: flex;
-      flex-wrap: wrap;
-      gap:22px;
-      width:100%;
-      .element {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        height: 50px;
-        padding-left:30px;
-        .nav-img {
-          width: 20px
-        }
-
-        .nav-text {
-          text-decoration: none;
-          font-family: 'Darker Grotesque', serif;
-          font-weight: 500;
-          font-size: 20px;
-          color: #686666;
-        }
+      align-items: center;
+      padding-left:40px;
+      gap: 15px;
+      .user-img {
+        width:20%;
+        border-radius: 50%;
       }
+      .user-name{
+        font-family: "Darker Grotesque", serif;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 12px;
+        color: #000000;
+      }
+      .user-post{
+        font-family: "Darker Grotesque", serif;
+        font-weight: 500;
+        font-size: 15px;
+        color: #686666;
+    }
+
+
+
     }
   }
-  .divider{
-    width:100%;
-    height:2px;
-    background-color: #FFE5E3;
-  }
+
+
+
 }
