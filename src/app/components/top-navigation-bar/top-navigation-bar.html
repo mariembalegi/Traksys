@@ -1,0 +1,58 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <div class="logo">
+      <img src="logo.png" alt="logo-app">
+    </div>
+  </div>
+
+  <div class="navbar-nav">
+    <a [routerLink]="route1" [ngClass]="{ 'active': isActive(route1) }" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a [routerLink]="route2" [ngClass]="{ 'active': isActive(route2) }" class="nav-item">
+      <i class="fas fa-tasks"></i>
+      <span>To Do</span>
+    </a>
+    <a [routerLink]="route3" [ngClass]="{ 'active': isActive(route3) }" class="nav-item active">
+      <i class="fas fa-folder"></i>
+      <span>Projects</span>
+    </a>
+    <a [routerLink]="route4" [ngClass]="{ 'active': isActive(route4) }" class="nav-item">
+      <i class="fas fa-boxes"></i>
+      <span>Resources</span>
+    </a>
+  </div>
+
+  <div class="navbar-actions">
+    <div class="notification-dropdown">
+      <button class="nav-btn">
+        <i class="fas fa-bell"></i>
+      </button>
+      <div class="dropdown-menu">
+        <div class="dropdown-header">Notifications</div>
+        <div class="dropdown-item">Project "Industrial Pump" updated</div>
+        <div class="dropdown-item">New task assigned to you</div>
+        <div class="dropdown-item">Workflow "Design" completed</div>
+      </div>
+    </div>
+
+    <div class="profile-dropdown">
+      <button class="nav-btn">
+        <i class="fas fa-user-circle"></i>
+      </button>
+      <div class="dropdown-menu">
+        <div class="dropdown-header">Profile</div>
+        <div class="dropdown-item">
+          <i class="fas fa-sign-in-alt"></i>
+          Sign In
+        </div>
+        <div class="dropdown-item">
+          <i class="fas fa-cog"></i>
+          Workflows
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+

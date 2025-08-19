@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+  }
+
+  p {
+    font-family: 'Darker Grotesque', serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #000000;
+    margin-left: 15px;
+    span {
+      color: #FF4136
+    }
+  }
+}
+
+

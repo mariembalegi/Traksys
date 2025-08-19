@@ -1,0 +1,157 @@
+.to-do-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 15px 0 0;
+  gap: 25px;
+
+  .projects-bar {
+    background-color: white;
+    width: 250px;
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    box-sizing: border-box;
+
+    .bar-header {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h1 {
+        font-family: "Darker Grotesque", serif;
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .projects-number {
+        background-color: #f5f5f5;
+        padding: 4px 10px;
+        border-radius: 50%;
+        font-family: "Darker Grotesque", serif;
+      }
+    }
+
+    .projects-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .project {
+        width: 100%;
+        display: flex;
+        border-radius: 14px;
+        border: 1px solid #000000;
+        padding: 10px 20px;
+        align-items: center;
+        gap: 10px;
+
+        img {
+          width: 50px;
+          border-radius: 50%;
+          object-fit: contain;
+
+          span {
+            font-family: "Darker Grotesque", serif;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .board {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 300px);
+    padding: 25px 0;
+    gap: 30px;
+
+    .header {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+
+      .selector {
+        display: flex;
+        gap:20px;
+        align-items: center;
+        span {
+          font-size: 16px;
+          font-family: "Darker Grotesque", serif;
+          font-weight: 500;
+        }
+
+        ::ng-deep .ng-select {
+          width: 300px;
+          min-width: 100px;
+        }
+
+        ::ng-deep .ng-select .ng-select-container {
+          border-radius: 6px;
+          border: 1px solid #e2e8f0;
+          padding: 8px 10px;
+          background: #FFFFFF;
+          font-family: "Darker Grotesque", serif;
+        }
+
+        ::ng-deep .ng-select .ng-select-container .ng-placeholder {
+          color: #777;
+          font-family: "Darker Grotesque", serif;
+        }
+
+        ::ng-deep .ng-select .ng-select-container .ng-value {
+          font-family: 'darker Grotesque', serif;
+        }
+
+        ::ng-deep .ng-select .ng-dropdown-panel .ng-option {
+          font-family: 'darker Grotesque', serif;
+
+          &:hover {
+            background: #f5f5f5;
+          }
+        }
+
+      }
+      .add-task-btn{
+        button {
+          font-family: "Darker Grotesque", serif;
+          color: white;
+          font-weight: 600;
+          font-size: 16px;
+          background: #FF4136;
+          padding: 7px 10px;
+          border: none;
+          border-radius: 6px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap:10px;
+          i {
+            margin-top: 3px;
+            font-weight: 600;
+          }
+        }
+      }
+
+
+    }
+
+    .content {
+      display: flex;
+      gap: 30px;
+      width: 100%;
+
+      .tasks-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+      }
+    }
+  }
+}

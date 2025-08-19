@@ -1,0 +1,145 @@
+<div class="project-details">
+  <div class="action-section">
+    <div class="right-section">
+      <div class="return-btn">
+        <button><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i></button>
+      </div>
+      <div class="project-name">
+        <h1>{{ selectedProject.name }} - #{{ projectId }}</h1>
+      </div>
+    </div>
+    <div class="add-piece-btn">
+      <button>Add Piece <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+    </div>
+  </div>
+  <div class="progress-container">
+    <div [style.width.%]="selectedProject.progress" class="progress-bar">
+      <span class="progress-text">{{ selectedProject.progress }}%</span>
+    </div>
+  </div>
+  <div class="details">
+    <div class="right-details">
+      <div class="action-btn">
+        <button>Expand All<img alt="expandall-btn" src="expandall.png"></button>
+        <button>Collapse All<img alt="collapseall-btn" src="collapseall.png"></button>
+      </div>
+      <div class="dates">
+        <div class="kickoff"><span>Kickoff: </span>{{ selectedProject.opened | date: 'dd/MM/yyyy' }}</div>
+        <div class="delivery-date"><span>Delivery: </span>{{ selectedProject.delivery | date: 'dd/MM/yyyy' }}</div>
+      </div>
+    </div>
+    <div class="design-picture">
+      <img alt="design-picture" src="{{selectedProject.designPicture}}">
+    </div>
+  </div>
+  <div class="table-pieces">
+    <table>
+      <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Progress</th>
+        <th>Description</th>
+        <th>Material</th>
+        <th>Material Quantity</th>
+        <th>Quantity</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let piece of pieces; let i = index">
+        <tr (click)="toggleDropdown(piece.reference)" [class.open]="lineOpen === piece.reference">
+          <td class="reference">
+            <span>{{ lineOpen === piece.reference ? '▼' : '▶' }}</span>
+            <span>{{ piece.reference }}</span>
+          </td>
+          <td class="picture-piece">
+            <img src="{{ piece.designPicture }}" alt="piece design"> <span>{{ piece.name }}</span>
+          </td>
+          <td>{{ piece.status }}</td>
+          <td><div class="progress-container">
+            <div class="progress-bar" [style.width.%]="piece.progress"> <span class="progress-text">{{ piece.progress }}%</span></div>
+          </div></td>
+          <td>{{ piece.description }}</td>
+          <td>{{ piece.material }}</td>
+          <td>{{ piece.materialQuantity }} {{ piece.materialUnit }}</td>
+          <td>{{ piece.quantity }}</td>
+          <td class="actions">
+            <button class="btn-icon" >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon btn-delete" (click)="deletePiece(i)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        <ng-container *ngIf="lineOpen === piece.reference">
+          <tr>
+            <td colspan="9" class="add-task-btn">
+              <button>Add Piece <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="9" class="nested-table-container">
+              <table class="nested-table">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Progress</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Estimated Time</th>
+                  <th>Time Spent</th>
+                  <th>Resources</th>
+                  <th>Due Date</th>
+                  <th>Actual Finish Date</th>
+                  <th>Created By</th>
+                  <th>Creation Date</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let task of tasks">
+                  <td>
+                    <i class="fa-solid fa-grip-vertical" style="color: #000000;"></i>
+                  </td>
+                  <td>{{ task.name }}</td>
+                  <td>{{ task.status }}</td>
+                  <td><div class="progress-container">
+                    <div class="progress-bar" [style.width.%]="task.progress"> <span class="progress-text">{{ task.progress }}%</span></div>
+                  </div></td>
+                  <td>{{ task.description }}</td>
+                  <td>{{ task.quantity }}</td>
+                  <td>{{ task.estimatedTime }}</td>
+                  <td>{{ task.spentTime }}</td>
+                  <td>
+                        <span *ngFor="let resId of task.resources; let last = last">
+                          {{ getResourceName(resId) }}<span *ngIf="!last">, </span>
+                        </span>
+                  </td>
+                  <td>{{ task.dueDate | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ task.actualFinishDate | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ getResourceName(task.createdBy) }}</td>
+                  <td>{{ task.creationDate | date:'dd/MM/yyyy' }}</td>
+                  <td class="actions">
+                    <button class="btn-icon" >
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-icon btn-delete" (click)="deleteTask(i)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

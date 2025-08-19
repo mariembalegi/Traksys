@@ -1,0 +1,19 @@
+<div class="add-customer-modal">
+  <div class="header">
+    <h1>project registration</h1>
+    <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
+  </div>
+  <form>
+    <div class="name-customer-input">
+      <label class="name-input">Name:<input type="text"/></label>
+    </div>
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+        Cancel
+      </button>
+      <button class="btn btn-primary" type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

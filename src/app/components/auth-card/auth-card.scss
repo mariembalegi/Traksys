@@ -1,0 +1,144 @@
+.container{
+  position: absolute;
+  width: 68.6%;
+  height: 100%;
+  background: #FFFFFF;
+  left: 482px;
+  top: 0px;
+}
+app-header{
+  position: absolute;
+  left:37px;
+  top:-20px;
+}
+.login-box{
+  position: absolute;
+  left: 207.55px;
+  top: 170px;
+}
+.login-title{
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 700;
+  font-size: 55px;
+  color: #000000;
+  margin:0;
+}
+.login-subtitle{
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 500;
+  font-size: 20.0534px;
+  color: #7A7575;
+}
+
+.email-input-group {
+  position: relative;
+  top:40px;
+}
+.email-label{
+  font-family: 'Darker Grotesque',serif;
+  font-weight: 600;
+  font-size: 36px;
+}
+.email-input-wrapper{
+  display: flex;
+  border-bottom: 1px solid  #000000;
+  width: 500px;
+  height: 45px;
+  align-content: center;
+}
+.email-icon {
+  margin-left:10px;
+  margin-top: 5px;
+  margin-right: 19px;
+  transform:scale(0.6);
+}
+.email-input-field{
+  border:none;
+  outline: none;
+  font-size: 20px;
+  font-family: 'Darker Grotesque',serif;
+  width: 453px;
+  height: 43px;
+  border-radius: 16px;
+}
+
+.password-input-group{
+  position: relative;
+  top:70px;
+}
+.password-label{
+  font-family: 'Darker Grotesque',serif;
+  font-weight: 600;
+  font-size: 36px;
+}
+.password-input-wrapper{
+  display: flex;
+  border-bottom: 1px solid  #000000;
+  width: 500px;
+  height: 45px;
+  align-content: center;
+}
+.password-icon{
+  margin-right: 13px;
+  margin-left:5px;
+  margin-top:2px;
+  transform:scale(0.38);
+  cursor:pointer;
+}
+.password-input-field{
+  border:none;
+  outline: none;
+  font-size: 20px;
+  width: 453px;
+  height: 43px;
+  border-radius: 16px;
+  font-family: 'Darker Grotesque',serif;
+}
+
+.login-button{
+  position: relative;
+  width: 500px;
+  height: 45px;
+  color:#FFFFFF;
+  font-size: 25px;
+  font-weight: 600;
+  font-family: 'Darker Grotesque', serif;
+  background: #FF4136;
+  border-radius: 16px;
+  border:1px solid #FF4136;
+  top:120px;
+}
+.forgot-password-link{
+  position:relative;
+  font-family: 'Darker Grotesque',serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #0074D9;
+  top:60px;
+  right:100px;
+}
+
+.warning{
+  margin: 0;
+  padding: 0;
+  display:flex;
+  border:1px solid #FF4136;
+  background-color: #FFE5E3;
+  width: 500px;
+  height: 45px;
+  color:#FF4136;
+  margin-bottom: -20px;
+}
+.warning p{
+  position: relative;
+  font-family: 'Darker Grotesque', serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin:10px;
+  bottom:2px;
+}
+.cancel-cross-icon{
+  transform: scale(0.4);
+  position: relative;
+  left:250px
+}

@@ -1,0 +1,22 @@
+.auth-container{
+  height:100%;
+  width:100%;
+  display:flex;
+}
+.auth-sidebar{
+  background: #FF4136;
+  height: 100%;
+  width:30%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-sidebar p{
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 900;
+  font-size: 52.5px;
+  line-height: 71px;
+  color: #FFFFFF;
+
+
+}

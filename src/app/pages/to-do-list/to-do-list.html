@@ -1,0 +1,72 @@
+<div class="to-do-list">
+  <div class="projects-bar">
+    <div class="bar-header">
+      <h1>Projects </h1>
+      <div class="projects-number">5</div>
+    </div>
+    <div class="projects-container">
+      <div class="project">
+        <img src="https://picsum.photos/200/120?random=5">
+        <span>Project Kappa</span>
+      </div>
+      <div class="project">
+        <img src="https://picsum.photos/200/120?random=5">
+        <span>Project Kappa</span>
+      </div>
+      <div class="project">
+        <img src="https://picsum.photos/200/120?random=5">
+        <span>Project Kappa</span>
+      </div>
+    </div>
+  </div>
+  <div class="board">
+    <div class="header">
+      <div class="selector">
+        <span>Select a Resource: </span>
+        <ng-select
+          [items]="resources"
+          bindLabel="name"
+          bindValue="id">
+        </ng-select>
+      </div>
+      <div class="add-task-btn">
+        <button>Add Task <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+      </div>
+
+    </div>
+    <div class="content">
+      <div class="tasks-container">
+        <div class="tasks-header">
+          <app-status-header header="To Do" number="2"></app-status-header>
+        </div>
+        <div class="tasks-cards">
+          <app-task-card></app-task-card>
+        </div>
+      </div>
+      <div class="tasks-container">
+        <div class="tasks-header">
+          <app-status-header header="In Progress" number="1"></app-status-header>
+        </div>
+        <div class="tasks-cards">
+          <app-task-card></app-task-card>
+        </div>
+      </div>
+      <div class="tasks-container">
+        <div class="tasks-header">
+          <app-status-header header="On Hold" number="1"></app-status-header>
+        </div>
+        <div class="tasks-cards">
+          <app-task-card></app-task-card>
+        </div>
+      </div>
+      <div class="tasks-container">
+        <div class="tasks-header">
+          <app-status-header header="Complete" number="5"></app-status-header>
+        </div>
+        <div class="tasks-cards">
+          <app-task-card></app-task-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

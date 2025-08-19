@@ -1,0 +1,82 @@
+<div class="projects-list">
+  <div class="header">
+    <div class="title">
+      <h1>Projects List <span>({{ filteredProjects.length }})</span></h1>
+    </div>
+    <div class="add-btn">
+      <button (click)="addEditModal()">Add Project <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+    </div>
+
+  </div>
+  <div class="search-controls">
+    <div class="search-group">
+      <div class="search-input">
+        <input placeholder="Search a Project" type="text" [(ngModel)]="searchText" (ngModelChange)="applyFilters()"/>
+        <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #777777;"></i>
+      </div>
+      <div class="select-input">
+        <ng-select
+          [items]="customers"
+          bindLabel="name"
+          bindValue="_id"
+          placeholder="Owned By Anyone" [(ngModel)]="selectedCustomer"
+          (ngModelChange)="applyFilters()">
+        </ng-select>
+      </div>
+    </div>
+    <div class="action-button">
+      <button (click)="toggleFilterStatus()"
+              class="btn-filter">
+        <i class="fas fa-filter"></i>
+      </button>
+    </div>
+  </div>
+  <div class="projects-table">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Design</th>
+        <th>Description</th>
+        <th>Customer</th>
+        <th>Progress</th>
+        <th>Opened</th>
+        <th>Delivery Date</th>
+        <th>Invoice Amount</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let project of pagedProjects; let i = index" [routerLink]="['/dashboard/projects/project-details', project.id]">
+        <td>{{ project.id }}</td>
+        <td>{{ project.name }}</td>
+        <td><img [src]="project.designPicture" alt="{{ project.name }} design" class="design-img"/></td>
+        <td>{{ project.description }}</td>
+        <td>{{ getCustomerName(project.customerId) }}</td>
+        <td><div class="progress-container">
+          <div class="progress-bar" [style.width.%]="project.progress"> <span class="progress-text">{{ project.progress }}%</span></div>
+        </div></td>
+        <td>{{ project.opened | date:'shortDate' }}</td>
+        <td>{{ project.delivery | date:'shortDate' }}</td>
+        <td>{{ formatCurrency(project.invoiceAmount, project.currency) }}</td>
+        <td class="actions">
+          <button class="btn-icon" >
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn-icon btn-delete" (click)="deleteProject(i)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="paginator-controls">
+    <app-paginator
+      [items]="filteredProjects"
+      [itemsPerPage]="itemsPerPage"
+      (pageChange)="onPageChange($event)">
+    </app-paginator>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+
+.navbar {
+  background-color: white;
+  padding: 0 2rem;
+  @include flex-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height:70px;
+
+  .navbar-brand {
+    .logo {
+      img{
+        width: 60px;
+      }
+    }
+  }
+
+  .navbar-nav {
+    display: flex;
+    gap: 2rem;
+
+    .nav-item {
+      @include flex-center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: gray;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      font-family: "Darker Grotesque", serif;
+
+      &:hover, &.active {
+        color: #FF4136;
+        background-color: rgba(220, 53, 69, 0.1);
+      }
+      i {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .navbar-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    .nav-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: gray;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: gray;
+        color: #FF4136;
+      }
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color:white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      display: none;
+      z-index: 1001;
+
+      .dropdown-header {
+        padding: 0.75rem 1rem;
+        font-weight: bold;
+        border-bottom: 1px solid gray;
+        color: gray;
+        font-family: "Darker Grotesque", serif;
+      }
+
+      .dropdown-item {
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        @include flex-center;
+        gap: 0.5rem;
+        font-family: "Darker Grotesque", serif;
+
+        &:hover {
+          background-color: gray;
+        }
+
+        i {
+          width: 16px;
+        }
+      }
+    }
+
+    .notification-dropdown,
+    .profile-dropdown {
+      position: relative;
+
+      &:hover .dropdown-menu {
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
+
+    .navbar-nav {
+      gap: 1rem;
+
+      .nav-item span {
+        display: none;
+      }
+    }
+  }
+}

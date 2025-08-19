@@ -1,0 +1,386 @@
+.project-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 20px;
+
+  .action-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .right-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+
+      .project-name {
+        h1 {
+          font-size: 18px;
+          font-weight: bold;
+          font-family: "Darker Grotesque", serif;
+        }
+      }
+
+      .return-btn {
+        button {
+          background: #FF4136;
+          padding: 10px 10px 12px 10px;
+          border: none;
+          border-radius: 6px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          i {
+            margin-top: 3px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .add-piece-btn {
+      button {
+        font-family: "Darker Grotesque", serif;
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+        background: #FF4136;
+        padding: 7px 10px;
+        border: none;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        i {
+          margin-top: 3px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .progress-container {
+    margin: 0 auto;
+    position: relative;
+    width: 400px;
+    min-width: 100px;
+    height: 20px;
+    background-color: #e0e0e0; // light gray background
+    border-radius: 10px;
+    overflow: hidden;
+
+    .progress-bar {
+      height: 100%;
+      background-color: #4caf50; // green bar
+      border-radius: 10px 0 0 10px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      line-height: 20px;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+
+
+  .details {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    .right-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 100px;
+      align-items: center;
+
+      .action-btn {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        button {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: #FFF;
+          padding: 8px 10px 10px 10px;
+          border: none;
+          border-radius: 6px;
+          font-family: "Darker Grotesque", serif;
+
+          img {
+            margin-top: 3px;
+            width: 15px;
+          }
+        }
+      }
+
+      .dates {
+        font-size: 14px;
+        font-family: "Darker Grotesque", serif;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        span {
+          font-weight: bold;
+        }
+      }
+
+    }
+
+    .design-picture {
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        margin: 0 auto;
+      }
+
+    }
+
+  }
+
+  .table-pieces {
+    width: 100%;
+    min-height: 0;
+    position: relative;
+    overflow: auto;
+    border-radius: 14px;
+    background: white;
+    border: 1px solid #e2e8f0;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "Darker Grotesque", serif;
+
+      thead {
+        background: #f5f5f5;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+
+        th {
+          padding: 12px 15px;
+          text-align: left;
+          font-weight: bold;
+          font-size: 14px;
+          color: #333;
+          border-bottom: 2px solid #e2e8f0;
+          white-space: nowrap;
+
+          &:first-child {
+            border-top-left-radius: 14px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 14px;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #e2e8f0;
+          transition: background-color 0.2s ease;
+
+          &.open {
+            background-color: #f0f0f0;
+          }
+
+          &:hover {
+            background: #f9fafb;
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          td {
+            padding: 12px 15px;
+            font-size: 14px;
+            color: #555;
+            vertical-align: middle;
+            button {
+              font-family: "Darker Grotesque", serif;
+              color: white;
+              font-weight: 600;
+              font-size: 18px;
+              background: #FF4136;
+              padding: 7px 10px;
+              border: none;
+              border-radius: 6px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              i {
+                margin-top: 3px;
+                font-weight: 600;
+              }
+            }
+
+            .progress-container {
+              position: relative;
+              width: 100%;
+              height: 20px;
+              background-color: #e0e0e0; // light gray background
+              border-radius: 10px;
+              overflow: hidden;
+            }
+
+            .progress-bar {
+              height: 100%;
+              background-color: #4caf50; // green bar
+              border-radius: 10px 0 0 10px;
+              transition: width 0.3s ease;
+            }
+
+            .progress-text {
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              font-size: 12px;
+              line-height: 20px;
+              color: #fff;
+              font-weight: bold;
+            }
+
+
+            &:first-child {
+              font-weight: 600;
+              color: #FF4136;
+            }
+
+            .design-img {
+              width: 40px;
+              height: 40px;
+              object-fit: cover;
+              border-radius: 6px;
+              border: 1px solid #e2e8f0;
+            }
+
+            &.actions {
+              white-space: nowrap;
+
+              .btn-icon {
+                background: transparent;
+                border: 1px solid #e2e8f0;
+                border-radius: 4px;
+                padding: 6px 8px;
+                margin: 0 2px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                i {
+                  color: #777;
+                  font-size: 12px;
+                }
+
+                &:hover {
+                  background: #f5f5f5;
+                  border-color: #777;
+
+                  i {
+                    color: #333;
+                  }
+                }
+
+                &.btn-delete {
+                  &:hover {
+                    background: #fee;
+                    border-color: #FF4136;
+
+                    i {
+                      color: #FF4136;
+                    }
+                  }
+                }
+              }
+            }
+
+            &.picture-piece {
+              display: flex; // mettre img et span sur la même ligne
+              align-items: center; // centrer verticalement
+              gap: 8px; // espace entre image et texte
+
+              img {
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Responsive design
+    @media (max-width: 768px) {
+      border-radius: 8px;
+
+      table {
+        thead th {
+          padding: 10px 8px;
+          font-size: 12px;
+        }
+
+        tbody td {
+          padding: 10px 8px;
+          font-size: 12px;
+
+          .design-img {
+            width: 30px;
+            height: 30px;
+          }
+
+          &.actions .btn-icon {
+            padding: 4px 6px;
+
+            i {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    // Custom scrollbar for better appearance
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 4px;
+
+      &:hover {
+        background: #777;
+      }
+    }
+  }
+}
