@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf, Location} from '@angular/common';
 import {Piece} from '../../models/piece';
 import {Project} from '../../models/project';
 import {Resource} from '../../models/resource';
 import {Task} from '../../models/task';
+import {Dialog} from '@angular/cdk/dialog';
+import {AddEditPieceModal} from '../../components/add-edit-piece-modal/add-edit-piece-modal';
+import {AddEditTaskModal} from '../../components/add-edit-task-modal/add-edit-task-modal';
 
 @Component({
   selector: 'app-project-details',
@@ -257,10 +260,20 @@ export class ProjectDetails implements OnInit {
     }
   ];
   selectedProject: any;
-  lineOpen: string | null = null;
+  lineOpenSet: Set<string> = new Set();
+  dialog1=inject(Dialog);
+  dialog2=inject(Dialog);
+  protected AddEditPieceModal (){
+    this.dialog1.open(AddEditPieceModal)
+  }
+  protected AddEditTaskModal (){
+    this.dialog2.open(AddEditTaskModal)
+  }
 
+  constructor(private location: Location, private route: ActivatedRoute) {}
 
-  constructor(private route: ActivatedRoute) {
+  goBack() {
+    this.location.back();
   }
 
   ngOnInit() {
@@ -269,7 +282,23 @@ export class ProjectDetails implements OnInit {
   }
 
   toggleDropdown(id: string) {
-    this.lineOpen = this.lineOpen === id ? null : id;
+    if (this.lineOpenSet.has(id)) {
+      this.lineOpenSet.delete(id); // ferme si déjà ouvert
+    } else {
+      this.lineOpenSet.add(id); // ouvre sinon
+    }
+  }
+
+  expandAll() {
+    this.lineOpenSet = new Set(this.pieces.map(p => p.reference)); // ouvre toutes les pièces
+  }
+
+  collapseAll() {
+    this.lineOpenSet.clear(); // ferme tout
+  }
+
+  isOpen(id: string): boolean {
+    return this.lineOpenSet.has(id);
   }
 
   getResourceName(customerId: string): string {
@@ -283,4 +312,6 @@ export class ProjectDetails implements OnInit {
   deleteTask(index: number) {
     this.tasks.splice(index, 1);
   }
+
+
 }

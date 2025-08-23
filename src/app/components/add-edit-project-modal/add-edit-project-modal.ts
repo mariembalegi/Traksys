@@ -33,11 +33,13 @@ export class AddEditProjectModal {
     { code: 'TND', name: 'Tunisian Dinar' }
   ];
 
-  protected closeModal(){
-    this.dialogRef?.close();
-  }
+
 
   protected addCustomerModal() {
     this.dialog.open(AddCustomerModal,{disableClose: true});
+  }
+
+  protected closeModal(){
+    this.dialogRef?.close();
   }
 }

@@ -1,0 +1,109 @@
+.stock {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  .stock-table {
+    min-height: 0;
+    position: relative;
+    overflow: auto;
+    border-radius: 14px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    table {
+      border-collapse: collapse;
+      font-family: "Darker Grotesque", serif;
+
+      thead {
+        background: #f5f5f5;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+
+        th {
+          padding: 12px 15px;
+          text-align: left;
+          font-weight: bold;
+          font-size: 14px;
+          color: #333;
+          border-bottom: 2px solid #e2e8f0;
+          white-space: nowrap;
+
+          &:first-child {
+            border-top-left-radius: 14px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 14px;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #e2e8f0;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background: #f9fafb;
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          td {
+            padding: 12px 15px;
+            font-size: 14px;
+            color: #555;
+            vertical-align: middle;
+
+            &:first-child {
+              font-weight: 600;
+              color: #FF4136;
+            }
+
+            &.actions {
+              white-space: nowrap;
+
+              .btn-icon {
+                background: transparent;
+                border: 1px solid #e2e8f0;
+                border-radius: 4px;
+                padding: 6px 8px;
+                margin: 0 2px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                i {
+                  color: #777;
+                  font-size: 12px;
+                }
+
+                &:hover {
+                  background: #f5f5f5;
+                  border-color: #777;
+
+                  i {
+                    color: #333;
+                  }
+                }
+
+                &.btn-delete {
+                  &:hover {
+                    background: #fee;
+                    border-color: #FF4136;
+
+                    i {
+                      color: #FF4136;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

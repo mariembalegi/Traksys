@@ -1,0 +1,92 @@
+<div class="add-edit-piece-modal">
+  <div class="header">
+    <h1>project registration</h1>
+    <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
+  </div>
+  <form>
+    <div class="name-quantity-input">
+      <div class="name"><label class="name-input">Name:<input type="text"/></label></div>
+      <div class="quantity-input">
+        <label for="quantity">Material Quantity:
+          <input type="number"/>
+        </label>
+      </div>
+    </div>
+    <div class="description-input">
+      <label for="piece">Description:
+        <textarea cols="30" id="piece" name="piece" rows="3"></textarea>
+      </label>
+    </div>
+    <div class="material-name-input">
+      <label for="material-type">Material:
+        <ng-select
+          [items]="materials"
+          bindValue="id"
+          placeholder="Select a material"
+        >
+          <!-- This controls how options appear in the dropdown -->
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.material }} - {{ item.type }}
+          </ng-template>
+
+          <!-- This controls how the selected item looks in the input box -->
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.material }} - {{ item.type }}
+          </ng-template>
+        </ng-select>
+
+      </label>
+    </div>
+    <div class="quantity-input">
+      <label for="quantity">Material Quantity:
+        <input type="number"/>
+      </label>
+    </div>
+    <div class="unit-input">
+      <label class="unit" for="unit">Unit:
+        <ng-select
+          [items]="units"
+          bindLabel="name"
+          bindValue="id"
+        >
+        </ng-select>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <div class="file-input">
+        <label for="designFile">Design File:</label>
+        <input
+          accept=".sldprt,.sldasm,.step,.stp,.iges,.igs"
+          class="form-input"
+          id="designFile"
+          name="designFile"
+          type="file"
+        >
+        <small class="form-help">Accepted formats: SolidWorks (.sldprt, .sldasm), STEP (.step, .stp), IGES (.iges,
+          .igs)</small>
+      </div>
+      <div class="picture-input">
+        <label for="designFile">Design Picture:</label>
+        <input
+          accept=".jpg,.jpeg,.png,.gif,.bmp,.webp,.svg"
+          class="form-input"
+          id="designFile"
+          name="designFile"
+          type="file"
+        >
+        <small class="form-help">Accepted formats: JPEG (.jpg, .jpeg), PNG (.png), GIF (.gif), BMP (.bmp), WebP (.webp),
+          SVG (.svg)</small>
+      </div>
+
+    </div>
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+        Cancel
+      </button>
+      <button class="btn btn-primary" type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

@@ -2,14 +2,14 @@
   <div class="action-section">
     <div class="right-section">
       <div class="return-btn">
-        <button><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i></button>
+        <button (click)="goBack()" ><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i></button>
       </div>
       <div class="project-name">
         <h1>{{ selectedProject.name }} - #{{ projectId }}</h1>
       </div>
     </div>
     <div class="add-piece-btn">
-      <button>Add Piece <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+      <button (click)="AddEditPieceModal()">Add Piece <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
     </div>
   </div>
   <div class="progress-container">
@@ -20,8 +20,8 @@
   <div class="details">
     <div class="right-details">
       <div class="action-btn">
-        <button>Expand All<img alt="expandall-btn" src="expandall.png"></button>
-        <button>Collapse All<img alt="collapseall-btn" src="collapseall.png"></button>
+        <button (click)="expandAll()">Expand All<img alt="expandall-btn" src="expandall.png"></button>
+        <button  (click)="collapseAll()">Collapse All<img alt="collapseall-btn" src="collapseall.png"></button>
       </div>
       <div class="dates">
         <div class="kickoff"><span>Kickoff: </span>{{ selectedProject.opened | date: 'dd/MM/yyyy' }}</div>
@@ -49,9 +49,9 @@
       </thead>
       <tbody>
       <ng-container *ngFor="let piece of pieces; let i = index">
-        <tr (click)="toggleDropdown(piece.reference)" [class.open]="lineOpen === piece.reference">
+        <tr (click)="toggleDropdown(piece.reference)" [class.open]="isOpen(piece.reference)">
           <td class="reference">
-            <span>{{ lineOpen === piece.reference ? '▼' : '▶' }}</span>
+            <span>{{ isOpen(piece.reference)  ? '▼' : '▶' }}</span>
             <span>{{ piece.reference }}</span>
           </td>
           <td class="picture-piece">
@@ -74,10 +74,10 @@
             </button>
           </td>
         </tr>
-        <ng-container *ngIf="lineOpen === piece.reference">
+        <ng-container *ngIf="isOpen(piece.reference)">
           <tr>
             <td colspan="9" class="add-task-btn">
-              <button>Add Piece <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+              <button (click)="AddEditTaskModal()">Add Task <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
             </td>
           </tr>
           <tr>

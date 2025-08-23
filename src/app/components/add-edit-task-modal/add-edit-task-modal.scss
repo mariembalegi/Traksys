@@ -1,0 +1,220 @@
+.add-edit-task-modal {
+  background-color: #FFFFFF;
+  padding: 10px 20px 20px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 14px;
+  width: 400px;
+  min-width: 200px;
+  height: 500px;
+  overflow-y: auto;
+  margin: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #c0c0c0 transparent;
+
+  .scroll-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 14px;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 14px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #a0a0a0;
+  }
+
+  .scroll-container::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+
+    h1 {
+      font-weight: 600;
+      color: #374151;
+      letter-spacing: 0.025em;
+      font-family: "Darker Grotesque", serif;
+      font-size: 20px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    i {
+      margin-top: 13px;
+      border-radius: 50%; // make it circular
+      padding: 6px; // space around the icon
+      cursor: pointer; // show it's clickable
+      transition: all 0.2s ease; // smooth hover effect
+
+      &:hover {
+        transform: scale(1.1); // small zoom effect
+      }
+
+      &:active {
+        transform: scale(0.95); // "press" effect
+      }
+    }
+  }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+
+    label {
+      font-weight: 600;
+      color: #374151;
+      letter-spacing: 0.025em;
+      font-family: "Darker Grotesque", serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+
+    }
+
+    .name-input {
+      width: 100%;
+      input {
+        width: 100%; // Full width of the container
+        outline: none;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        padding: 10px 10px 8px 10px;
+        box-sizing: border-box;
+
+      }
+    }
+
+    .description-input {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+
+      label {
+        width: 100%;
+      }
+
+      textarea {
+        width: 100%;
+        outline: none;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+    }
+
+    .time{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap:10px;
+      input {
+        width: 100%; // Full width of the container
+        outline: none;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        padding: 10px 10px 8px 10px;
+        box-sizing: border-box;
+
+      }
+    }
+    .resources{
+      width: 100%;
+    }
+    ng-select {
+      width: 100%; // Full width of the container
+    }
+
+    // Target ng-select internal elements if needed
+    ::ng-deep .ng-select {
+      width: 100%;
+    }
+
+    ::ng-deep .ng-select .ng-select-container {
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      padding: 8px 10px;
+      background: #FFFFFF;
+      font-family: "Darker Grotesque", serif;
+    }
+
+    ::ng-deep .ng-select .ng-select-container .ng-placeholder {
+      color: #777;
+      font-family: "Darker Grotesque", serif;
+    }
+
+    ::ng-deep .ng-select .ng-select-container .ng-value {
+      font-family: 'darker Grotesque', serif;
+    }
+
+    ::ng-deep .ng-select .ng-dropdown-panel .ng-option {
+      font-family: 'darker Grotesque', serif;
+
+      &:hover {
+        background: #f5f5f5;
+      }
+    }
+
+
+    .modal-actions {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+
+      .btn {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+
+        &.btn-secondary {
+          background-color: #fff;
+          color: #374151;
+
+          &:hover {
+            background-color: #ccc;
+            transform: translateY(-1px);
+          }
+        }
+
+        &.btn-primary {
+          background: #FF4136;
+          color: white;
+          box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+
+          &:hover:not(:disabled) {
+            background: #FF4136;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(220, 53, 69, 0.4);
+          }
+
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+          }
+        }
+      }
+    }
+  }
+}

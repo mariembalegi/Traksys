@@ -1,0 +1,43 @@
+<div class="add-edit-task-modal">
+  <div class="header">
+    <h1>project registration</h1>
+    <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
+  </div>
+  <form>
+    <div class="name-input">
+      <label class="name-input">Name:<input type="text"/></label>
+    </div>
+    <div class="description-input">
+      <label for="piece">Description:
+        <textarea cols="30" id="piece" name="piece" rows="3"></textarea>
+      </label>
+    </div>
+    <div class="time">
+      <div class="due-date">
+        <label>Due Date:<input type="datetime-local"/></label>
+      </div>
+      <div class="estimated-time">
+        <label >Estimated Time:<input type="text"/></label>
+      </div>
+    </div>
+    <div class="resources">
+      <label> Resources
+      <ng-select
+        [items]="resources"
+        bindLabel="name"
+        bindValue="id"
+        [multiple]="true"
+      >
+      </ng-select>
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+        Cancel
+      </button>
+      <button class="btn btn-primary" type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>
