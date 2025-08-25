@@ -1,11 +1,25 @@
-<div class="pagination-controls">
-  <button (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1">
+<div class="pagination-controls" role="navigation" aria-label="Pagination Navigation">
+  <button 
+    (click)="setPage(currentPage - 1)" 
+    [disabled]="currentPage === 1"
+    [attr.aria-disabled]="currentPage === 1"
+    aria-label="Go to previous page"
+    type="button">
+    <i class="fas fa-chevron-left" aria-hidden="true"></i>
     Previous
   </button>
 
-  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <span role="status" aria-live="polite" aria-label="Current page information">
+    Page {{ currentPage }} of {{ totalPages }}
+  </span>
 
-  <button (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+  <button 
+    (click)="setPage(currentPage + 1)" 
+    [disabled]="currentPage === totalPages"
+    [attr.aria-disabled]="currentPage === totalPages"
+    aria-label="Go to next page"
+    type="button">
     Next
+    <i class="fas fa-chevron-right" aria-hidden="true"></i>
   </button>
 </div>

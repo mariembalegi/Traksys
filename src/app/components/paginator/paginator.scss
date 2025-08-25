@@ -1,0 +1,148 @@
+// ===================================
+// PAGINATOR COMPONENT STYLES
+// ===================================
+
+// Variables matching your app's design system
+$primary-color: #FF4136;
+$white: #ffffff;
+$text-dark: #333;
+$text-medium: #555;
+$text-light: #777;
+$border-color: #e2e8f0;
+$light-gray: #f5f5f5;
+$hover-gray: #f9fafb;
+$border-radius-medium: 6px;
+$border-radius-large: 10px;
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 0;
+  font-family: "Darker Grotesque", serif;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 120px;
+    height: 45px;
+    font-family: "Darker Grotesque", serif;
+    font-weight: 600;
+    font-size: 18px;
+    border: 2px solid $border-color;
+    border-radius: $border-radius-large;
+    background: $white;
+    color: $text-dark;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    i {
+      font-size: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-color: $primary-color;
+      color: $primary-color;
+      background: $hover-gray;
+
+      i {
+        transform: translateX(2px);
+      }
+
+      &:first-child i {
+        transform: translateX(-2px);
+      }
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background: $light-gray;
+      color: $text-light;
+      border-color: #e0e0e0;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+
+      i {
+        opacity: 0.5;
+      }
+    }
+
+    // Add subtle animation effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 65, 54, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    &:hover:not(:disabled)::before {
+      left: 100%;
+    }
+  }
+
+  span {
+    font-family: "Darker Grotesque", serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: $text-dark;
+    padding: 12px 24px;
+    background: $white;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius-large;
+    min-width: 160px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .pagination-controls {
+    gap: 10px;
+    padding: 15px 0;
+
+    button {
+      min-width: 100px;
+      height: 40px;
+      font-size: 16px;
+    }
+
+    span {
+      font-size: 18px;
+      padding: 10px 16px;
+      min-width: 140px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-controls {
+    flex-direction: column;
+    gap: 15px;
+
+    button {
+      width: 100%;
+      max-width: 200px;
+    }
+
+    span {
+      order: -1;
+    }
+  }
+}
