@@ -5,6 +5,8 @@ import { Task } from '../../models/task';
 import { Comment } from '../../models/comment';
 import { Resource } from '../../models/resource';
 import { Piece } from '../../models/piece';
+import { Project } from '../../models/project';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-task-detail-dialog',
@@ -17,6 +19,7 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
   @Input() comments: Comment[] = [];
   @Input() resources: Resource[] = [];
   @Input() pieces: Piece[] = [];
+  @Input() project: Project | null = null;
   @Input() isVisible: boolean = false;
   @Input() currentResourceId: string = 'r1'; // Current user's resource ID
   @Output() closeDialog = new EventEmitter<void>();
@@ -34,7 +37,7 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
   piece: Piece | null = null;
   private previousQuantity: number = 0;
 
-  constructor() {}
+  constructor(private notificationService: NotificationService) {}
 
   ngOnInit() {
     if (this.task) {
@@ -172,6 +175,22 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
 
   onQuantityChange() {
     if (this.task && this.producedQuantity >= 0 && this.producedQuantity <= this.totalQuantity) {
+      // Check if pieces were added (not removed)
+      const quantityDifference = this.producedQuantity - this.previousQuantity;
+      
+      if (quantityDifference > 0) {
+        // Send notification for pieces added - using the existing addProgressNotification method
+        this.notificationService.addProgressNotification(
+          this.task.name,
+          this.producedQuantity,
+          this.totalQuantity,
+          'Production Team',
+          this.task.id,
+          this.project?.name,
+          this.piece?.name
+        );
+      }
+      
       // Update previous quantity
       this.previousQuantity = this.producedQuantity;
       

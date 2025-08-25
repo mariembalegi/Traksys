@@ -44,13 +44,38 @@ export class NotificationService {
 
   notifications$ = this.notifications.asObservable();
 
-  addProgressNotification(taskName: string, producedQuantity: number, totalQuantity: number, userRole: string, taskId: string) {
+  addProgressNotification(taskName: string, producedQuantity: number, totalQuantity: number, userRole: string, taskId: string, projectName?: string, pieceName?: string) {
+    let message = `${userRole}: ${producedQuantity} out of ${totalQuantity} pieces completed on "${taskName}"`;
+    
+    if (projectName && pieceName) {
+      message = `${userRole}: ${producedQuantity} out of ${totalQuantity} pieces completed on "${taskName}" (Project: ${projectName}, Piece: ${pieceName})`;
+    } else if (projectName) {
+      message = `${userRole}: ${producedQuantity} out of ${totalQuantity} pieces completed on "${taskName}" (Project: ${projectName})`;
+    } else if (pieceName) {
+      message = `${userRole}: ${producedQuantity} out of ${totalQuantity} pieces completed on "${taskName}" (Piece: ${pieceName})`;
+    }
+
     const notification: Notification = {
       id: `progress_${Date.now()}`,
       title: 'Progress Update',
-      message: `${userRole}: ${producedQuantity} out of ${totalQuantity} pieces completed on "${taskName}"`,
+      message: message,
       timestamp: new Date(),
       type: 'progress',
+      taskId: taskId,
+      read: false
+    };
+
+    const currentNotifications = this.notifications.value;
+    this.notifications.next([notification, ...currentNotifications]);
+  }
+
+  addProductionNotification(taskName: string, piecesAdded: number, totalProduced: number, totalQuantity: number, taskId: string) {
+    const notification: Notification = {
+      id: `production_${Date.now()}`,
+      title: 'Production Update',
+      message: `${piecesAdded} piece${piecesAdded > 1 ? 's' : ''} added to "${taskName}" (${totalProduced}/${totalQuantity} completed)`,
+      timestamp: new Date(),
+      type: 'success',
       taskId: taskId,
       read: false
     };

@@ -37,6 +37,7 @@ export class ToDoList {
   isDialogVisible: boolean = false;
   selectedTask: Task | null = null;
   selectedTaskComments: Comment[] = [];
+  selectedProject: Project | null = null;
 
   projects: Project[] = [
     {
@@ -268,13 +269,24 @@ export class ToDoList {
   openTaskDialog(task: Task) {
     this.selectedTask = task;
     this.selectedTaskComments = this.comments.filter(comment => comment.taskId === task.id);
+    this.selectedProject = this.findProjectForTask(task);
     this.isDialogVisible = true;
+  }
+
+  findProjectForTask(task: Task): Project | null {
+    // Find the piece that contains this task
+    const piece = this.pieces.find(piece => piece.taskIds.includes(task.id));
+    if (!piece) return null;
+    
+    // Find the project that contains this piece
+    return this.projects.find(project => project.pieceIds.includes(piece.id)) || null;
   }
 
   closeTaskDialog() {
     this.isDialogVisible = false;
     this.selectedTask = null;
     this.selectedTaskComments = [];
+    this.selectedProject = null;
   }
 
   addComment(commentText: string) {

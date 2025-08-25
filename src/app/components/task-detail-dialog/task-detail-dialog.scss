@@ -142,6 +142,17 @@
         color: #2c3e50;
         font-family: "Darker Grotesque", serif;
       }
+
+      // Special styling for resources to span full width
+      &.resources-item {
+        grid-column: 1 / -1;
+        width: fit-content;
+        
+        .value {
+          white-space: nowrap;
+          overflow: visible;
+        }
+      }
     }
   }
 }
