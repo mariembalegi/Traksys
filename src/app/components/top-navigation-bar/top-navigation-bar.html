@@ -30,14 +30,48 @@
 
   <div class="navbar-actions">
     <div class="notification-dropdown">
-      <button class="nav-btn">
+      <button class="nav-btn" (click)="toggleNotifications()">
         <i class="fas fa-bell"></i>
+        <span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
       </button>
-      <div class="dropdown-menu">
-        <div class="dropdown-header">Notifications</div>
-        <div class="dropdown-item">Project "Industrial Pump" updated</div>
-        <div class="dropdown-item">New task assigned to you</div>
-        <div class="dropdown-item">Workflow "Design" completed</div>
+      <div class="dropdown-menu" [class.show]="isNotificationOpen">
+        <div class="dropdown-header">
+          <span>Notifications</span>
+          <button class="mark-all-read" *ngIf="unreadCount > 0" (click)="markAllAsRead()">
+            Mark all read
+          </button>
+        </div>
+        
+        <div class="notifications-list">
+          <div 
+            class="notification-item" 
+            *ngFor="let notification of notifications" 
+            [class.unread]="!notification.read"
+            (click)="markAsRead(notification)">
+            
+            <div class="notification-icon" [class]="'type-' + notification.type">
+              <i class="fas" [class]="getNotificationIcon(notification.type)"></i>
+            </div>
+            
+            <div class="notification-content">
+              <div class="notification-title">{{ notification.title }}</div>
+              <div class="notification-message">{{ notification.message }}</div>
+              <div class="notification-time">{{ getTimeAgo(notification.timestamp) }}</div>
+            </div>
+            
+            <button 
+              class="clear-btn" 
+              (click)="clearNotification(notification, $event)"
+              title="Remove notification">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <div class="no-notifications" *ngIf="notifications.length === 0">
+            <i class="fas fa-bell-slash"></i>
+            <p>No notifications</p>
+          </div>
+        </div>
       </div>
     </div>
 

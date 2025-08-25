@@ -1,0 +1,201 @@
+<div class="dialog-overlay" *ngIf="isVisible && task" (click)="close()">
+  <div class="dialog-content" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h2>{{ task?.name }}</h2>
+      <button class="close-btn" (click)="close()">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+
+    <div class="dialog-body">
+      <!-- Task Info Section -->
+      <div class="task-info-section">
+        <div class="task-status">
+          <span class="status-badge" [style.background-color]="getStatusColor()">
+            {{ task?.status }}
+          </span>
+        </div>
+        
+        <div class="task-description">
+          <h4>Description</h4>
+          <p>{{ task?.description }}</p>
+        </div>
+
+        <div class="task-details-grid">
+          <div class="detail-item">
+            <i class="fa-solid fa-calendar"></i>
+            <span class="label">Due Date:</span>
+            <span class="value">{{ task?.dueDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-clock"></i>
+            <span class="label">Estimated:</span>
+            <span class="value">{{ task?.estimatedTime }}h</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-boxes"></i>
+            <span class="label">Total Pieces:</span>
+            <span class="value">{{ totalQuantity }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-users"></i>
+            <span class="label">Resources:</span>
+            <span class="value">{{ getTaskResourceNames() }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quantity Tracking Section -->
+      <div class="quantity-section">
+        <h4>Production Tracking</h4>
+        <div class="quantity-container">
+          <div class="quantity-display">
+            <div class="quantity-item">
+              <span class="label">Produced</span>
+              <div class="quantity-controls">
+                <button class="quantity-btn minus" (click)="decrementQuantity()" [disabled]="producedQuantity <= 0">
+                  <i class="fa-solid fa-minus"></i>
+                </button>
+                <input 
+                  type="number" 
+                  class="quantity-input" 
+                  [(ngModel)]="producedQuantity"
+                  (ngModelChange)="onQuantityChange()"
+                  [min]="0" 
+                  [max]="totalQuantity">
+                <button class="quantity-btn plus" (click)="incrementQuantity()" [disabled]="producedQuantity >= totalQuantity">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="quantity-item">
+              <span class="label">Total</span>
+              <span class="total-value">{{ totalQuantity }}</span>
+            </div>
+            <div class="quantity-item">
+              <span class="label">Remaining</span>
+              <span class="remaining-value">{{ totalQuantity - producedQuantity }}</span>
+            </div>
+          </div>
+          <div class="piece-info" *ngIf="piece">
+            <div class="piece-name">
+              <i class="fa-solid fa-puzzle-piece"></i>
+              <span>{{ piece.name }}</span>
+            </div>
+            <div class="piece-reference">Ref: {{ piece.reference }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <h4>Progress</h4>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div 
+              class="progress-fill" 
+              [style.width.%]="calculateProgress()"
+              [style.background-color]="getProgressBarColor()">
+            </div>
+          </div>
+          <span class="progress-text">{{ calculateProgress() }}%</span>
+        </div>
+      </div>
+
+      <!-- Timer Section -->
+      <div class="timer-section">
+        <h4>Time Tracking</h4>
+        <div class="timer-container">
+          <div class="time-display">
+            <div class="time-item">
+              <span class="label">Estimated</span>
+              <span class="time estimated-time">{{ formatTime(task?.estimatedTime || 0) }}</span>
+              <span class="sublabel">Manager Set</span>
+            </div>
+            <div class="time-item">
+              <span class="label">Time Spent</span>
+              <span class="time spent-time">{{ formatTime(elapsedTime) }}</span>
+              <span class="sublabel">Total Time</span>
+            </div>
+            <div class="time-item progress-item">
+              <span class="label">Time Progress</span>
+              <div class="time-progress-bar">
+                <div 
+                  class="time-progress-fill" 
+                  [style.width.%]="getTimeProgressPercentage()"
+                  [style.background-color]="getTimeProgressColor()">
+                </div>
+              </div>
+              <span class="time-percentage" [class.over-time]="getTimeProgressPercentage() > 100">
+                {{ getTimeProgressPercentage() }}%
+              </span>
+              <span class="sublabel" *ngIf="getTimeProgressPercentage() > 100">Over Estimated</span>
+              <span class="sublabel" *ngIf="getTimeProgressPercentage() <= 100">On Track</span>
+            </div>
+          </div>
+          <div class="timer-controls">
+            <button 
+              class="timer-btn start-btn" 
+              (click)="startTimer()" 
+              [disabled]="isTimerRunning">
+              <i class="fa-solid fa-play"></i> Start
+            </button>
+            <button 
+              class="timer-btn stop-btn" 
+              (click)="stopTimer()" 
+              [disabled]="!isTimerRunning">
+              <i class="fa-solid fa-pause"></i> Stop
+            </button>
+          </div>
+          
+          <!-- Time Summary -->
+          <div class="time-summary" *ngIf="task">
+            <div class="summary-item">
+              <span class="summary-label">Remaining Time:</span>
+              <span class="summary-value" [class.negative]="getRemainingTime() < 0">
+                {{ formatTime(getAbsoluteRemainingTime()) }}
+                <span class="status-text" *ngIf="getRemainingTime() < 0"> (Over)</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <h4>Comments ({{ comments.length }})</h4>
+        
+        <!-- Add Comment -->
+        <div class="add-comment">
+          <textarea 
+            [(ngModel)]="newCommentText"
+            placeholder="Add a comment..."
+            rows="3">
+          </textarea>
+          <button 
+            class="submit-comment-btn" 
+            (click)="submitComment()"
+            [disabled]="!newCommentText.trim()">
+            <i class="fa-solid fa-paper-plane"></i> Post Comment
+          </button>
+        </div>
+
+        <!-- Comments List -->
+        <div class="comments-list">
+          <div class="comment-item" *ngFor="let comment of comments">
+            <div class="comment-header">
+              <span class="author">{{ getResourceName(comment.authorId) }}</span>
+              <span class="timestamp">{{ getTimeAgo(comment.createdAt) }}</span>
+            </div>
+            <div class="comment-message">{{ comment.message }}</div>
+          </div>
+          
+          <div class="no-comments" *ngIf="comments.length === 0">
+            <i class="fa-solid fa-comment-slash"></i>
+            <p>No comments yet. Be the first to add one!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

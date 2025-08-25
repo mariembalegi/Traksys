@@ -4,20 +4,23 @@ import {Resource} from '../../models/resource';
 import {StatusHeader} from '../../components/status-header/status-header';
 import {TaskCard} from '../../components/task-card/task-card';
 import {Project} from '../../models/project';
-import {NgForOf} from '@angular/common';
+import {NgForOf, CommonModule} from '@angular/common';
 import {Piece} from '../../models/piece';
 import {Task} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {Comment} from '../../models/comment';
+import {TaskDetailDialog} from '../../components/task-detail-dialog/task-detail-dialog';
 
 @Component({
   selector: 'app-to-do-list',
   imports: [
+    CommonModule,
     NgSelectComponent,
     StatusHeader,
     TaskCard,
     NgForOf,
-    FormsModule
+    FormsModule,
+    TaskDetailDialog
   ],
   templateUrl: './to-do-list.html',
   styleUrl: './to-do-list.scss'
@@ -29,6 +32,11 @@ export class ToDoList {
   inProgressTasks: Task[] = [];
   completedTasks: Task[] = [];
   onHoldTasks: Task[] = [];
+
+  // Dialog properties
+  isDialogVisible: boolean = false;
+  selectedTask: Task | null = null;
+  selectedTaskComments: Comment[] = [];
 
   projects: Project[] = [
     {
@@ -114,6 +122,21 @@ export class ToDoList {
       progress: 10,
       status: "To Do",
       taskIds: ["t4"]
+    },
+    {
+      id: "pc4",
+      reference: "TEST-001",
+      name: "Test Component",
+      description: "Test component for timer functionality.",
+      designFile: "/designs/test_component.dxf",
+      designPicture: "/img/test_component.png",
+      materialId: "m1",
+      materialQuantity: 1,
+      materialUnit: "kg",
+      quantity: 5,
+      progress: 20,
+      status: "In Progress",
+      taskIds: ["t5"]
     }
   ];
 
@@ -128,7 +151,7 @@ export class ToDoList {
       progress: 80,
       status: "In Progress",
       resourceIds: ["r1", "r2"],
-      commentIds: ["cm1"],
+      commentIds: ["cm1", "cm3", "cm5"],
       dueDate: new Date("2025-08-25"),
       actualFinishDate: undefined,
       createdBy: "r1",
@@ -160,7 +183,7 @@ export class ToDoList {
       progress: 30,
       status: "In Progress",
       resourceIds: ["r3"],
-      commentIds: ["cm2"],
+      commentIds: ["cm2", "cm4"],
       dueDate: new Date("2025-09-05"),
       actualFinishDate: undefined,
       createdBy: "r3",
@@ -181,6 +204,22 @@ export class ToDoList {
       actualFinishDate: undefined,
       createdBy: "r1",
       creationDate: new Date("2025-08-20")
+    },
+    {
+      id: "t5",
+      name: "Test Timer Task",
+      description: "A test task to check timer functionality with 1 minute spent time.",
+      estimatedTime: 1/60, // 1 minute estimated (in hours)
+      spentTime: 1/60, // 1 minute spent (in hours)
+      quantity: 5,
+      progress: 20,
+      status: "In Progress",
+      resourceIds: ["r1"],
+      commentIds: [],
+      dueDate: new Date("2025-08-26"),
+      actualFinishDate: undefined,
+      createdBy: "r1",
+      creationDate: new Date("2025-08-25")
     }
   ];
 
@@ -189,7 +228,7 @@ export class ToDoList {
       id: "cm1",
       taskId: "t1",
       authorId: "r1",
-      message: "Cutting process started successfully.",
+      message: "Cutting process started successfully. Material preparation complete.",
       createdAt: new Date("2025-08-15T10:00:00")
     },
     {
@@ -198,6 +237,20 @@ export class ToDoList {
       authorId: "r3",
       message: "Welding in progress, waiting for quality check.",
       createdAt: new Date("2025-08-18T14:30:00")
+    },
+    {
+      id: "cm3",
+      taskId: "t1",
+      authorId: "r2",
+      message: "CNC machine calibration completed. Ready for cutting operation.",
+      createdAt: new Date("2025-08-15T08:30:00")
+    },
+    {
+      id: "cm4",
+      taskId: "t3",
+      authorId: "r3",
+      message: "First pass welding completed. Need to check for defects before second pass.",
+      createdAt: new Date("2025-08-19T09:15:00")
     }
   ];
 
@@ -210,5 +263,68 @@ export class ToDoList {
     this.inProgressTasks = tasksForResource.filter(task => task.status === 'In Progress');
     this.completedTasks = tasksForResource.filter(task => task.status === 'Completed');
     this.onHoldTasks = tasksForResource.filter(task => task.status === 'On Hold');
+  }
+
+  openTaskDialog(task: Task) {
+    this.selectedTask = task;
+    this.selectedTaskComments = this.comments.filter(comment => comment.taskId === task.id);
+    this.isDialogVisible = true;
+  }
+
+  closeTaskDialog() {
+    this.isDialogVisible = false;
+    this.selectedTask = null;
+    this.selectedTaskComments = [];
+  }
+
+  addComment(commentText: string) {
+    if (this.selectedTask) {
+      const newComment: Comment = {
+        id: `cm${this.comments.length + 1}`,
+        taskId: this.selectedTask.id,
+        authorId: this.selectedResourceId || 'r1', // Use selected resource or default
+        message: commentText,
+        createdAt: new Date()
+      };
+      
+      this.comments.push(newComment);
+      this.selectedTaskComments = this.comments.filter(comment => comment.taskId === this.selectedTask!.id);
+      
+      // Update the task's comment count
+      const task = this.tasks.find(t => t.id === this.selectedTask!.id);
+      if (task) {
+        task.commentIds.push(newComment.id);
+      }
+    }
+  }
+
+  updateTaskQuantity(event: {taskId: string, producedQuantity: number}) {
+    const task = this.tasks.find(t => t.id === event.taskId);
+    if (task) {
+      // Find the piece that contains this task
+      const piece = this.pieces.find(p => p.taskIds.includes(event.taskId));
+      if (piece) {
+        // Calculate new progress based on produced quantity
+        const newProgress = Math.min(100, Math.round((event.producedQuantity / piece.quantity) * 100));
+        task.progress = newProgress;
+        
+        // Update piece progress if this task represents the main work
+        piece.progress = newProgress;
+        
+        // Update status based on progress
+        if (newProgress === 100) {
+          task.status = 'Completed';
+          piece.status = 'Completed';
+        } else if (newProgress > 0) {
+          task.status = 'In Progress';
+          piece.status = 'In Progress';
+        }
+      }
+      
+      // Re-filter tasks to update the UI
+      if (this.selectedResourceId) {
+        this.updateTasksByResource(this.selectedResourceId);
+      }
+    }
   }
 }

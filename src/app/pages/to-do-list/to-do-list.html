@@ -40,6 +40,7 @@
             [taskDueDate]="toDoTask.dueDate"
             [taskEstimatedTime]="toDoTask.estimatedTime"
             [taskCommentsNumber]="toDoTask.commentIds.length"
+            (cardClick)="openTaskDialog(toDoTask)"
           >
           </app-task-card>
         </div>
@@ -55,6 +56,7 @@
             [taskDueDate]="inProgressTask.dueDate"
             [taskEstimatedTime]="inProgressTask.estimatedTime"
             [taskCommentsNumber]="inProgressTask.commentIds.length"
+            (cardClick)="openTaskDialog(inProgressTask)"
           >
           </app-task-card>
         </div>
@@ -70,6 +72,7 @@
             [taskDueDate]="onHoldTask.dueDate"
             [taskEstimatedTime]="onHoldTask.estimatedTime"
             [taskCommentsNumber]="onHoldTask.commentIds.length"
+            (cardClick)="openTaskDialog(onHoldTask)"
           >
           </app-task-card>
         </div>
@@ -85,10 +88,25 @@
             [taskDueDate]="completedTask.dueDate"
             [taskEstimatedTime]="completedTask.estimatedTime"
             [taskCommentsNumber]="completedTask.commentIds.length"
+            (cardClick)="openTaskDialog(completedTask)"
           >
           </app-task-card>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Task Detail Dialog -->
+  <app-task-detail-dialog
+    *ngIf="selectedTask && isDialogVisible"
+    [task]="selectedTask"
+    [comments]="selectedTaskComments"
+    [resources]="resources"
+    [pieces]="pieces"
+    [isVisible]="isDialogVisible"
+    [currentResourceId]="selectedResourceId || 'r1'"
+    (closeDialog)="closeTaskDialog()"
+    (addComment)="addComment($event)"
+    (updateQuantity)="updateTaskQuantity($event)"
+  ></app-task-detail-dialog>
 </div>

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {DatePipe} from '@angular/common';
 
 @Component({
@@ -15,4 +15,9 @@ export class TaskCard {
   @Input() taskDueDate!: Date ;
   @Input() taskEstimatedTime!:number;
   @Input() taskCommentsNumber!:number;
+  @Output() cardClick = new EventEmitter<void>();
+
+  onCardClick() {
+    this.cardClick.emit();
+  }
 }
