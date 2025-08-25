@@ -2,20 +2,12 @@
   <div class="projects-bar">
     <div class="bar-header">
       <h1>Projects </h1>
-      <div class="projects-number">5</div>
+      <div class="projects-number">{{projects.length}}</div>
     </div>
     <div class="projects-container">
-      <div class="project">
-        <img src="https://picsum.photos/200/120?random=5">
-        <span>Project Kappa</span>
-      </div>
-      <div class="project">
-        <img src="https://picsum.photos/200/120?random=5">
-        <span>Project Kappa</span>
-      </div>
-      <div class="project">
-        <img src="https://picsum.photos/200/120?random=5">
-        <span>Project Kappa</span>
+      <div class="project" *ngFor="let project of projects">
+        <img src="{{project.designPicture}}">
+        <span>{{project.name}}</span>
       </div>
     </div>
   </div>
@@ -26,7 +18,9 @@
         <ng-select
           [items]="resources"
           bindLabel="name"
-          bindValue="id">
+          bindValue="id"
+          [(ngModel)]="selectedResourceId"
+          (ngModelChange)="updateTasksByResource($event)">
         </ng-select>
       </div>
       <div class="add-task-btn">
@@ -37,34 +31,62 @@
     <div class="content">
       <div class="tasks-container">
         <div class="tasks-header">
-          <app-status-header header="To Do" number="2"></app-status-header>
+          <app-status-header header="To Do" number="{{toDoTasks.length}}"></app-status-header>
         </div>
-        <div class="tasks-cards">
-          <app-task-card></app-task-card>
-        </div>
-      </div>
-      <div class="tasks-container">
-        <div class="tasks-header">
-          <app-status-header header="In Progress" number="1"></app-status-header>
-        </div>
-        <div class="tasks-cards">
-          <app-task-card></app-task-card>
-        </div>
-      </div>
-      <div class="tasks-container">
-        <div class="tasks-header">
-          <app-status-header header="On Hold" number="1"></app-status-header>
-        </div>
-        <div class="tasks-cards">
-          <app-task-card></app-task-card>
+        <div class="tasks-cards" *ngFor="let toDoTask of toDoTasks">
+          <app-task-card
+            [taskName]="toDoTask.name"
+            [taskDescription]="toDoTask.description"
+            [taskDueDate]="toDoTask.dueDate"
+            [taskEstimatedTime]="toDoTask.estimatedTime"
+            [taskCommentsNumber]="toDoTask.commentIds.length"
+          >
+          </app-task-card>
         </div>
       </div>
       <div class="tasks-container">
         <div class="tasks-header">
-          <app-status-header header="Complete" number="5"></app-status-header>
+          <app-status-header header="In Progress" number="{{inProgressTasks.length}}"></app-status-header>
         </div>
-        <div class="tasks-cards">
-          <app-task-card></app-task-card>
+        <div class="tasks-cards" *ngFor="let inProgressTask  of inProgressTasks">
+          <app-task-card
+            [taskName]="inProgressTask.name"
+            [taskDescription]="inProgressTask.description"
+            [taskDueDate]="inProgressTask.dueDate"
+            [taskEstimatedTime]="inProgressTask.estimatedTime"
+            [taskCommentsNumber]="inProgressTask.commentIds.length"
+          >
+          </app-task-card>
+        </div>
+      </div>
+      <div class="tasks-container">
+        <div class="tasks-header">
+          <app-status-header header="On Hold" number="{{onHoldTasks.length}}"></app-status-header>
+        </div>
+        <div class="tasks-cards" *ngFor="let onHoldTask of onHoldTasks">
+          <app-task-card
+            [taskName]="onHoldTask.name"
+            [taskDescription]="onHoldTask.description"
+            [taskDueDate]="onHoldTask.dueDate"
+            [taskEstimatedTime]="onHoldTask.estimatedTime"
+            [taskCommentsNumber]="onHoldTask.commentIds.length"
+          >
+          </app-task-card>
+        </div>
+      </div>
+      <div class="tasks-container">
+        <div class="tasks-header">
+          <app-status-header header="Completed" number="{{completedTasks.length}}"></app-status-header>
+        </div>
+        <div class="tasks-cards" *ngFor="let completedTask of completedTasks">
+          <app-task-card
+            [taskName]="completedTask.name"
+            [taskDescription]="completedTask.description"
+            [taskDueDate]="completedTask.dueDate"
+            [taskEstimatedTime]="completedTask.estimatedTime"
+            [taskCommentsNumber]="completedTask.commentIds.length"
+          >
+          </app-task-card>
         </div>
       </div>
     </div>

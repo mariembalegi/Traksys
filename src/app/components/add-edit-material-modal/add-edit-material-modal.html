@@ -1,0 +1,59 @@
+<div class="add-edit-material-modal">
+  <div class="header">
+    <h1>material registration</h1>
+    <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
+  </div>
+
+  <form>
+    <div class="material-type-input">
+      <label class="material-input">Material: <input type="text"/></label>
+      <label class="type-input">Type: <input type="text"/></label>
+    </div>
+    <div class="quantity-input"><label>Quantity: <input type="number"/></label></div>
+    <div class="shape">
+      <p>Shape</p>
+      <div class="shape-input">
+        <label class="shape-type" for="cylindrical-shape"><input type="radio" id="cylindrical-shape" name="shape" (click)="shape = 'cylindrical bar'" />Cylindrical Bar</label>
+        <label class="shepe-type" for="plate-shape"><input type="radio" id="plate-shape" name="shape" (click)="shape = 'plate'"/>Plate</label>
+      </div>
+
+    </div>
+   <div class="diameter-length-input" *ngIf="shape === 'cylindrical bar'" >
+     <div class="diameter-input"><label for="diameter-input">Diameter: <input id="diameter-input" type="number"/></label></div>
+     <div class="length-input"><label for="length-input">Length: <input id="length-input" type="number"/></label></div>
+     <div class="unit-input">
+       <label class="unit" for="unit">Unit:
+         <ng-select
+           [items]="units"
+           bindLabel="name"
+           bindValue="id"
+         >
+         </ng-select>
+       </label>
+     </div>
+   </div>
+    <div class="x-y-thickness-input" *ngIf="shape === 'plate'">
+      <div class="x-input"><label for="x-input">X: <input id="x-input" type="number"/></label></div>
+      <div class="y-input"><label for="y-input">Y: <input id="y-input" type="number"/></label></div>
+      <div class="thickness-input"><label for="thickness-input">Thickness: <input id="thickness-input" type="number"/></label></div>
+      <div class="unit-input">
+        <label class="unit" for="unit">Unit:
+          <ng-select
+            [items]="units"
+            bindLabel="name"
+            bindValue="id"
+          >
+          </ng-select>
+        </label>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+        Cancel
+      </button>
+      <button class="btn btn-primary" type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

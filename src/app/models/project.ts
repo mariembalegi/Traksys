@@ -1,10 +1,14 @@
 export interface Project {
-  id: number;
+  id: string;
   name: string;
+
+  description: string;
   designPicture: string;
   designFile: string;
-  description: string;
-  customerId: string;
+
+  customerId: string;      // FK → Customer
+  pieceIds: string[];      // FKs → Pieces
+
   progress: number;
   opened: Date;
   delivery: Date;

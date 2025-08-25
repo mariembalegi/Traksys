@@ -3,17 +3,19 @@ type Unit = "mm" | "m";
 
 export interface Material {
   id: string;
-  material: string;     // e.g., Aluminium, Steel
-  type: string;         // e.g., C55, 6061, Inox 304
-  quantity: number;     // stock quantity
-  shape: Shape;         // "Cylindrical Bar" or "Plate"
-  last_updated: Date;   // Date object
-  unit: Unit;           // unit of dimensions (mm or m)
+  material: string;        // e.g., Aluminium, Steel
+  type: string;            // e.g., C55, 6061, Inox 304
+  quantity: number;        // stock quantity
+  shape: Shape;            // "Cylindrical Bar" or "Plate"
+  unit: Unit;              // mm, m, kg etc.
+  last_updated: Date;
 
   // Dimensions
-  diameter?: number;    // only for Cylindrical Bar
-  length?: number;      // only for Cylindrical Bar
-  x?: number;           // only for Plate
-  y?: number;           // only for Plate
-  thickness?: number;   // only for Plate
+  diameter?: number;       // for Cylindrical Bar
+  length?: number;         // for Cylindrical Bar
+  x?: number;              // for Plate
+  y?: number;              // for Plate
+  thickness?: number;      // for Plate
+
+  pieceIds: string[];      // FKs → Pieces
 }

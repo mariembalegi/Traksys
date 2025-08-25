@@ -1,18 +1,18 @@
-import {Resource} from './resource';
-
 export interface Task {
-  id: number;                                 // Unique task identifier
-  name: string;                               // Task name
-  description: string;                        // Short explanation
+  id: string;
+  name: string;
+  description: string;
 
-  estimatedTime: number;                       // Estimated time (hours)
-  spentTime: number;                          // Actual time spent (hours)
-  quantity: number;                           // Number of pieces processed in this task
+  estimatedTime: number;   // in hours
+  spentTime: number;
+  quantity: number;
 
-  progress: number;                           // Progress percentage (0-100)
-  status: 'To Do' | 'In Progress' | 'Completed' | 'Blocked'; // Current status
+  progress: number;
+  status: 'To Do' | 'In Progress' | 'Completed' | 'On Hold';
 
-  resources: string[];
+  resourceIds: string[];   // N..N → Resources
+  commentIds: string[];    // 1..N → Comments
+
   dueDate: Date;
   actualFinishDate?: Date;
 

@@ -8,6 +8,7 @@ import {Paginator} from '../../components/paginator/paginator';
 import {Dialog} from '@angular/cdk/dialog';
 import {AddEditProjectModal} from '../../components/add-edit-project-modal/add-edit-project-modal';
 import {RouterLink} from '@angular/router';
+import {Material} from '../../models/material';
 
 
 @Component({
@@ -26,6 +27,7 @@ import {RouterLink} from '@angular/router';
 export class ProjectsList {
   private dialog=inject(Dialog);
   projects: Project[] = [];
+  materials: Material[] = [];
   filteredProjects: Project[] = [];
   customers: Customer[] = [];
   filterStatus: 'all' | 'open' | 'closed' = 'all';
@@ -45,152 +47,68 @@ export class ProjectsList {
   loadOnData() {
 
     this.customers = [
-      { _id: "C01", name: "Natilait" },
-      { _id: "C02", name: "Sagemcom" },
-      { _id: "C03", name: "Orange" },
-      { _id: "C04", name: "Total" }
+      { id: "c1", name: "ACME Industries", projectIds: ["p1"] },
+      { id: "c2", name: "TechnoFab", projectIds: ["p2"] }
     ];
 
     this.projects = [
       {
-        id: 1,
-        name: "Project Alpha",
+        id: "p1",
+        name: "CNC Machine Housing",
+        description: "Project for producing CNC machine housing parts.",
         designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Small desktop CNC prototype",
-        customerId: "C01",
-        progress: 50,
-        opened: new Date("2025-08-01"),
-        delivery: new Date("2025-08-20"),
-        invoiceAmount: 1500,
-        currency: "USD",
-        isOpen: true
-      },
-      {
-        id: 2,
-        name: "Project Beta",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Decorative CNC engraving pattern",
-        customerId: "C02",
-        progress: 80,
-        opened: new Date("2025-07-15"),
-        delivery: new Date("2025-08-30"),
-        invoiceAmount: 2500,
-        currency: "EUR",
-        isOpen: false
-      },
-      {
-        id: 3,
-        name: "Project Gamma",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Architectural CNC modeling",
-        customerId: "C03",
-        progress: 30,
-        opened: new Date("2025-06-10"),
-        delivery: new Date("2025-09-01"),
-        invoiceAmount: 1800,
-        currency: "USD",
-        isOpen: true
-      },
-      {
-        id: 4,
-        name: "Project Delta",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Cabinet CNC design layout",
-        customerId: "C01",
-        progress: 100,
-        opened: new Date("2025-05-05"),
-        delivery: new Date("2025-07-20"),
-        invoiceAmount: 3200,
-        currency: "EUR",
-        isOpen: false
-      },
-      {
-        id: 5,
-        name: "Project Epsilon",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Random placeholder design",
-        customerId: "C04",
-        progress: 60,
-        opened: new Date("2025-07-01"),
-        delivery: new Date("2025-08-25"),
-        invoiceAmount: 2100,
-        currency: "USD",
-        isOpen: true
-      },
-      {
-        id: 6,
-        name: "Project Zeta",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "CNC metal cutting prototype",
-        customerId: "C02",
-        progress: 40,
-        opened: new Date("2025-08-05"),
-        delivery: new Date("2025-09-15"),
-        invoiceAmount: 2700,
-        currency: "USD",
-        isOpen: true
-      },
-      {
-        id: 7,
-        name: "Project Eta",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "CNC woodworking furniture design",
-        customerId: "C03",
-        progress: 75,
-        opened: new Date("2025-06-25"),
-        delivery: new Date("2025-08-28"),
-        invoiceAmount: 3500,
-        currency: "EUR",
-        isOpen: false
-      },
-      {
-        id: 8,
-        name: "Project Theta",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Precision CNC spare parts",
-        customerId: "C01",
-        progress: 20,
-        opened: new Date("2025-07-10"),
-        delivery: new Date("2025-09-05"),
-        invoiceAmount: 1200,
-        currency: "USD",
-        isOpen: true
-      },
-      {
-        id: 9,
-        name: "Project Iota",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Custom CNC signage project",
-        customerId: "C04",
-        progress: 90,
-        opened: new Date("2025-05-22"),
-        delivery: new Date("2025-08-18"),
-        invoiceAmount: 2800,
-        currency: "EUR",
-        isOpen: false
-      },
-      {
-        id: 10,
-        name: "Project Kappa",
-        designPicture: "https://picsum.photos/200/120?random=5",
-        designFile: "",
-        description: "Industrial CNC automation module",
-        customerId: "C02",
+        designFile: "/designs/cnc_project.dxf",
+        customerId: "c1",
+        pieceIds: ["pc1", "pc2"],
         progress: 65,
-        opened: new Date("2025-06-30"),
-        delivery: new Date("2025-09-10"),
-        invoiceAmount: 4000,
-        currency: "USD",
+        opened: new Date("2025-08-01"),
+        delivery: new Date("2025-09-15"),
+        invoiceAmount: 15000,
+        currency: "EUR",
         isOpen: true
+      },
+      {
+        id: "p2",
+        name: "Robotic Arm",
+        description: "Fabrication of components for robotic arm prototype.",
+        designPicture: "https://picsum.photos/200/120?random=5",
+        designFile: "/designs/robotic_arm.dxf",
+        customerId: "c2",
+        pieceIds: ["pc3"],
+        progress: 20,
+        opened: new Date("2025-08-10"),
+        delivery: new Date("2025-10-01"),
+        invoiceAmount: 8000,
+        currency: "EUR",
+        isOpen: true
+      }
+    ];
+
+    this.materials = [
+      {
+        id: "m1",
+        material: "Aluminium",
+        type: "6061",
+        quantity: 120,
+        shape: "Cylindrical Bar",
+        unit: "mm",
+        last_updated: new Date("2025-08-20"),
+        diameter: 50,
+        length: 2000,
+        pieceIds: ["pc1"]
+      },
+      {
+        id: "m2",
+        material: "Steel",
+        type: "C55",
+        quantity: 80,
+        shape: "Plate",
+        unit: "mm",
+        last_updated: new Date("2025-08-18"),
+        x: 1000,
+        y: 500,
+        thickness: 20,
+        pieceIds: ["pc2", "pc3"]
       }
     ];
 
@@ -250,7 +168,7 @@ export class ProjectsList {
   }
 
   getCustomerName(customerId: string): string {
-    const customer = this.customers.find(c => c._id === customerId);
+    const customer = this.customers.find(c => c.id === customerId);
     return customer ? customer.name : customerId;
   }
 }

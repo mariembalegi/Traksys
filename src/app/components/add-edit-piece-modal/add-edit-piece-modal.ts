@@ -14,62 +14,29 @@ import {Material} from '../../models/material';
 export class AddEditPieceModal {
   materials: Material[] = [
     {
-      id: "1",
-      material: "Aluminium",
-      type: "C55",
-      quantity: 20,
-      shape: "Cylindrical Bar",
-      diameter: 50,        // mm
-      length: 2000,        // mm
-      unit: "mm",
-      last_updated: new Date("2025-08-20")
-    },
-    {
-      id: "2",
-      material: "Steel",
-      type: "S235",
-      quantity: 10,
-      shape: "Plate",
-      x: 1000,             // mm
-      y: 500,              // mm
-      thickness: 10,       // mm
-      unit: "mm",
-      last_updated: new Date("2025-08-18")
-    },
-    {
-      id: "3",
+      id: "m1",
       material: "Aluminium",
       type: "6061",
-      quantity: 5,
-      shape: "Plate",
-      x: 0.5,              // m
-      y: 0.5,              // m
-      thickness: 0.01,     // m
-      unit: "m",
-      last_updated: new Date("2025-08-15")
-    },
-    {
-      id: "4",
-      material: "Steel",
-      type: "Inox 304",
-      quantity: 8,
+      quantity: 120,
       shape: "Cylindrical Bar",
-      diameter: 100,       // mm
-      length: 1500,        // mm
       unit: "mm",
-      last_updated: new Date("2025-08-10")
+      last_updated: new Date("2025-08-20"),
+      diameter: 50,
+      length: 2000,
+      pieceIds: ["pc1"]
     },
     {
-      id: "5",
-      material: "Copper",
-      type: "C110",
-      quantity: 12,
+      id: "m2",
+      material: "Steel",
+      type: "C55",
+      quantity: 80,
       shape: "Plate",
-      x: 300,              // mm
-      y: 300,              // mm
-      thickness: 5,        // mm
       unit: "mm",
-      last_updated: new Date("2025-08-05")
+      last_updated: new Date("2025-08-18"),
+      x: 1000,
+      y: 500,
+      thickness: 20,
+      pieceIds: ["pc2", "pc3"]
     }
   ];
 

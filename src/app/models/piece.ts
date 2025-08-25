@@ -1,16 +1,19 @@
 export interface Piece {
-  reference: string;                // Unique piece identifier
-  name: string;              // Name of the piece
-  description: string;       // Short explanation
+  id: string;
+  reference: string;       // Unique identifier
+  name: string;
+  description: string;
 
-  designFile: string;        // CAD/Blueprint file path
-  designPicture: string;     // Image/preview of the design
+  designFile: string;
+  designPicture: string;
 
-  material: string;          // Material used
-  materialQuantity: number;  // How much material needed
-  materialUnit: string;      // Unit of the material (kg, m, etc.)
+  materialId: string;      // FK → Material
+  materialQuantity: number;
+  materialUnit: string;
 
-  quantity: number;          // Number of pieces to produce
-  progress: number;          // Progress in percentage (0-100)
-  status: 'To Do' | 'In Progress' | 'Completed' | 'Blocked'; // Current status
+  quantity: number;
+  progress: number;
+  status: 'To Do' | 'In Progress' | 'Completed' | 'Blocked';
+
+  taskIds: string[];       // FKs → Tasks
 }

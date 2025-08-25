@@ -14,11 +14,9 @@ import {Resource} from '../../models/resource';
 export class AddEditTaskModal {
   private dialogRef=inject(DialogRef,{optional:true});
   resources: Resource[] = [
-    { id: 'res-1', name: 'John Doe', type: 'Person' },
-    { id: 'res-2', name: 'Alice Smith', type: 'Person' },
-    { id: 'res-3', name: 'Lathe Machine', type: 'Machine' },
-    { id: 'res-4', name: 'CNC Cutter', type: 'Machine' },
-    { id: 'res-5', name: 'Welding Robot', type: 'Machine' }
+    { id: "r1", name: "CNC Operator", type: "Person", taskIds: ["t1", "t4"] },
+    { id: "r2", name: "Lathe Machine", type: "Machine", taskIds: ["t1"] },
+    { id: "r3", name: "Welder", type: "Person", taskIds: ["t3"] }
   ];
   protected closeModal(){
     this.dialogRef?.close();

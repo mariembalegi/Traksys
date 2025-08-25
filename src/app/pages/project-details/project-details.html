@@ -62,7 +62,7 @@
             <div class="progress-bar" [style.width.%]="piece.progress"> <span class="progress-text">{{ piece.progress }}%</span></div>
           </div></td>
           <td>{{ piece.description }}</td>
-          <td>{{ piece.material }}</td>
+          <td>{{ getMaterial(piece.materialId)?.id }}</td>
           <td>{{ piece.materialQuantity }} {{ piece.materialUnit }}</td>
           <td>{{ piece.quantity }}</td>
           <td class="actions">
@@ -116,7 +116,7 @@
                   <td>{{ task.estimatedTime }}</td>
                   <td>{{ task.spentTime }}</td>
                   <td>
-                        <span *ngFor="let resId of task.resources; let last = last">
+                        <span *ngFor="let resId of task.resourceIds; let last = last">
                           {{ getResourceName(resId) }}<span *ngIf="!last">, </span>
                         </span>
                   </td>

@@ -20,10 +20,8 @@ export class AddEditProjectModal {
   private dialog=inject(Dialog);
 
   customers: Customer[] = [
-    { _id: "C01", name: "Natilait" },
-    { _id: "C02", name: "Sagemcom" },
-    { _id: "C03", name: "Orange" },
-    { _id: "C04", name: "Total" }
+    { id: "c1", name: "ACME Industries", projectIds: ["p1"] },
+    { id: "c2", name: "TechnoFab", projectIds: ["p2"] }
   ];
 
   currencies = [

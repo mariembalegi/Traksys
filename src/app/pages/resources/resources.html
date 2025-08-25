@@ -1,1 +1,56 @@
-<p>resources works!</p>
+<div class="resources-page">
+  <div class="header">
+    <div class="row">
+      <i class="fa-solid fa-chart-column blue" style="color: #0749bb;"></i>
+      <p class="title">Total Resources</p>
+      <p class="number">10</p>
+    </div>
+    <div class="row">
+      <i class="fa-solid fa-gear purple" style="color: #a700bd;"></i>
+      <p class="title">Machines</p>
+      <p class="number machines">10</p>
+    </div>
+    <div class="row">
+      <i class="fa-solid fa-user blue" style="color: #0749bb;"></i>
+      <p class="title">Operators</p>
+      <p class="number operators">10</p>
+    </div>
+  </div>
+  <div class="header">
+    <div class="row">
+      <i class="fa-solid fa-play green" style="color: #05ad6d;"></i>
+      <p class="title">Active</p>
+      <p class="number active">10</p>
+    </div>
+    <div class="row">
+      <i class="fa-solid fa-pause yellow" style="color: #d1a60a;"></i>
+      <p class="title">Idle</p>
+      <p class="number idle">10</p>
+    </div>
+    <div class="row">
+      <i class="fa-solid fa-triangle-exclamation red" style="color: #FF4136;"></i>
+      <p class="title">Maintenance</p>
+      <p class="number maintenance">10</p>
+    </div>
+  </div>
+  <div class="activity-status">
+    <p>Activity Status</p>
+    <div class="status-container">
+      <div class="status">All Resources</div>
+      <div class="status">Active</div>
+      <div class="status">Idle/Available</div>
+      <div class="status">Machines Only</div>
+      <div class="status">Operators Only</div>
+      <div class="status">Maintenance</div>
+    </div>
+  </div>
+  <div class="content">
+    <h1>Resources<span>(7)</span></h1>
+    <div class="divider"></div>
+    <div class="maintenance-list">
+      <div class="element"><app-maintenance-resource-card></app-maintenance-resource-card></div>
+      <div class="element"><app-active-resource-card></app-active-resource-card></div>
+      <div class="element"><app-available-resource-card></app-available-resource-card></div>
+    </div>
+  </div>
+</div>

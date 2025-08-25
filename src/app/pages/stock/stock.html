@@ -1,7 +1,14 @@
 <div class="stock">
-  <div class="search-filter">
-
+  <div class="header">
+    <div class="search-input">
+      <input placeholder="Search a Project" type="text" [(ngModel)]="searchText" (ngModelChange)="applyFilters()"/>
+      <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #777777;"></i>
+    </div>
+    <div class="add-material-btn">
+      <button (click)="addEditModal()">Add Material <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+    </div>
   </div>
+
 
   <div class="stock-table">
     <table>
@@ -11,11 +18,46 @@
         <th>Material</th>
         <th>Type</th>
         <th>Quantity</th>
+        <td>Shape</td>
+        <td>Diameter</td>
+        <td>length</td>
+        <td>x</td>
+        <td>y</td>
+        <td>thickness</td>
         <th>Last Updated</th>
         <th>Actions</th>
       </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+      <tr *ngFor="let material of pagedMaterials ; let i = index">
+        <td>{{material.id}}</td>
+        <td>{{material.material}}</td>
+        <td>{{material.type}}</td>
+        <td>{{material.quantity}}</td>
+        <td>{{material.shape}}</td>
+        <td>{{material.diameter}}</td>
+        <td>{{material.length}}</td>
+        <td>{{material.x}}</td>
+        <td>{{material.y}}</td>
+        <td>{{material.thickness}}</td>
+        <td>{{material.last_updated  | date:'dd/MM/yyyy'}}</td>
+        <td class="actions">
+          <button class="btn-icon" >
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn-icon btn-delete" (click)="deleteMaterial(i)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
     </table>
+  </div>
+  <div class="paginator-controls">
+    <app-paginator
+      [items]="filteredMaterials"
+      [itemsPerPage]="itemsPerPage"
+      (pageChange)="onPageChange($event)">
+    </app-paginator>
   </div>
 </div>
