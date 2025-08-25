@@ -85,5 +85,22 @@
       <p>System Alerts</p>
       <i class="fa-solid fa-circle-exclamation" style="color: #cccccc;"></i>
     </div>
+    <div class="alerts-container">
+      @for (alert of systemAlerts; track alert.id) {
+        <div class="alert-item" [class]="'severity-' + alert.severity">
+          <div class="alert-icon">
+            <i class="fa-solid" [class]="getAlertIcon(alert.type)" [style.color]="getAlertColor(alert.severity)"></i>
+          </div>
+          <div class="alert-content">
+            <div class="alert-title">{{ alert.title }}</div>
+            <div class="alert-message">{{ alert.message }}</div>
+            <div class="alert-timestamp">{{ getTimeAgo(alert.timestamp) }}</div>
+          </div>
+          <div class="alert-badge" [style.background-color]="getAlertColor(alert.severity)">
+            {{ alert.severity.toUpperCase() }}
+          </div>
+        </div>
+      }
+    </div>
   </div>
 </div>

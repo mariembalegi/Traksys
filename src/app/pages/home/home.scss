@@ -91,6 +91,127 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+      font-weight: bold;
+      font-family: "Darker Grotesque",serif;
+      margin-bottom: 15px;
+      
+      p {
+        margin: 0;
+      }
+    }
+
+    .alerts-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+
+      .alert-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        &.severity-high {
+          border-left-color: #dc3545;
+          background-color: #fff5f5;
+        }
+
+        &.severity-medium {
+          border-left-color: #fd7e14;
+          background-color: #fff8f0;
+        }
+
+        &.severity-low {
+          border-left-color: #28a745;
+          background-color: #f0fff4;
+        }
+
+        .alert-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background-color: #ffffff;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          flex-shrink: 0;
+
+          i {
+            font-size: 14px;
+          }
+        }
+
+        .alert-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .alert-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #2c3e50;
+            font-family: "Darker Grotesque", serif;
+          }
+
+          .alert-message {
+            font-size: 13px;
+            color: #5a6c7d;
+            line-height: 1.4;
+            font-family: "Darker Grotesque", serif;
+          }
+
+          .alert-timestamp {
+            font-size: 11px;
+            color: #95a5a6;
+            font-weight: 300;
+            font-family: "Darker Grotesque", serif;
+          }
+        }
+
+        .alert-badge {
+          padding: 4px 8px;
+          border-radius: 12px;
+          font-size: 10px;
+          font-weight: 600;
+          color: white;
+          text-align: center;
+          min-width: 50px;
+          height: fit-content;
+          font-family: "Darker Grotesque", serif;
+        }
+      }
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+      }
     }
   }
 }
