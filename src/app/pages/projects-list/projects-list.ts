@@ -33,6 +33,7 @@ export class ProjectsList {
   filterStatus: 'all' | 'open' | 'closed' = 'all';
   searchText: string = '';
   selectedCustomer: string | null = null;
+  isFilterDropdownOpen = false;
 
   pagedProjects: Project[] = [];
   itemsPerPage = 8;
@@ -345,10 +346,22 @@ export class ProjectsList {
   }
 
   toggleFilterStatus() {
-    this.filterStatus = this.filterStatus === 'all' ? 'open'
-      : this.filterStatus === 'open' ? 'closed'
-        : 'all';
+    this.isFilterDropdownOpen = !this.isFilterDropdownOpen;
+  }
+
+  setFilterStatus(status: 'all' | 'open' | 'closed') {
+    this.filterStatus = status;
+    this.isFilterDropdownOpen = false;
     this.applyFilters();
+  }
+
+  getFilterStatusLabel(): string {
+    switch (this.filterStatus) {
+      case 'all': return 'All';
+      case 'open': return 'Open';
+      case 'closed': return 'Closed';
+      default: return 'All';
+    }
   }
 
   deleteProject(index: number) {

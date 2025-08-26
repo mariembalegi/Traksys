@@ -25,10 +25,28 @@
       </div>
     </div>
     <div class="action-button">
-      <button (click)="toggleFilterStatus()"
-              class="btn-filter">
-        <i class="fas fa-filter"></i>
-      </button>
+      <div class="filter-dropdown">
+        <button (click)="toggleFilterStatus()" class="btn-filter">
+          <i class="fas fa-filter"></i>
+        </button>
+        <div class="dropdown-menu" [class.show]="isFilterDropdownOpen">
+          <div class="dropdown-item" 
+               [class.active]="filterStatus === 'all'"
+               (click)="setFilterStatus('all')">
+            All
+          </div>
+          <div class="dropdown-item" 
+               [class.active]="filterStatus === 'open'"
+               (click)="setFilterStatus('open')">
+            Open
+          </div>
+          <div class="dropdown-item" 
+               [class.active]="filterStatus === 'closed'"
+               (click)="setFilterStatus('closed')">
+            Closed
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="projects-table">
