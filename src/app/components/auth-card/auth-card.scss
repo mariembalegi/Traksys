@@ -28,29 +28,18 @@
 .logo-icon {
   width: 32px;
   height: 32px;
-  background: #2E3A87;
-  border-radius: 50%;
-  position: relative;
+  object-fit: contain;
 }
 
 .logo-icon::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
-  background: #FF4136;
-  border-radius: 2px;
-  border-top-right-radius: 50%;
+  display: none;
 }
 
 .logo-text {
   font-family: 'Darker Grotesque', serif;
   font-weight: 700;
   font-size: 24px;
-  color: #2E3A87;
+
 }
 
 .logo-dot {
