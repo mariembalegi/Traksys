@@ -1,31 +1,37 @@
 <div class="container">
-  <app-header></app-header>
+  <!-- Header with logo -->
+  <div class="header">
+    <div class="logo-container">
+      <div class="logo-icon"></div>
+      <span class="logo-text">Traksys<span class="logo-dot">.</span></span>
+    </div>
+  </div>
+  
   <div class="login-box">
     <h1 class="login-title">Log In</h1>
     <p class="login-subtitle">Enter your email and password to login our dashboard.</p>
-    <!-- Warning email or password incorrect -->
-    <div class="warning">
-      <p>Incorrect email or password.</p>
-      <img alt="cancel-cross-icon" src="cancel-cross-icon.png" class="cancel-cross-icon">
-    </div>
+    
     <!-- Email Input -->
-    <div class="email-input-group">
-      <label for="email" class="email-label">Email</label>
-      <div class="email-input-wrapper">
-        <img alt="email-icon" src="email-icon.png" class="email-icon">
-        <input type="email" id="email" class="email-input-field" placeholder="Jane.Doe@company.com" required/>
+    <div class="input-group">
+      <label for="email" class="input-label">Email</label>
+      <div class="input-wrapper">
+        <div class="input-icon email-icon"></div>
+        <input type="email" id="email" class="input-field" placeholder="Jane.Doe@company.com" required/>
       </div>
     </div>
+    
     <!-- Password Input -->
-    <div class="password-input-group">
-      <label for="password" class="password-label">Password</label>
-      <div class="password-input-wrapper">
-        <img alt="password-icon" src="eye-close.png" class="password-icon">
-        <input type="password" id="password" class="password-input-field" placeholder="********" required/>
+    <div class="input-group">
+      <label for="password" class="input-label">Password</label>
+      <div class="input-wrapper">
+        <div class="input-icon password-icon"></div>
+        <input type="password" id="password" class="input-field" placeholder="Enter your Password" required/>
       </div>
     </div>
+    
     <!-- Sign In Button -->
     <button class="login-button">Sign In</button>
+    
     <!-- Forgot Password Link -->
     <a href="#" class="forgot-password-link">Forgot Password?</a>
   </div>

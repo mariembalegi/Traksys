@@ -1,22 +1,36 @@
-.auth-container{
-  height:100%;
-  width:100%;
-  display:flex;
+.auth-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
-.auth-sidebar{
+
+.auth-sidebar {
   background: #FF4136;
-  height: 100%;
-  width:30%;
-  display:flex;
+  height: 100vh;
+  width: 30%;
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
 }
-.auth-sidebar p{
+
+.auth-sidebar p {
   font-family: 'Darker Grotesque', serif;
   font-weight: 900;
-  font-size: 52.5px;
-  line-height: 71px;
+  font-size: 52px;
+  line-height: 1.2;
   color: #FFFFFF;
+  text-align: left;
+  margin: 0;
+}
 
-
+app-auth-card {
+  flex: 1;
+  display: flex;
+  height: 100vh;
 }
