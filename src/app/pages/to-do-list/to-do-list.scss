@@ -186,9 +186,13 @@
         }
 
         .tasks-cards {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 15px;
           flex: 1;
           overflow-y: auto;
           padding-right: 5px;
+          align-content: start;
 
           &::-webkit-scrollbar {
             width: 6px;
