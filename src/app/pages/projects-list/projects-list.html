@@ -64,7 +64,7 @@
           <button class="btn-icon" >
             <i class="fas fa-edit"></i>
           </button>
-          <button class="btn-icon btn-delete" (click)="deleteProject(i)">
+          <button class="btn-icon btn-delete" (click)="deleteProject(i); $event.stopPropagation()">
             <i class="fas fa-trash"></i>
           </button>
         </td>
