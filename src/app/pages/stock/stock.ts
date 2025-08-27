@@ -102,7 +102,7 @@ export class Stock {
         type: "ABS",
         quantity: 200,
         shape: "Plate",
-        unit: "m",
+        unit: "mm",
         last_updated: new Date("2025-08-01"),
         x: 200,
         y: 100,
@@ -152,7 +152,7 @@ export class Stock {
         type: "Mg",
         quantity: 5,
         shape: "Plate",
-        unit: "m",
+        unit: "mm",
         last_updated: new Date("2025-07-15"),
         x: 100,
         y: 50,
@@ -168,7 +168,7 @@ export class Stock {
         type: i % 2 === 0 ? "TypeA" : "TypeB",
         quantity: 10 * i,
         shape: i % 2 === 0 ? "Plate" : "Cylindrical Bar",
-        unit: i % 3 === 0 ? "m" : "mm",
+        unit: "mm",
         last_updated: new Date(2025, 7, 1 + i),
         diameter: i % 2 === 0 ? undefined : 10 + i,
         length: i % 2 === 0 ? undefined : 1000 + i * 10,
@@ -178,6 +178,8 @@ export class Stock {
         pieceIds: [`pc${i}`]
       });
     }
+    // Update any hardcoded materials with unit 'm' to 'mm'
+    this.materials = this.materials.map(mat => ({ ...mat, unit: 'mm' }));
     this.applyFilters();
   }
   onPageChange(currentPageItems: Material[]) {

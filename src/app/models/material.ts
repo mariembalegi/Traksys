@@ -1,5 +1,5 @@
 type Shape = "Cylindrical Bar" | "Plate";
-type Unit = "mm" | "m";
+type Unit = "mm";
 
 export interface Material {
   id: string;
