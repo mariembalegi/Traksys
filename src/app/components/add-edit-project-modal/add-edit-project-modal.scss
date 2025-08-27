@@ -12,28 +12,24 @@
   scrollbar-width: thin;
   scrollbar-color: #c0c0c0 transparent;
 
-  .scroll-container::-webkit-scrollbar {
-    width: 8px;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
 
-  .scroll-container::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 14px;
+  &::-webkit-scrollbar-track {
+    background: #f9fafb;
+    border-radius: 3px;
   }
 
-  .scroll-container::-webkit-scrollbar-thumb {
-    background-color: #c0c0c0;
-    border-radius: 14px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-  }
+  &::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+    transition: background 0.2s ease;
 
-  .scroll-container::-webkit-scrollbar-thumb:hover {
-    background-color: #a0a0a0;
-  }
-
-  .scroll-container::-webkit-scrollbar-corner {
-    background: transparent;
+    &:hover {
+      background: #9ca3af;
+    }
   }
 
   .header {
