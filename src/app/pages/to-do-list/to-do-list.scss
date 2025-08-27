@@ -136,33 +136,6 @@
           }
         }
       }
-
-      .add-task-btn {
-        button {
-          font-family: "Darker Grotesque", serif;
-          color: white;
-          font-weight: 600;
-          font-size: 16px;
-          background: #FF4136;
-          padding: 12px 20px;
-          border: none;
-          border-radius: 8px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
-          cursor: pointer;
-          transition: background-color 0.2s ease;
-
-          &:hover {
-            background: #e63946;
-          }
-
-          i {
-            font-weight: 600;
-          }
-        }
-      }
     }
 
     .content {
@@ -250,10 +223,6 @@
 
         .selector {
           justify-content: space-between;
-        }
-
-        .add-task-btn {
-          align-self: center;
         }
       }
 
