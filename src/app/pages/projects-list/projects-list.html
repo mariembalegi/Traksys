@@ -18,9 +18,11 @@
         <ng-select
           [items]="customers"
           bindLabel="name"
-          bindValue="_id"
-          placeholder="Owned By Anyone" [(ngModel)]="selectedCustomer"
-          (ngModelChange)="applyFilters()">
+          bindValue="id"
+          placeholder="Owned By Anyone" 
+          [(ngModel)]="selectedCustomer"
+          (ngModelChange)="applyFilters()"
+          [clearable]="true">
         </ng-select>
       </div>
     </div>

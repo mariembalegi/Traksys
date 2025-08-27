@@ -48,11 +48,11 @@ export class ProjectsList {
   loadOnData() {
 
     this.customers = [
-      { id: "c1", name: "ACME Industries", projectIds: ["p1", "p3", "p5", "p7"] },
-      { id: "c2", name: "TechnoFab", projectIds: ["p2", "p4", "p6"] },
-      { id: "c3", name: "MetalWorks Inc", projectIds: ["p8", "p9", "p10"] },
-      { id: "c4", name: "Precision Engineering", projectIds: ["p11", "p12"] },
-      { id: "c5", name: "Industrial Solutions", projectIds: ["p13", "p14", "p15"] }
+      { id: "c1", name: "ACME Industries", projectIds: ["p1", "p3", "p5", "p7", "p16", "p21", "p26", "p31", "p36", "p41", "p46", "p51"] },
+      { id: "c2", name: "TechnoFab", projectIds: ["p2", "p4", "p6", "p17", "p22", "p27", "p32", "p37", "p42", "p47", "p52"] },
+      { id: "c3", name: "MetalWorks Inc", projectIds: ["p8", "p9", "p10", "p18", "p23", "p28", "p33", "p38", "p43", "p48", "p53"] },
+      { id: "c4", name: "Precision Engineering", projectIds: ["p11", "p12", "p19", "p24", "p29", "p34", "p39", "p44", "p49", "p54"] },
+      { id: "c5", name: "Industrial Solutions", projectIds: ["p13", "p14", "p15", "p20", "p25", "p30", "p35", "p40", "p45", "p50", "p55"] }
     ];
 
     this.projects = [
