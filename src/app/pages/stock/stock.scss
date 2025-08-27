@@ -5,24 +5,53 @@
   gap: 20px;
   background-color: #f5f5f5;
 
-  .header{
+  .header {
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
     .search-input {
-      flex-wrap: wrap;
       display: flex;
       align-items: center;
       border-radius: 6px;
-      border: 1px solid #e2e8f0;
-      padding: 8px 10px;
-      background: #FFFFFF;
+      border: 1px solid #d1d5db;
+      padding: 8px 12px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: all 0.2s ease;
+      width: 250px;
+
+
+      &:focus-within {
+        border-color: #ff4136;
+        box-shadow: 0 0 0 3px rgba(255, 65, 54, 0.1);
+      }
 
       input {
         border: none;
         outline: none;
+        flex: 1;
+        font-family: "Darker Grotesque", serif;
+        font-size: 14px;
+        color: #374151;
+
+        &::placeholder {
+          color: #9ca3af;
+        }
+      }
+
+      i {
+        color: #9ca3af;
+        font-size: 14px;
+        margin-left: 8px;
       }
     }
     button {
@@ -30,7 +59,7 @@
       color: white;
       font-weight: bold;
       font-size: 18px;
-      background: #FF4136;
+      background: #ff4136;
       padding: 10px;
       border: none;
       border-radius: 6px;
@@ -40,6 +69,22 @@
 
       i {
         margin-top: 3px;
+      }
+    }
+
+    .title {
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        font-family: "Darker Grotesque", serif;
+        color: #1f2937;
+        margin: 0;
+      }
+
+      h1 span {
+        font-weight: 400;
+        color: #6b7280;
+        font-size: 20px;
       }
     }
   }
@@ -137,7 +182,7 @@
 
             &:first-child {
               font-weight: 600;
-              color: #FF4136;
+              color: #ff4136;
             }
 
             .design-img {
@@ -177,10 +222,10 @@
                 &.btn-delete {
                   &:hover {
                     background: #fee;
-                    border-color: #FF4136;
+                    border-color: #ff4136;
 
                     i {
-                      color: #FF4136;
+                      color: #ff4136;
                     }
                   }
                 }
@@ -252,7 +297,7 @@
       color: white;
       font-weight: 600;
       font-size: 14px;
-      background: #FF4136;
+      background: #ff4136;
       padding: 8px 16px;
       border: none;
       border-radius: 6px;
@@ -265,7 +310,7 @@
       box-shadow: 0 2px 4px rgba(255, 65, 54, 0.2);
 
       &:hover {
-        background: #E63429;
+        background: #e63429;
       }
       
     }

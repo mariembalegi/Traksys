@@ -1,15 +1,22 @@
 <div class="stock">
   <div class="header">
-    <div class="search-input">
-      <input placeholder="Search a Project" type="text" [(ngModel)]="searchText" (ngModelChange)="applyFilters()"/>
-      <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #777777;"></i>
+    <div class="header-row">
+      <div class="title">
+        <h1>Materials List <span>({{ filteredMaterials.length }})</span></h1>
+      </div>
+      <div class="add-material-btn">
+        <button (click)="addEditModal()">Add Material <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+      </div>
     </div>
-    <div class="add-material-btn">
-      <button (click)="addEditModal()">Add Material <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+    <div class="search-controls">
+      <div class="search-group">
+        <div class="search-input">
+          <input placeholder="Search a Material" type="text" [(ngModel)]="searchText" (ngModelChange)="applyFilters()"/>
+          <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #777777;"></i>
+        </div>
+      </div>
     </div>
   </div>
-
-
   <div class="stock-table">
     <table>
       <thead>
