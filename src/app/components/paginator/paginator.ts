@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/co
 })
 export class Paginator {
   @Input() items: any[] = [];
-  @Input() itemsPerPage: number = 8;
+  @Input() itemsPerPage: number = 50;
   @Output() pageChange = new EventEmitter<any[]>();
 
   currentPage = 1;
