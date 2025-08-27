@@ -187,8 +187,10 @@ export class Stock {
   }
   applyFilters() {
     this.filteredMaterials = this.materials.filter(material => {
-      const matchesSearch = !this.searchText || material.material.toLowerCase().includes(this.searchText.toLowerCase());
-      return matchesSearch ;
+      const search = this.searchText.toLowerCase();
+      const matchesName = material.material.toLowerCase().includes(search);
+      const matchesType = material.type.toLowerCase().includes(search);
+      return !this.searchText || matchesName || matchesType;
     });
     // Initialize pagedMaterials with first page if filteredMaterials is not empty
     if (this.filteredMaterials.length > 0) {
