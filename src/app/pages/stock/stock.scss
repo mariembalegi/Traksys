@@ -245,4 +245,33 @@
   .paginator-controls {
     width: 100%;
   }
+
+  .add-material-btn {
+    button {
+      font-family: "Darker Grotesque", serif;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      background: #FF4136;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(255, 65, 54, 0.2);
+
+      &:hover {
+        background: #E63429;
+      }
+      
+    }
+
+    i.fa-plus {
+      font-size: 12px;
+    }
+  }
 }
