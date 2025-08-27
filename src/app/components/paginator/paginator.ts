@@ -33,5 +33,46 @@ export class Paginator {
 
     this.pageChange.emit(this.pagedItems);
   }
+
+  getPageItems(): (number | string)[] {
+    const items: (number | string)[] = [];
+    const total = this.totalPages;
+    const current = this.currentPage;
+
+    if (total <= 9) {
+      // Show all pages if 9 or fewer
+      for (let i = 1; i <= total; i++) {
+        items.push(i);
+      }
+    } else {
+      // Always show first page
+      items.push(1);
+
+      if (current <= 4) {
+        // Current page is near the beginning
+        for (let i = 2; i <= 6; i++) {
+          items.push(i);
+        }
+        items.push('...');
+        items.push(total);
+      } else if (current >= total - 3) {
+        // Current page is near the end
+        items.push('...');
+        for (let i = total - 5; i <= total; i++) {
+          items.push(i);
+        }
+      } else {
+        // Current page is in the middle
+        items.push('...');
+        for (let i = current - 1; i <= current + 1; i++) {
+          items.push(i);
+        }
+        items.push('...');
+        items.push(total);
+      }
+    }
+
+    return items;
+  }
 }
 

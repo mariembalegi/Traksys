@@ -1,25 +1,38 @@
-<div class="pagination-controls" role="navigation" aria-label="Pagination Navigation">
+<div class="pagination-container" role="navigation" aria-label="Pagination Navigation">
+  <!-- Previous button -->
   <button 
+    class="pagination-btn prev-btn"
     (click)="setPage(currentPage - 1)" 
     [disabled]="currentPage === 1"
     [attr.aria-disabled]="currentPage === 1"
     aria-label="Go to previous page"
     type="button">
     <i class="fas fa-chevron-left" aria-hidden="true"></i>
-    Previous
   </button>
 
-  <span role="status" aria-live="polite" aria-label="Current page information">
-    Page {{ currentPage }} of {{ totalPages }}
-  </span>
+  <!-- Page numbers -->
+  <ng-container *ngFor="let item of getPageItems(); let i = index">
+    <button 
+      *ngIf="item !== '...'"
+      class="pagination-btn page-btn"
+      [class.active]="item === currentPage"
+      (click)="setPage(item)"
+      [attr.aria-label]="'Go to page ' + item"
+      [attr.aria-current]="item === currentPage ? 'page' : null"
+      type="button">
+      {{ item }}
+    </button>
+    <span *ngIf="item === '...'" class="pagination-ellipsis">...</span>
+  </ng-container>
 
+  <!-- Next button -->
   <button 
+    class="pagination-btn next-btn"
     (click)="setPage(currentPage + 1)" 
     [disabled]="currentPage === totalPages"
     [attr.aria-disabled]="currentPage === totalPages"
     aria-label="Go to next page"
     type="button">
-    Next
     <i class="fas fa-chevron-right" aria-hidden="true"></i>
   </button>
 </div>
