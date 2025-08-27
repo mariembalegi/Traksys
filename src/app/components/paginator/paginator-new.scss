@@ -1,0 +1,132 @@
+// ===================================
+// ELEGANT PAGINATOR COMPONENT STYLES
+// ===================================
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  font-family: "Darker Grotesque", serif;
+  margin: 16px auto;
+  width: fit-content;
+  border: 1px solid #e5e7eb;
+
+  .pagination-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 4px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    outline: none;
+
+    &:hover:not(:disabled):not(.active) {
+      background: #f8fafc;
+      color: #374151;
+    }
+
+    &:disabled {
+      color: #d1d5db;
+      cursor: not-allowed;
+      
+      &:hover {
+        background: transparent;
+      }
+    }
+
+    // Previous and Next buttons
+    &.prev-btn,
+    &.next-btn {
+      i {
+        font-size: 10px;
+      }
+    }
+
+    // Page number buttons
+    &.page-btn {
+      min-width: 28px;
+      font-weight: 500;
+
+      &.active {
+        background: #a5b4fc;
+        color: #ffffff;
+        font-weight: 600;
+        
+        &:hover {
+          background: #a5b4fc;
+        }
+      }
+    }
+  }
+
+  .pagination-ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    color: #9ca3af;
+    font-size: 13px;
+    font-weight: 500;
+    user-select: none;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .pagination-container {
+    padding: 6px 10px;
+    gap: 1px;
+
+    .pagination-btn {
+      min-width: 24px;
+      height: 24px;
+      font-size: 12px;
+    }
+
+    .pagination-ellipsis {
+      min-width: 24px;
+      height: 24px;
+      font-size: 12px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-container {
+    padding: 6px 8px;
+    
+    .pagination-btn {
+      min-width: 22px;
+      height: 22px;
+      font-size: 11px;
+      
+      &.prev-btn,
+      &.next-btn {
+        i {
+          font-size: 9px;
+        }
+      }
+    }
+
+    .pagination-ellipsis {
+      min-width: 22px;
+      height: 22px;
+      font-size: 11px;
+    }
+  }
+}
