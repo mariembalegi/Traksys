@@ -16,7 +16,7 @@
       *ngIf="item !== '...'"
       class="pagination-btn page-btn"
       [class.active]="item === currentPage"
-      (click)="setPage(item)"
+  (click)="typeof item === 'number' && setPage(item)"
       [attr.aria-label]="'Go to page ' + item"
       [attr.aria-current]="item === currentPage ? 'page' : null"
       type="button">

@@ -1,7 +1,7 @@
 <div class="dialog-overlay" *ngIf="isVisible && task" (click)="close()">
   <div class="dialog-content" (click)="$event.stopPropagation()">
     <div class="dialog-header">
-      <h2>{{ task?.name }}</h2>
+  <h2>{{ task.name }}</h2>
       <button class="close-btn" (click)="close()">
         <i class="fa-solid fa-times"></i>
       </button>
@@ -12,25 +12,25 @@
       <div class="task-info-section">
         <div class="task-status">
           <span class="status-badge" [style.background-color]="getStatusColor()">
-            {{ task?.status }}
+            {{ task.status }}
           </span>
         </div>
         
         <div class="task-description">
           <h4>Description</h4>
-          <p>{{ task?.description }}</p>
+          <p>{{ task.description }}</p>
         </div>
 
         <div class="task-details-grid">
           <div class="detail-item">
             <i class="fa-solid fa-calendar"></i>
             <span class="label">Due Date:</span>
-            <span class="value">{{ task?.dueDate | date:'dd/MM/yyyy' }}</span>
+            <span class="value">{{ task.dueDate | date:'dd/MM/yyyy' }}</span>
           </div>
           <div class="detail-item">
             <i class="fa-solid fa-clock"></i>
             <span class="label">Estimated:</span>
-            <span class="value">{{ task?.estimatedTime }}h</span>
+            <span class="value">{{ task.estimatedTime }}h</span>
           </div>
           <div class="detail-item">
             <i class="fa-solid fa-boxes"></i>
@@ -109,7 +109,7 @@
           <div class="time-display">
             <div class="time-item">
               <span class="label">Estimated</span>
-              <span class="time estimated-time">{{ formatTime(task?.estimatedTime || 0) }}</span>
+              <span class="time estimated-time">{{ formatTime(task.estimatedTime || 0) }}</span>
               <span class="sublabel">Manager Set</span>
             </div>
             <div class="time-item">
