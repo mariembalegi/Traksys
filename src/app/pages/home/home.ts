@@ -1,14 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Alert {
-  id: number;
-  type: 'low-stock' | 'maintenance';
-  title: string;
-  message: string;
-  severity: 'high' | 'medium' | 'low';
-  timestamp: Date;
-}
+import { AlertService, Alert } from '../../services/alert.service';
 
 @Component({
   selector: 'app-home',
@@ -16,41 +8,15 @@ interface Alert {
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home {
-  systemAlerts: Alert[] = [
-    {
-      id: 1,
-      type: 'low-stock',
-      title: 'Low Stock Alert',
-      message: 'Steel bars inventory is running low (5 units remaining)',
-      severity: 'high',
-      timestamp: new Date(2025, 7, 25, 10, 30)
-    },
-    {
-      id: 2,
-      type: 'maintenance',
-      title: 'Maintenance Required',
-      message: 'Machine #3 requires scheduled maintenance in 2 days',
-      severity: 'medium',
-      timestamp: new Date(2025, 7, 25, 8, 15)
-    },
-    {
-      id: 3,
-      type: 'low-stock',
-      title: 'Critical Stock Level',
-      message: 'Aluminum sheets completely out of stock',
-      severity: 'high',
-      timestamp: new Date(2025, 7, 24, 16, 45)
-    },
-    {
-      id: 4,
-      type: 'maintenance',
-      title: 'Equipment Check',
-      message: 'Conveyor belt requires routine inspection',
-      severity: 'low',
-      timestamp: new Date(2025, 7, 24, 14, 20)
-    }
-  ];
+export class Home implements OnInit {
+  private alertService = inject(AlertService);
+  systemAlerts: Alert[] = [];
+
+  ngOnInit() {
+    this.alertService.alerts$.subscribe(alerts => {
+      this.systemAlerts = alerts;
+    });
+  }
 
   getAlertIcon(type: string): string {
     return type === 'low-stock' ? 'fa-box-open' : 'fa-wrench';

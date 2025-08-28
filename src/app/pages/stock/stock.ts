@@ -7,6 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Dialog} from '@angular/cdk/dialog';
 import {AddEditProjectModal} from '../../components/add-edit-project-modal/add-edit-project-modal';
 import {AddEditMaterialModal} from '../../components/add-edit-material-modal/add-edit-material-modal';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-stock',
@@ -23,6 +24,7 @@ import {AddEditMaterialModal} from '../../components/add-edit-material-modal/add
 })
 export class Stock {
   private dialog=inject(Dialog);
+  private alertService = inject(AlertService);
   materials:Material[]=[];
   filteredMaterials:Material[]=[];
   pagedMaterials: Material[] = [];
@@ -227,8 +229,33 @@ export class Stock {
       if (aLow === bLow) return 0;
       return aLow ? -1 : 1;
     });
+    // After sorting and filtering
+    this.triggerLowStockAlerts();
     this.applyFilters();
   }
+
+  triggerLowStockAlerts() {
+    const currentAlerts = this.alertService['alerts'].value;
+    const alertKeys = new Set(currentAlerts.filter(a => a.type === 'low-stock').map(a => `${a.message}`));
+    this.materials.forEach(material => {
+      const isLow = (typeof material.available_length === 'number' && typeof material.min_length === 'number' && material.available_length <= material.min_length)
+        || (typeof material.available_area === 'number' && typeof material.min_area === 'number' && material.available_area <= material.min_area);
+      const remaining = typeof material.available_length === 'number' ? `${material.available_length} mm` :
+                        typeof material.available_area === 'number' ? `${material.available_area} mm²` : `${material.quantity} units`;
+      const alertMessage = `${material.material} (${material.type}) inventory is running low (${remaining} remaining)`;
+      if (isLow && !alertKeys.has(alertMessage)) {
+        this.alertService.addAlert({
+          id: Date.now(),
+          type: 'low-stock',
+          title: 'Low Stock Alert',
+          message: alertMessage,
+          severity: 'high',
+          timestamp: new Date()
+        });
+      }
+    });
+  }
+
   onPageChange(currentPageItems: Material[]) {
     this.pagedMaterials = currentPageItems;
   }
