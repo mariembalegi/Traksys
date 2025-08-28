@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {Material} from '../../models/material';
-import {DatePipe, NgForOf} from '@angular/common';
+import {DatePipe, NgForOf, CommonModule} from '@angular/common';
 import {Paginator} from '../../components/paginator/paginator';
 import {Project} from '../../models/project';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -15,7 +15,8 @@ import {AddEditMaterialModal} from '../../components/add-edit-material-modal/add
     DatePipe,
     Paginator,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './stock.html',
   styleUrl: './stock.scss'
@@ -217,6 +218,15 @@ export class Stock {
         });
       }
     }
+    // Sort so low-stock materials appear first
+    this.materials.sort((a, b) => {
+      const aLow = (typeof a.available_length === 'number' && typeof a.min_length === 'number' && a.available_length <= a.min_length)
+        || (typeof a.available_area === 'number' && typeof a.min_area === 'number' && a.available_area <= a.min_area);
+      const bLow = (typeof b.available_length === 'number' && typeof b.min_length === 'number' && b.available_length <= b.min_length)
+        || (typeof b.available_area === 'number' && typeof b.min_area === 'number' && b.available_area <= b.min_area);
+      if (aLow === bLow) return 0;
+      return aLow ? -1 : 1;
+    });
     this.applyFilters();
   }
   onPageChange(currentPageItems: Material[]) {

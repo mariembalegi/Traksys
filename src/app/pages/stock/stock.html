@@ -38,7 +38,9 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let material of pagedMaterials ; let i = index">
+      <tr *ngFor="let material of pagedMaterials ; let i = index"
+  [ngClass]="(typeof material.available_length === 'number' && typeof material.min_length === 'number' && material.available_length <= material.min_length) ||
+             (typeof material.available_area === 'number' && typeof material.min_area === 'number' && material.available_area <= material.min_area) ? 'low-stock-row' : ''">
         <td>{{material.id}}</td>
         <td>{{material.material}}</td>
         <td>{{material.type}}</td>
