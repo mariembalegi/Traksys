@@ -1,12 +1,10 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, inject } from '@angular/core';
-import {NgSelectComponent} from '@ng-select/ng-select';
 import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-material-modal',
   imports: [
-    NgSelectComponent,
     NgIf
   ],
   templateUrl: './add-edit-material-modal.html',

@@ -21,15 +21,9 @@
    <div class="diameter-length-input" *ngIf="shape === 'cylindrical bar'" >
      <div class="diameter-input"><label for="diameter-input">Diameter: <input id="diameter-input" type="number"/></label></div>
      <div class="length-input"><label for="length-input">Length: <input id="length-input" type="number"/></label></div>
-     <div class="unit-input">
-       <label class="unit" for="unit">Unit:
-         <ng-select
-           [items]="units"
-           bindLabel="name"
-           bindValue="id"
-         >
-         </ng-select>
-       </label>
+     <div class="length-row" style="display: flex; gap: 16px; align-items: center;">
+       <div class="diameter-input"><label for="available-length-input">Available Length: <input id="available-length-input" type="number"/></label></div>
+       <div class="diameter-input"><label for="min-length-input">Minimum Length: <input id="min-length-input" type="number"/></label></div>
      </div>
    </div>
     <div class="x-y-thickness-input" *ngIf="shape === 'plate'">
