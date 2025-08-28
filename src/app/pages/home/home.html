@@ -86,7 +86,7 @@
       <i class="fa-solid fa-circle-exclamation" style="color: #cccccc;"></i>
     </div>
     <div class="alerts-container">
-      @for (alert of systemAlerts; track alert.id) {
+  @for (alert of systemAlerts; track trackByAlertId($index, alert)) {
         <div class="alert-item" [class]="'severity-' + alert.severity">
           <div class="alert-icon">
             <i class="fa-solid" [class]="getAlertIcon(alert.type)" [style.color]="getAlertColor(alert.severity)"></i>

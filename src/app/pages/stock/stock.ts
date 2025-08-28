@@ -24,7 +24,7 @@ import { AlertService } from '../../services/alert.service';
 })
 export class Stock {
   trackByMaterialId(index: number, material: Material): string {
-    return material.id;
+    return `${material.id}-${index}`;
   }
   private dialog=inject(Dialog);
   private alertService = inject(AlertService);

@@ -10,6 +10,9 @@ import { MaterialService } from '../../services/material.service';
   styleUrl: './home.scss'
 })
 export class Home implements OnInit {
+  trackByAlertId(index: number, alert: Alert): string {
+    return `${alert.id}-${index}`;
+  }
   private alertService = inject(AlertService);
   private materialService = inject(MaterialService);
   systemAlerts: Alert[] = [];
