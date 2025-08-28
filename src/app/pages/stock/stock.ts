@@ -8,6 +8,7 @@ import {Dialog} from '@angular/cdk/dialog';
 import {AddEditProjectModal} from '../../components/add-edit-project-modal/add-edit-project-modal';
 import {AddEditMaterialModal} from '../../components/add-edit-material-modal/add-edit-material-modal';
 import { AlertService } from '../../services/alert.service';
+import { MaterialService } from '../../services/material.service';
 
 @Component({
   selector: 'app-stock',
@@ -24,6 +25,7 @@ import { AlertService } from '../../services/alert.service';
 })
 export class Stock {
   private dialog=inject(Dialog);
+  private materialService = inject(MaterialService);
   private alertService = inject(AlertService);
   materials:Material[]=[];
   filteredMaterials:Material[]=[];
@@ -231,12 +233,13 @@ export class Stock {
     });
     // After sorting and filtering
     this.triggerLowStockAlerts();
+    this.materialService.setMaterials(this.materials);
     this.applyFilters();
   }
 
   triggerLowStockAlerts() {
     const currentAlerts = this.alertService['alerts'].value;
-    const alertKeys = new Set(currentAlerts.filter(a => a.type === 'low-stock').map(a => `${a.message}`));
+    const alertKeys = new Set((currentAlerts.filter((a: any) => a.type === 'low-stock')).map((a: any) => `${a.message}`));
     this.materials.forEach(material => {
       const isLow = (typeof material.available_length === 'number' && typeof material.min_length === 'number' && material.available_length <= material.min_length)
         || (typeof material.available_area === 'number' && typeof material.min_area === 'number' && material.available_area <= material.min_area);
@@ -290,4 +293,7 @@ export class Stock {
   protected addEditModal() {
     this.dialog.open(AddEditMaterialModal,{disableClose: true});
   }
+  trackByMaterialId(index: number, material: Material) {
+    return material.id;
   }
+}
