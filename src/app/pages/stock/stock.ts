@@ -43,6 +43,8 @@ export class Stock {
         last_updated: new Date("2025-08-20"),
         diameter: 50,
         length: 2000,
+        available_length: 2.0,
+        min_length: 1.0,
         pieceIds: ["pc1"]
       },
       {
@@ -56,6 +58,8 @@ export class Stock {
         x: 1000,
         y: 500,
         thickness: 20,
+        available_area: 1.2,
+        min_area: 0.2,
         pieceIds: ["pc2", "pc3"]
       },
       // Additional stock items for paginator test
@@ -69,6 +73,8 @@ export class Stock {
         last_updated: new Date("2025-08-15"),
         diameter: 10,
         length: 1500,
+        available_length: 1.5,
+        min_length: 0.8,
         pieceIds: ["pc4"]
       },
       {
@@ -82,6 +88,8 @@ export class Stock {
         x: 800,
         y: 400,
         thickness: 15,
+        available_area: 0.9,
+        min_area: 0.15,
         pieceIds: ["pc5"]
       },
       {
@@ -94,6 +102,8 @@ export class Stock {
         last_updated: new Date("2025-08-05"),
         diameter: 20,
         length: 1200,
+        available_length: 1.2,
+        min_length: 0.5,
         pieceIds: ["pc6"]
       },
       {
@@ -107,6 +117,8 @@ export class Stock {
         x: 200,
         y: 100,
         thickness: 5,
+        available_area: 0.2,
+        min_area: 0.3,
         pieceIds: ["pc7"]
       },
       {
@@ -119,6 +131,8 @@ export class Stock {
         last_updated: new Date("2025-07-28"),
         diameter: 30,
         length: 800,
+        available_length: 0.8,
+        min_length: 0.3,
         pieceIds: ["pc8"]
       },
       {
@@ -132,6 +146,8 @@ export class Stock {
         x: 300,
         y: 150,
         thickness: 8,
+        available_area: 0.1,
+        min_area: 0.1,
         pieceIds: ["pc9"]
       },
       {
@@ -144,6 +160,8 @@ export class Stock {
         last_updated: new Date("2025-07-20"),
         diameter: 12,
         length: 600,
+        available_length: 0.6,
+        min_length: 0.7,
         pieceIds: ["pc10"]
       },
       {
@@ -157,29 +175,48 @@ export class Stock {
         x: 100,
         y: 50,
         thickness: 2,
+        available_area: 0.05,
+        min_area: 0.05,
         pieceIds: ["pc11"]
       }
     ];
     // Add 50 more materials for paginator test
     for (let i = 11; i <= 60; i++) {
-      this.materials.push({
-        id: `m${i}`,
-        material: `Material${i}`,
-        type: i % 2 === 0 ? "TypeA" : "TypeB",
-        quantity: 10 * i,
-        shape: i % 2 === 0 ? "Plate" : "Cylindrical Bar",
-        unit: "mm",
-        last_updated: new Date(2025, 7, 1 + i),
-        diameter: i % 2 === 0 ? undefined : 10 + i,
-        length: i % 2 === 0 ? undefined : 1000 + i * 10,
-        x: i % 2 === 0 ? 100 + i * 5 : undefined,
-        y: i % 2 === 0 ? 50 + i * 2 : undefined,
-        thickness: i % 2 === 0 ? 5 + i : undefined,
-        pieceIds: [`pc${i}`]
-      });
+      if (i % 2 === 0) {
+        // Plate
+        this.materials.push({
+          id: `m${i}`,
+          material: `Material${i}`,
+          type: "TypeA",
+          quantity: 10 * i,
+          shape: "Plate",
+          unit: "mm",
+          last_updated: new Date(2025, 7, 1 + i),
+          x: 100 + i * 5,
+          y: 50 + i * 2,
+          thickness: 5 + i,
+          available_area: 0.1 + (i * 0.01),
+          min_area: 0.05 + (i * 0.005),
+          pieceIds: [`pc${i}`]
+        });
+      } else {
+        // Cylindrical Bar
+        this.materials.push({
+          id: `m${i}`,
+          material: `Material${i}`,
+          type: "TypeB",
+          quantity: 10 * i,
+          shape: "Cylindrical Bar",
+          unit: "mm",
+          last_updated: new Date(2025, 7, 1 + i),
+          diameter: 10 + i,
+          length: 1000 + i * 10,
+          available_length: 0.5 + (i * 0.05),
+          min_length: 0.3 + (i * 0.03),
+          pieceIds: [`pc${i}`]
+        });
+      }
     }
-    // Update any hardcoded materials with unit 'm' to 'mm'
-    this.materials = this.materials.map(mat => ({ ...mat, unit: 'mm' }));
     this.applyFilters();
   }
   onPageChange(currentPageItems: Material[]) {

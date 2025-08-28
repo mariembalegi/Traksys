@@ -24,13 +24,15 @@
         <th>ID</th>
         <th>Material</th>
         <th>Type</th>
-        <th>Quantity</th>
-        <td>Shape</td>
-        <td>Diameter</td>
-        <td>length</td>
-        <td>x</td>
-        <td>y</td>
-        <td>thickness</td>
+  <th>Quantity</th>
+  <th>Available Length</th>
+  <th>Available Area</th>
+  <th>Shape</th>
+  <th>Diameter</th>
+  <th>Length</th>
+  <th>X</th>
+  <th>Y</th>
+  <th>Thickness</th>
         <th>Last Updated</th>
         <th>Actions</th>
       </tr>
@@ -41,12 +43,14 @@
         <td>{{material.material}}</td>
         <td>{{material.type}}</td>
         <td>{{material.quantity}}</td>
+  <td>{{material.available_length !== undefined && material.available_length !== null ? material.available_length + ' mm' : ''}}</td>
+  <td>{{material.available_area !== undefined && material.available_area !== null ? material.available_area + ' mm²' : ''}}</td>
         <td>{{material.shape}}</td>
-        <td>{{material.diameter}}</td>
-        <td>{{material.length}}</td>
-        <td>{{material.x}}</td>
-        <td>{{material.y}}</td>
-        <td>{{material.thickness}}</td>
+  <td>{{material.diameter !== undefined && material.diameter !== null ? material.diameter + ' mm' : ''}}</td>
+  <td>{{material.length !== undefined && material.length !== null ? material.length + ' mm' : ''}}</td>
+  <td>{{material.x !== undefined && material.x !== null ? material.x + ' mm' : ''}}</td>
+  <td>{{material.y !== undefined && material.y !== null ? material.y + ' mm' : ''}}</td>
+  <td>{{material.thickness !== undefined && material.thickness !== null ? material.thickness + ' mm' : ''}}</td>
         <td>{{material.last_updated  | date:'dd/MM/yyyy'}}</td>
         <td class="actions">
           <button class="btn-icon" >
