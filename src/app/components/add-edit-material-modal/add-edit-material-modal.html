@@ -36,15 +36,9 @@
       <div class="x-input"><label for="x-input">X: <input id="x-input" type="number"/></label></div>
       <div class="y-input"><label for="y-input">Y: <input id="y-input" type="number"/></label></div>
       <div class="thickness-input"><label for="thickness-input">Thickness: <input id="thickness-input" type="number"/></label></div>
-      <div class="unit-input">
-        <label class="unit" for="unit">Unit:
-          <ng-select
-            [items]="units"
-            bindLabel="name"
-            bindValue="id"
-          >
-          </ng-select>
-        </label>
+      <div class="area-row" style="display: flex; gap: 16px; align-items: center;">
+  <div class="x-input"><label for="available-area-input">Available Area: <input id="available-area-input" type="number"/></label></div>
+  <div class="x-input"><label for="min-area-input">Minimum Area: <input id="min-area-input" type="number"/></label></div>
       </div>
     </div>
     <div class="modal-actions">
