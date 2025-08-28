@@ -8,7 +8,6 @@ import {Dialog} from '@angular/cdk/dialog';
 import {AddEditProjectModal} from '../../components/add-edit-project-modal/add-edit-project-modal';
 import {AddEditMaterialModal} from '../../components/add-edit-material-modal/add-edit-material-modal';
 import { AlertService } from '../../services/alert.service';
-import { MaterialService } from '../../services/material.service';
 
 @Component({
   selector: 'app-stock',
@@ -24,8 +23,10 @@ import { MaterialService } from '../../services/material.service';
   styleUrl: './stock.scss'
 })
 export class Stock {
+  trackByMaterialId(index: number, material: Material): string {
+    return material.id;
+  }
   private dialog=inject(Dialog);
-  private materialService = inject(MaterialService);
   private alertService = inject(AlertService);
   materials:Material[]=[];
   filteredMaterials:Material[]=[];
@@ -38,6 +39,36 @@ export class Stock {
   }
   loadOnData() {
     this.materials = [
+      {
+        id: "m0",
+        material: "CriticalZero",
+        type: "CZ",
+        quantity: 0,
+        shape: "Cylindrical Bar",
+        unit: "mm",
+        last_updated: new Date(),
+        diameter: 10,
+        length: 100,
+        available_length: 0,
+        min_length: 1.0,
+        pieceIds: []
+      },
+      {
+        id: "m00",
+        material: "CriticalAreaZero",
+        type: "CAZ",
+        quantity: 0,
+        shape: "Plate",
+        unit: "mm",
+        last_updated: new Date(),
+        x: 100,
+        y: 50,
+        thickness: 5,
+        available_area: 0,
+        min_area: 0.1,
+        pieceIds: []
+      },
+
       {
         id: "m1",
         material: "Aluminium",
@@ -233,24 +264,43 @@ export class Stock {
     });
     // After sorting and filtering
     this.triggerLowStockAlerts();
-    this.materialService.setMaterials(this.materials);
     this.applyFilters();
   }
 
   triggerLowStockAlerts() {
     const currentAlerts = this.alertService['alerts'].value;
-    const alertKeys = new Set((currentAlerts.filter((a: any) => a.type === 'low-stock')).map((a: any) => `${a.message}`));
+    const alertKeys = new Set(currentAlerts.map(a => `${a.type}:${a.message}`));
     this.materials.forEach(material => {
-      const isLow = (typeof material.available_length === 'number' && typeof material.min_length === 'number' && material.available_length <= material.min_length)
-        || (typeof material.available_area === 'number' && typeof material.min_area === 'number' && material.available_area <= material.min_area);
-      const remaining = typeof material.available_length === 'number' ? `${material.available_length} mm` :
-                        typeof material.available_area === 'number' ? `${material.available_area} mm²` : `${material.quantity} units`;
-      const alertMessage = `${material.material} (${material.type}) inventory is running low (${remaining} remaining)`;
-      if (isLow && !alertKeys.has(alertMessage)) {
+      let isCritical = false;
+      let isLow = false;
+      let alertMessage = '';
+      let alertType: 'low-stock' | 'critical-stock' | undefined = undefined;
+      let alertTitle: string | undefined = undefined;
+      // Check for critical (out of stock)
+      if (typeof material.available_length === 'number' && material.available_length === 0) {
+        isCritical = true;
+        alertMessage = `${material.material} (${material.type}) completely out of stock`;
+        alertType = 'critical-stock';
+        alertTitle = 'Critical Stock Level';
+      } else if (typeof material.available_area === 'number' && material.available_area === 0) {
+        isCritical = true;
+        alertMessage = `${material.material} (${material.type}) completely out of stock`;
+        alertType = 'critical-stock';
+        alertTitle = 'Critical Stock Level';
+      } else if ((typeof material.available_length === 'number' && typeof material.min_length === 'number' && material.available_length > 0 && material.available_length <= material.min_length)
+        || (typeof material.available_area === 'number' && typeof material.min_area === 'number' && material.available_area > 0 && material.available_area <= material.min_area)) {
+        isLow = true;
+        const remaining = typeof material.available_length === 'number' ? `${material.available_length} mm` :
+                          typeof material.available_area === 'number' ? `${material.available_area} mm²` : `${material.quantity} units`;
+        alertMessage = `${material.material} (${material.type}) inventory is running low (${remaining} remaining)`;
+        alertType = 'low-stock';
+        alertTitle = 'Low Stock Alert';
+      }
+      if ((isCritical || isLow) && alertType && alertTitle && !alertKeys.has(`${alertType}:${alertMessage}`)) {
         this.alertService.addAlert({
           id: Date.now(),
-          type: 'low-stock',
-          title: 'Low Stock Alert',
+          type: alertType,
+          title: alertTitle,
           message: alertMessage,
           severity: 'high',
           timestamp: new Date()
@@ -293,7 +343,4 @@ export class Stock {
   protected addEditModal() {
     this.dialog.open(AddEditMaterialModal,{disableClose: true});
   }
-  trackByMaterialId(index: number, material: Material) {
-    return material.id;
   }
-}

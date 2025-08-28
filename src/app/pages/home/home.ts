@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertService, Alert } from '../../services/alert.service';
+import { MaterialService } from '../../services/material.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,43 @@ import { AlertService, Alert } from '../../services/alert.service';
 })
 export class Home implements OnInit {
   private alertService = inject(AlertService);
+  private materialService = inject(MaterialService);
   systemAlerts: Alert[] = [];
 
   ngOnInit() {
+    // Set the same materials as in stock.ts to trigger alerts globally
+    this.materialService.setMaterials([
+      {
+        id: "m0",
+        material: "CriticalZero",
+        type: "CZ",
+        quantity: 0,
+        shape: "Cylindrical Bar",
+        unit: "mm",
+        last_updated: new Date(),
+        diameter: 10,
+        length: 100,
+        available_length: 0,
+        min_length: 1.0,
+        pieceIds: []
+      },
+      {
+        id: "m00",
+        material: "CriticalAreaZero",
+        type: "CAZ",
+        quantity: 0,
+        shape: "Plate",
+        unit: "mm",
+        last_updated: new Date(),
+        x: 100,
+        y: 50,
+        thickness: 5,
+        available_area: 0,
+        min_area: 0.1,
+        pieceIds: []
+      },
+      // ...add other materials as needed, matching stock.ts...
+    ]);
     this.alertService.alerts$.subscribe(alerts => {
       this.systemAlerts = alerts;
     });
