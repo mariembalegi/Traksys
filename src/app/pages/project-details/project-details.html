@@ -63,7 +63,13 @@
           </div></td>
           <td>{{ piece.description }}</td>
           <td>{{ getMaterial(piece.materialId)?.material }} - {{ getMaterial(piece.materialId)?.type }}</td>
-          <td>{{ piece.materialQuantity }} {{ piece.materialUnit }}</td>
+          <td>
+            <span *ngIf="piece.materialQuantity">
+              {{ piece.materialQuantity }}
+              <span *ngIf="getMaterial(piece.materialId)?.shape === 'Cylindrical Bar'">mm</span>
+              <span *ngIf="getMaterial(piece.materialId)?.shape === 'Plate'">mm²</span>
+            </span>
+          </td>
           <td>{{ piece.quantity }}</td>
           <td class="actions">
             <button class="btn-icon" >
