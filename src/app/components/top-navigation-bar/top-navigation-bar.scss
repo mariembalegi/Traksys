@@ -298,12 +298,19 @@
     .notification-dropdown,
     .profile-dropdown {
       position: relative;
+    }
 
+    .notification-dropdown {
       &:hover .dropdown-menu:not(.show) {
         display: block;
       }
     }
   }
+}
+
+.profile-dropdown .dropdown-menu {
+  min-width: 150px !important;
+  max-width: 200px !important;
 }
 
 @media (max-width: 768px) {
