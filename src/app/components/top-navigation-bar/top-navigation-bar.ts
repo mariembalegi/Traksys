@@ -24,10 +24,12 @@ export class TopNavigationBar implements OnInit, OnDestroy {
   @Input() route3 !:string;
   @Input() route4 !:string;
   @Input() route5 !:string;
+  @Input() userName: string = 'Jane Doe';
 
   notifications: Notification[] = [];
   unreadCount: number = 0;
   isNotificationOpen: boolean = false;
+  isProfileOpen: boolean = false;
   private notificationSubscription: Subscription = new Subscription();
 
   constructor(
@@ -47,8 +49,14 @@ export class TopNavigationBar implements OnInit, OnDestroy {
       document.addEventListener('click', (event) => {
         const target = event.target as HTMLElement;
         const notificationDropdown = document.querySelector('.notification-dropdown');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        
         if (notificationDropdown && !notificationDropdown.contains(target)) {
           this.isNotificationOpen = false;
+        }
+        
+        if (profileDropdown && !profileDropdown.contains(target)) {
+          this.isProfileOpen = false;
         }
       });
     }
@@ -64,6 +72,10 @@ export class TopNavigationBar implements OnInit, OnDestroy {
 
   toggleNotifications() {
     this.isNotificationOpen = !this.isNotificationOpen;
+  }
+
+  toggleProfile() {
+    this.isProfileOpen = !this.isProfileOpen;
   }
 
   markAsRead(notification: Notification) {
@@ -106,6 +118,18 @@ export class TopNavigationBar implements OnInit, OnDestroy {
 
   navigateToHome() {
     this.router.navigate([this.route1]);
+  }
+
+  getUserInitials(): string {
+    if (!this.userName) return '';
+    return this.userName
+      .split(' ')
+      .map(name => name.charAt(0).toUpperCase())
+      .join('');
+  }
+
+  signOut() {
+    this.router.navigate(['/login']);
   }
 
 }
