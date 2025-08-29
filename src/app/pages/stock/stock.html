@@ -5,7 +5,10 @@
         <h1>Materials List <span>({{ filteredMaterials.length }})</span></h1>
       </div>
       <div class="add-material-btn">
-        <button (click)="addEditModal()">Add Material <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+        <button (click)="addEditModal()">
+          <span class="btn-text">Add Material</span>
+          <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+        </button>
       </div>
     </div>
     <div class="search-controls">
@@ -18,61 +21,63 @@
     </div>
   </div>
   <div class="stock-table">
-    <table>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Material</th>
-        <th>Type</th>
-  <th>Quantity</th>
-  <th>Available Length</th>
-  <th>Available Area</th>
-  <th>Shape</th>
-  <th>Diameter</th>
-  <th>Length</th>
-  <th>X</th>
-  <th>Y</th>
-  <th>Thickness</th>
-        <th>Last Updated</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let material of pagedMaterials ; let i = index; trackBy: trackByMaterialId"
-  [ngClass]="
-  (typeof material.available_length === 'number' && material.available_length === 0) ||
-  (typeof material.available_area === 'number' && material.available_area === 0) 
-    ? 'no-stock' 
-    : 
-  ((typeof material.available_length === 'number' && typeof material.min_length === 'number' && material.available_length > 0 && material.available_length <= material.min_length) ||
-   (typeof material.available_area === 'number' && typeof material.min_area === 'number' && material.available_area > 0 && material.available_area <= material.min_area)) 
-    ? 'low-stock-row' 
-    : ''
-">
-        <td>{{material.id}}</td>
-        <td>{{material.material}}</td>
-        <td>{{material.type}}</td>
-        <td>{{material.quantity}}</td>
-  <td>{{material.available_length !== undefined && material.available_length !== null ? material.available_length + ' mm' : ''}}</td>
-  <td>{{material.available_area !== undefined && material.available_area !== null ? material.available_area + ' mm²' : ''}}</td>
-        <td>{{material.shape}}</td>
-  <td>{{material.diameter !== undefined && material.diameter !== null ? material.diameter + ' mm' : ''}}</td>
-  <td>{{material.length !== undefined && material.length !== null ? material.length + ' mm' : ''}}</td>
-  <td>{{material.x !== undefined && material.x !== null ? material.x + ' mm' : ''}}</td>
-  <td>{{material.y !== undefined && material.y !== null ? material.y + ' mm' : ''}}</td>
-  <td>{{material.thickness !== undefined && material.thickness !== null ? material.thickness + ' mm' : ''}}</td>
-        <td>{{material.last_updated  | date:'dd/MM/yyyy'}}</td>
-        <td class="actions">
-          <button class="btn-icon" >
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="btn-icon btn-delete" (click)="deleteMaterial(i)">
-            <i class="fas fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Material</th>
+          <th>Type</th>
+    <th>Quantity</th>
+    <th>Available Length</th>
+    <th>Available Area</th>
+    <th>Shape</th>
+    <th>Diameter</th>
+    <th>Length</th>
+    <th>X</th>
+    <th>Y</th>
+    <th>Thickness</th>
+          <th>Last Updated</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let material of pagedMaterials ; let i = index; trackBy: trackByMaterialId"
+    [ngClass]="
+    (typeof material.available_length === 'number' && material.available_length === 0) ||
+    (typeof material.available_area === 'number' && material.available_area === 0) 
+      ? 'no-stock' 
+      : 
+    ((typeof material.available_length === 'number' && typeof material.min_length === 'number' && material.available_length > 0 && material.available_length <= material.min_length) ||
+     (typeof material.available_area === 'number' && typeof material.min_area === 'number' && material.available_area > 0 && material.available_area <= material.min_area)) 
+      ? 'low-stock-row' 
+      : ''
+  ">
+          <td>{{material.id}}</td>
+          <td>{{material.material}}</td>
+          <td>{{material.type}}</td>
+          <td>{{material.quantity}}</td>
+    <td>{{material.available_length !== undefined && material.available_length !== null ? material.available_length + ' mm' : ''}}</td>
+    <td>{{material.available_area !== undefined && material.available_area !== null ? material.available_area + ' mm²' : ''}}</td>
+          <td>{{material.shape}}</td>
+    <td>{{material.diameter !== undefined && material.diameter !== null ? material.diameter + ' mm' : ''}}</td>
+    <td>{{material.length !== undefined && material.length !== null ? material.length + ' mm' : ''}}</td>
+    <td>{{material.x !== undefined && material.x !== null ? material.x + ' mm' : ''}}</td>
+    <td>{{material.y !== undefined && material.y !== null ? material.y + ' mm' : ''}}</td>
+    <td>{{material.thickness !== undefined && material.thickness !== null ? material.thickness + ' mm' : ''}}</td>
+          <td>{{material.last_updated  | date:'dd/MM/yyyy'}}</td>
+          <td class="actions">
+            <button class="btn-icon" >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon btn-delete" (click)="deleteMaterial(i)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="paginator-controls">
     <app-paginator
