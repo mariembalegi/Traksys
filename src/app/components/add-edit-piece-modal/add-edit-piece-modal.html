@@ -22,18 +22,10 @@
         <label for="material-type">Material:
           <ng-select
             [items]="materials"
+            bindLabel="material"
             bindValue="id"
             placeholder="Select a material"
           >
-            <!-- This controls how options appear in the dropdown -->
-            <ng-template ng-option-tmp let-item="item">
-              {{ item.material }} - {{ item.type }}
-            </ng-template>
-
-            <!-- This controls how the selected item looks in the input box -->
-            <ng-template ng-label-tmp let-item="item">
-              {{ item.material }} - {{ item.type }}
-            </ng-template>
           </ng-select>
         </label>
       </div>
