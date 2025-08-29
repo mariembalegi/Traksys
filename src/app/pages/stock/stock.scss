@@ -382,29 +382,30 @@
     }
 
     // Remove the old media query as we've integrated responsive design throughout
-    // Custom scrollbar for better appearance
+    // Custom scrollbar for better appearance - matching projects table style
     .table-container::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
 
       // Thinner scrollbar on mobile
       @media (max-width: 768px) {
-        width: 6px;
-        height: 6px;
+        width: 4px;
+        height: 4px;
       }
     }
 
     .table-container::-webkit-scrollbar-track {
-      background: #f5f5f5;
-      border-radius: 4px;
+      background: #f9fafb;
+      border-radius: 3px;
     }
 
     .table-container::-webkit-scrollbar-thumb {
-      background: #e2e8f0;
-      border-radius: 4px;
+      background: #d1d5db;
+      border-radius: 3px;
+      transition: background 0.2s ease;
 
       &:hover {
-        background: #777;
+        background: #9ca3af;
       }
     }
   }
