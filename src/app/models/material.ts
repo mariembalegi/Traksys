@@ -1,5 +1,4 @@
 type Shape = "Cylindrical Bar" | "Plate";
-type Unit = "mm";
 
 export interface Material {       
   min_length?: number; // minimum length for bars
@@ -11,7 +10,6 @@ export interface Material {
   available_length?: number; // for bars, in mm
   available_area?: number;   // for plates, in square mm
   shape: Shape;            // "Cylindrical Bar" or "Plate"
-  unit: Unit;              // mm, m, kg etc.
   last_updated: Date;
 
   // Dimensions
