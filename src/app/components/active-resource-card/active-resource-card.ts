@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-active-resource-card',
+  standalone: true,
   imports: [],
   templateUrl: './active-resource-card.html',
   styleUrl: './active-resource-card.scss'
