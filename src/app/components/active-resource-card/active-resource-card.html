@@ -1,8 +1,8 @@
 <div class="card">
   <div class="row">
     <div class="left">
-      <i class="fa-solid fa-gear" style="color: #ffffff;"></i>
-      <p>Machine Name</p>
+      <i [class]="name === 'machine name' ? 'fa-solid fa-gear' : 'fa-solid fa-user'" style="color: #ffffff;"></i>
+      <p>{{name}}</p>
     </div>
     <div class="right">
       <i class="fa-solid fa-play fa-xs" style="color: #05ad6d;"></i>
@@ -11,8 +11,8 @@
   <div class="running-ticket">Running</div>
   <div class="details">
     <div class="details-row">
-      <p class="title">Operator:</p>
-      <p>Ahmed Ben Ahmed</p>
+      <p class="title">{{resourceTitle}}</p>
+      <p>{{resourceName}}</p>
     </div>
     <div class="details-row">
       <p class="title">Current Task:</p>
