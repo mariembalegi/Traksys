@@ -40,10 +40,19 @@ export class AddEditPieceModal {
     }
   ];
 
-  units= [
-    { id: 'unit-1', name: 'mm' },
-    { id: 'unit-2', name: 'm' }
+  types = [
+    { id: 'type-1', name: 'Al' },     // Aluminum
+    { id: 'type-2', name: 'Fe' },     // Iron/Steel
+    { id: 'type-3', name: 'Cu' },     // Copper
+    { id: 'type-4', name: 'Zn' },     // Zinc
+    { id: 'type-5', name: 'Ti' },     // Titanium
+    { id: 'type-6', name: 'Mg' },     // Magnesium
+    { id: 'type-7', name: 'Ni' },     // Nickel
+    { id: 'type-8', name: 'Cr' },     // Chromium
+    { id: 'type-9', name: 'Pb' },     // Lead
+    { id: 'type-10', name: 'Sn' }     // Tin
   ];
+
   private dialogRef=inject(DialogRef,{optional:true});
   protected closeModal(){
     this.dialogRef?.close();

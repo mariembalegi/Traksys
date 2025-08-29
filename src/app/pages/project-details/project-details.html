@@ -76,13 +76,12 @@
         </tr>
         <ng-container *ngIf="isOpen(piece.reference)">
           <tr>
-            <td colspan="9" class="add-task-btn">
-              <button (click)="AddEditTaskModal()">Add Task <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
-            </td>
-          </tr>
-          <tr>
             <td colspan="9" class="nested-table-container">
-              <table class="nested-table">
+              <div class="nested-content-wrapper">
+                <div class="add-task-btn">
+                  <button (click)="AddEditTaskModal()"><span class="btn-text">Add Task</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+                </div>
+                <table class="nested-table">
                 <thead>
                 <tr>
                   <th></th>
@@ -135,6 +134,7 @@
                 </tr>
                 </tbody>
               </table>
+              </div>
             </td>
           </tr>
         </ng-container>

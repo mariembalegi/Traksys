@@ -17,39 +17,41 @@
         <textarea cols="30" id="piece" name="piece" rows="3"></textarea>
       </label>
     </div>
-    <div class="material-name-input">
-      <label for="material-type">Material:
-        <ng-select
-          [items]="materials"
-          bindValue="id"
-          placeholder="Select a material"
-        >
-          <!-- This controls how options appear in the dropdown -->
-          <ng-template ng-option-tmp let-item="item">
-            {{ item.material }} - {{ item.type }}
-          </ng-template>
+    <div class="material-type-input">
+      <div class="material-input">
+        <label for="material-type">Material:
+          <ng-select
+            [items]="materials"
+            bindValue="id"
+            placeholder="Select a material"
+          >
+            <!-- This controls how options appear in the dropdown -->
+            <ng-template ng-option-tmp let-item="item">
+              {{ item.material }} - {{ item.type }}
+            </ng-template>
 
-          <!-- This controls how the selected item looks in the input box -->
-          <ng-template ng-label-tmp let-item="item">
-            {{ item.material }} - {{ item.type }}
-          </ng-template>
-        </ng-select>
-
-      </label>
+            <!-- This controls how the selected item looks in the input box -->
+            <ng-template ng-label-tmp let-item="item">
+              {{ item.material }} - {{ item.type }}
+            </ng-template>
+          </ng-select>
+        </label>
+      </div>
+      <div class="type-input">
+        <label for="type">Type:
+          <ng-select
+            [items]="types"
+            bindLabel="name"
+            bindValue="id"
+            placeholder="Select a type"
+          >
+          </ng-select>
+        </label>
+      </div>
     </div>
     <div class="quantity-input">
       <label for="quantity">Material Quantity:
         <input type="number"/>
-      </label>
-    </div>
-    <div class="unit-input">
-      <label class="unit" for="unit">Unit:
-        <ng-select
-          [items]="units"
-          bindLabel="name"
-          bindValue="id"
-        >
-        </ng-select>
       </label>
     </div>
 

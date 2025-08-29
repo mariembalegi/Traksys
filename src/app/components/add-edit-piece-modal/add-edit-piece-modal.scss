@@ -125,8 +125,18 @@
       }
     }
 
-    .material-name-input{
+    .material-type-input {
       width: 100%;
+      display: flex;
+      gap: 10px;
+
+      .material-input {
+        flex: 1;
+      }
+
+      .type-input {
+        flex: 1;
+      }
     }
     .quantity-input{
       width: 100%;
@@ -139,9 +149,6 @@
         box-sizing: border-box;
 
       }
-    }
-    .unit-input{
-      width: 100%;
     }
     ng-select {
       width: 100%; // Full width of the container
