@@ -42,7 +42,7 @@
         <th>Progress</th>
         <th>Description</th>
         <th>Material</th>
-        <th>Material Quantity</th>
+        <th>Dimension Needed</th>
         <th>Quantity</th>
         <th>Action</th>
       </tr>
@@ -62,7 +62,7 @@
             <div class="progress-bar" [style.width.%]="piece.progress"> <span class="progress-text">{{ piece.progress }}%</span></div>
           </div></td>
           <td>{{ piece.description }}</td>
-          <td>{{ getMaterial(piece.materialId)?.id }}</td>
+          <td>{{ getMaterial(piece.materialId)?.material }} - {{ getMaterial(piece.materialId)?.type }}</td>
           <td>{{ piece.materialQuantity }} {{ piece.materialUnit }}</td>
           <td>{{ piece.quantity }}</td>
           <td class="actions">
