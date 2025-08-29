@@ -235,7 +235,10 @@
         }
 
         .low-stock-row {
-          background-color: #ffe5e5 !important; /* pastel red for low stock */
+          background-color: #FFD580 !important; /* pastel red for low stock */
+        }
+        .no-stock {
+          background-color: #ffe5e5 !important; /* pastel pink for no stock */
         }
       }
     }
