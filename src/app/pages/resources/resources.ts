@@ -5,6 +5,7 @@ import {AvailableResourceCard} from '../../components/available-resource-card/av
 
 @Component({
   selector: 'app-resources',
+  standalone: true,
   imports: [
     MaintenanceResourceCard,
     ActiveResourceCard,
