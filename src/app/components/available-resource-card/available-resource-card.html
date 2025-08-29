@@ -1,8 +1,8 @@
 <div class="card">
   <div class="row">
     <div class="left">
-      <i class="fa-solid fa-gear" style="color: #ffffff;"></i>
-      <p>Machine Name</p>
+      <i [class]="name === 'machine name' ? 'fa-solid fa-gear' : 'fa-solid fa-user'" style="color: #ffffff;"></i>
+      <p>{{name}}</p>
     </div>
     <div class="right">
       <i class="fa-solid fa-wrench fa-xs" style="color: #FF4136;"></i>
