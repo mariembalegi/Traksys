@@ -9,7 +9,6 @@ export interface Piece {
 
   materialId: string;      // FK → Material
   materialQuantity: number;
-  materialUnit: string;
 
   quantity: number;
   progress: number;
