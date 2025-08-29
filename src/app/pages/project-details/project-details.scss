@@ -179,7 +179,60 @@ $border-radius-xl: 14px;
 
     .add-piece-btn {
       button {
-        @include button-primary;
+        font-family: "Darker Grotesque", serif;
+        color: white;
+        font-weight: 600;
+        font-size: 14px;
+        background: #FF4136;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(255, 65, 54, 0.2);
+
+        .btn-text {
+          // Hide text on smaller screens
+          @media (max-width: 768px) {
+            display: none;
+          }
+        }
+
+        // Responsive button styling
+        @media (max-width: 768px) {
+          padding: 12px;
+          border-radius: 50%;
+          gap: 0;
+          min-width: 44px;
+          min-height: 44px;
+          justify-content: center;
+          align-items: center;
+        }
+
+        @media (max-width: 480px) {
+          padding: 10px;
+          min-width: 40px;
+          min-height: 40px;
+        }
+
+        &:hover {
+          background: #E63429;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 8px rgba(255, 65, 54, 0.3);
+        }
+
+        &:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(255, 65, 54, 0.2);
+        }
+
+        i {
+          font-size: 12px;
+        }
       }
     }
   }
