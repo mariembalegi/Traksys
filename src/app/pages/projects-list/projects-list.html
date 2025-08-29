@@ -4,9 +4,11 @@
       <h1>Projects List <span>({{ filteredProjects.length }})</span></h1>
     </div>
     <div class="add-btn">
-      <button (click)="addEditModal()">Add Project <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+      <button (click)="addEditModal()">
+        <span class="btn-text">Add Project</span>
+        <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+      </button>
     </div>
-
   </div>
   <div class="search-controls">
     <div class="search-group">
@@ -52,45 +54,47 @@
     </div>
   </div>
   <div class="projects-table">
-    <table>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Design</th>
-        <th>Description</th>
-        <th>Customer</th>
-        <th>Progress</th>
-        <th>Opened</th>
-        <th>Delivery Date</th>
-        <th>Invoice Amount</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let project of pagedProjects; let i = index" [routerLink]="['/dashboard/projects/project-details', project.id]">
-        <td>{{ project.id }}</td>
-        <td>{{ project.name }}</td>
-        <td><img [src]="project.designPicture" alt="{{ project.name }} design" class="design-img"/></td>
-        <td>{{ project.description }}</td>
-        <td>{{ getCustomerName(project.customerId) }}</td>
-        <td><div class="progress-container">
-          <div class="progress-bar" [style.width.%]="project.progress"> <span class="progress-text">{{ project.progress }}%</span></div>
-        </div></td>
-        <td>{{ project.opened | date:'shortDate' }}</td>
-        <td>{{ project.delivery | date:'shortDate' }}</td>
-        <td>{{ formatCurrency(project.invoiceAmount, project.currency) }}</td>
-        <td class="actions">
-          <button class="btn-icon" >
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="btn-icon btn-delete" (click)="deleteProject(i); $event.stopPropagation()">
-            <i class="fas fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Design</th>
+          <th>Description</th>
+          <th>Customer</th>
+          <th>Progress</th>
+          <th>Opened</th>
+          <th>Delivery Date</th>
+          <th>Invoice Amount</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let project of pagedProjects; let i = index" [routerLink]="['/dashboard/projects/project-details', project.id]">
+          <td>{{ project.id }}</td>
+          <td>{{ project.name }}</td>
+          <td><img [src]="project.designPicture" alt="{{ project.name }} design" class="design-img"/></td>
+          <td>{{ project.description }}</td>
+          <td>{{ getCustomerName(project.customerId) }}</td>
+          <td><div class="progress-container">
+            <div class="progress-bar" [style.width.%]="project.progress"> <span class="progress-text">{{ project.progress }}%</span></div>
+          </div></td>
+          <td>{{ project.opened | date:'shortDate' }}</td>
+          <td>{{ project.delivery | date:'shortDate' }}</td>
+          <td>{{ formatCurrency(project.invoiceAmount, project.currency) }}</td>
+          <td class="actions">
+            <button class="btn-icon" >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon btn-delete" (click)="deleteProject(i); $event.stopPropagation()">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="paginator-controls">
     <app-paginator
