@@ -62,12 +62,13 @@
       font-weight: 500;
 
       &.active {
-        background: #a5b4fc;
-        color: #ffffff;
+        background: #ffb3b3; // Red pastel background
+        color: #fff; // Darker red text for better contrast
         font-weight: 600;
         
         &:hover {
-          background: #a5b4fc;
+          background: #ffb3b3; // Keep same background on hover
+      
         }
       }
     }
