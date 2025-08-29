@@ -104,4 +104,8 @@ export class TopNavigationBar implements OnInit, OnDestroy {
     return `${diffInDays}d ago`;
   }
 
+  navigateToHome() {
+    this.router.navigate([this.route1]);
+  }
+
 }
