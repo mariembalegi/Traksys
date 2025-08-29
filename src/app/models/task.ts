@@ -12,6 +12,7 @@ export interface Task {
 
   resourceIds: string[];   // N..N → Resources
   commentIds: string[];    // 1..N → Comments
+  pieceId?: string;        // FK → Piece
 
   dueDate: Date;
   actualFinishDate?: Date;

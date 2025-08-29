@@ -1,10 +1,11 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import {DatePipe, CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-task-card',
   imports: [
-    DatePipe
+    DatePipe,
+    CommonModule
   ],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss'
@@ -15,6 +16,8 @@ export class TaskCard {
   @Input() taskDueDate!: Date ;
   @Input() taskEstimatedTime!:number;
   @Input() taskCommentsNumber!:number;
+  @Input() pieceName?: string;
+  @Input() pieceReference?: string;
   @Output() cardClick = new EventEmitter<void>();
 
   onCardClick() {

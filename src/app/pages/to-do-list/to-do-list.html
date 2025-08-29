@@ -37,6 +37,8 @@
             [taskDueDate]="toDoTask.dueDate"
             [taskEstimatedTime]="toDoTask.estimatedTime"
             [taskCommentsNumber]="toDoTask.commentIds.length"
+            [pieceName]="getPieceName(toDoTask.pieceId || '')"
+            [pieceReference]="getPieceReference(toDoTask.pieceId || '')"
             (cardClick)="openTaskDialog(toDoTask)"
           >
           </app-task-card>
@@ -53,6 +55,8 @@
             [taskDueDate]="inProgressTask.dueDate"
             [taskEstimatedTime]="inProgressTask.estimatedTime"
             [taskCommentsNumber]="inProgressTask.commentIds.length"
+            [pieceName]="getPieceName(inProgressTask.pieceId || '')"
+            [pieceReference]="getPieceReference(inProgressTask.pieceId || '')"
             (cardClick)="openTaskDialog(inProgressTask)"
           >
           </app-task-card>
@@ -69,6 +73,8 @@
             [taskDueDate]="onHoldTask.dueDate"
             [taskEstimatedTime]="onHoldTask.estimatedTime"
             [taskCommentsNumber]="onHoldTask.commentIds.length"
+            [pieceName]="getPieceName(onHoldTask.pieceId || '')"
+            [pieceReference]="getPieceReference(onHoldTask.pieceId || '')"
             (cardClick)="openTaskDialog(onHoldTask)"
           >
           </app-task-card>
@@ -85,6 +91,8 @@
             [taskDueDate]="completedTask.dueDate"
             [taskEstimatedTime]="completedTask.estimatedTime"
             [taskCommentsNumber]="completedTask.commentIds.length"
+            [pieceName]="getPieceName(completedTask.pieceId || '')"
+            [pieceReference]="getPieceReference(completedTask.pieceId || '')"
             (cardClick)="openTaskDialog(completedTask)"
           >
           </app-task-card>

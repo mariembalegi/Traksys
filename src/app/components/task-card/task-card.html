@@ -1,6 +1,16 @@
 <div class="task-card" (click)="onCardClick()">
   <div class="name row">{{taskName}}</div>
   <div class="description row">{{taskDescription}}</div>
+  <div class="piece-info" *ngIf="pieceName || pieceReference">
+    <div class="piece-name row" *ngIf="pieceName">
+      <i class="fa-solid fa-cube fa-2xs" style="color: #6b7280;"></i>
+      <span>{{pieceName}}</span>
+    </div>
+    <div class="piece-reference row" *ngIf="pieceReference">
+      <i class="fa-solid fa-hashtag fa-2xs" style="color: #6b7280;"></i>
+      <span>{{pieceReference}}</span>
+    </div>
+  </div>
   <div class="due-date row"><i class="fa-solid fa-calendar fa-2xs" style="color: #000000;"></i>{{taskDueDate | date:'dd/MM/yyyy'}}</div>
   <div class="estimatedTime row"><i class="fa-solid fa-alarm-clock fa-2xs" style="color: #000000;"></i>{{taskEstimatedTime}}</div>
   <div class="divider"></div>

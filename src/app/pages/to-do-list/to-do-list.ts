@@ -153,6 +153,7 @@ export class ToDoList {
       status: "In Progress",
       resourceIds: ["r1", "r2"],
       commentIds: ["cm1", "cm3", "cm5"],
+      pieceId: "pc1",
       dueDate: new Date("2025-08-25"),
       actualFinishDate: undefined,
       createdBy: "r1",
@@ -169,6 +170,7 @@ export class ToDoList {
       status: "To Do",
       resourceIds: ["r1"],
       commentIds: [],
+      pieceId: "pc1",
       dueDate: new Date("2025-08-28"),
       actualFinishDate: undefined,
       createdBy: "r1",
@@ -185,6 +187,7 @@ export class ToDoList {
       status: "In Progress",
       resourceIds: ["r3"],
       commentIds: ["cm2", "cm4"],
+      pieceId: "pc2",
       dueDate: new Date("2025-09-05"),
       actualFinishDate: undefined,
       createdBy: "r3",
@@ -201,6 +204,7 @@ export class ToDoList {
       status: "To Do",
       resourceIds: ["r1"],
       commentIds: [],
+      pieceId: "pc3",
       dueDate: new Date("2025-09-10"),
       actualFinishDate: undefined,
       createdBy: "r1",
@@ -217,6 +221,7 @@ export class ToDoList {
       status: "In Progress",
       resourceIds: ["r1"],
       commentIds: [],
+      pieceId: "pc1",
       dueDate: new Date("2025-08-26"),
       actualFinishDate: undefined,
       createdBy: "r1",
@@ -338,5 +343,16 @@ export class ToDoList {
         this.updateTasksByResource(this.selectedResourceId);
       }
     }
+  }
+
+  // Helper methods to get piece information
+  getPieceName(pieceId: string): string {
+    const piece = this.pieces.find(p => p.id === pieceId);
+    return piece ? piece.name : '';
+  }
+
+  getPieceReference(pieceId: string): string {
+    const piece = this.pieces.find(p => p.id === pieceId);
+    return piece ? piece.reference : '';
   }
 }

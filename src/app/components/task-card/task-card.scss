@@ -56,6 +56,41 @@
       }
     }
 
+  .piece-info {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    margin: 0 15px;
+    padding: 8px 5px;
+    border-left: 3px solid #FF4136;
+    
+    .piece-name, .piece-reference {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 2px 5px !important;
+      font-size: 12px !important;
+      
+      &.piece-name {
+        color: #374151;
+        font-weight: 600;
+      }
+      
+      &.piece-reference {
+        color: #6b7280;
+        font-weight: 500;
+      }
+      
+      i {
+        color: #6b7280 !important;
+        margin-top: 0 !important;
+      }
+      
+      span {
+        font-family: "Darker Grotesque", serif;
+      }
+    }
+  }
+
   .divider{
     width: 100%;
     border: 1px solid #f5f5f5;
