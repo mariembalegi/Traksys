@@ -65,6 +65,10 @@ export class TopNavigationBar implements OnInit, OnDestroy {
     return this.router.url.includes(route);
   }
 
+  navigateToHome() {
+    this.router.navigate([this.route1 || '/']);
+  }
+
   toggleNotifications() {
     this.isNotificationOpen = !this.isNotificationOpen;
   }
