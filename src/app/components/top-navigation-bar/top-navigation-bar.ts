@@ -29,6 +29,9 @@ export class TopNavigationBar implements OnInit, OnDestroy {
   unreadCount: number = 0;
   isNotificationOpen: boolean = false;
   private notificationSubscription: Subscription = new Subscription();
+  
+  // User profile data - you can replace this with actual user data from a service
+  userName: string = 'Jane Doe';
 
   constructor(
     public router: Router,
@@ -102,6 +105,18 @@ export class TopNavigationBar implements OnInit, OnDestroy {
     if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
     if (diffInHours < 24) return `${diffInHours}h ago`;
     return `${diffInDays}d ago`;
+  }
+
+  getUserInitials(): string {
+    if (!this.userName) return 'U';
+    
+    const names = this.userName.trim().split(' ');
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+    
+    // Take first letter of first name and first letter of last name
+    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
   }
 
 }

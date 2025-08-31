@@ -92,51 +92,90 @@
         justify-content: center;
         font-weight: bold;
       }
-    }
 
-    .dropdown-menu {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      min-width: 350px;
-      max-width: 400px;
-      display: none;
-      z-index: 1001;
+      &.profile-btn {
+        .profile-initials {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 35px;
+          height: 35px;
+          background-color: #FF4136;
+          color: white;
+          border-radius: 50%;
+          font-size: 0.9rem;
+          font-weight: 600;
+          font-family: "Darker Grotesque", serif;
+        }
 
-      &.show {
-        display: block;
-      }
-
-      .dropdown-header {
-        padding: 0.75rem 1rem;
-        font-weight: bold;
-        border-bottom: 1px solid #e9ecef;
-        color: #333;
-        font-family: "Darker Grotesque", serif;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .mark-all-read {
-          background: none;
-          border: none;
-          color: #FF4136;
-          font-size: 0.8rem;
-          cursor: pointer;
-          padding: 0.25rem 0.5rem;
-          border-radius: 4px;
-          transition: background-color 0.3s ease;
-
-          &:hover {
-            background-color: rgba(255, 65, 54, 0.1);
-          }
+        &:hover .profile-initials {
+          background-color: #e53935;
         }
       }
+    }
 
-      .notifications-list {
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        min-width: 350px;
+        max-width: 400px;
+        display: none;
+        z-index: 1001;
+
+        &.show {
+          display: block;
+        }
+
+        .dropdown-header {
+          padding: 0.75rem 1rem;
+          font-weight: bold;
+          border-bottom: 1px solid #e9ecef;
+          color: #333;
+          font-family: "Darker Grotesque", serif;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .mark-all-read {
+            background: none;
+            border: none;
+            color: #FF4136;
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: rgba(255, 65, 54, 0.1);
+            }
+          }
+        }
+
+        .dropdown-item {
+          padding: 0.75rem 1rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #333;
+          text-decoration: none;
+          font-family: "Darker Grotesque", serif;
+
+          &:hover {
+            background-color: #f8f9fa;
+          }
+
+          i {
+            color: #666;
+            width: 16px;
+          }
+        }      .notifications-list {
         max-height: 400px;
         overflow-y: auto;
       }
@@ -267,6 +306,13 @@
 
       &:hover .dropdown-menu:not(.show) {
         display: block;
+      }
+    }
+
+    .profile-dropdown {
+      .dropdown-menu {
+        min-width: 150px;
+        max-width: 200px;
       }
     }
   }

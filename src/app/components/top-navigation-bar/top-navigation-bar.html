@@ -76,18 +76,13 @@
     </div>
 
     <div class="profile-dropdown">
-      <button class="nav-btn">
-        <i class="fas fa-user-circle"></i>
+      <button class="nav-btn profile-btn">
+        <span class="profile-initials">{{ getUserInitials() }}</span>
       </button>
       <div class="dropdown-menu">
-        <div class="dropdown-header">Profile</div>
         <div class="dropdown-item">
-          <i class="fas fa-sign-in-alt"></i>
-          Sign In
-        </div>
-        <div class="dropdown-item">
-          <i class="fas fa-cog"></i>
-          Workflows
+          <i class="fas fa-sign-out-alt"></i>
+          Sign Out
         </div>
       </div>
     </div>
