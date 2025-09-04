@@ -14,20 +14,20 @@
 .header {
   display: flex;
   align-items: center;
-  padding: 40px 0 40px 0;
-  margin-bottom: 20px;
-  width: 400px;
+  padding: 2.5rem 0 2.5rem 0; /* 40px using rem */
+  margin-bottom: 1.25rem; /* 20px using rem */
+  width: 25rem; /* 400px using rem */
 }
 
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem; /* 8px using rem */
 }
 
 .logo-icon {
-  width: 32px;
-  height: 32px;
+  width: 2rem; /* 32px using rem */
+  height: 2rem; /* 32px using rem */
   object-fit: contain;
 }
 
@@ -38,8 +38,8 @@
 .logo-text {
   font-family: 'Darker Grotesque', serif;
   font-weight: 700;
-  font-size: 24px;
-
+  font-size: 1.5rem; /* 24px - Modern logo size */
+  line-height: 1.2;
 }
 
 .logo-dot {
@@ -47,7 +47,7 @@
 }
 
 .login-box {
-  width: 400px;
+  width: 25rem; /* 400px using rem */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -56,34 +56,36 @@
 .login-title {
   font-family: 'Darker Grotesque', serif;
   font-weight: 700;
-  font-size: 48px;
+  font-size: 3rem; /* 48px - Modern large title */
   color: #000000;
-  margin: 0 0 16px 0;
+  margin: 0 0 1rem 0;
   text-align: left;
+  line-height: 1.1;
 }
 
 .login-subtitle {
   font-family: 'Darker Grotesque', serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem; /* 16px - Standard body text */
   color: #999999;
   text-align: left;
-  margin: 0 0 48px 0;
-  line-height: 1.4;
+  margin: 0 0 3rem 0;
+  line-height: 1.5;
 }
 
 .input-group {
-  margin-bottom: 32px;
+  margin-bottom: 2rem; /* 32px using rem */
   width: 100%;
 }
 
 .input-label {
   font-family: 'Darker Grotesque', serif;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 500;
+  font-size: 0.875rem; /* 14px - Small label text */
   color: #000000;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem; /* 8px using rem */
+  line-height: 1.43;
 }
 
 .input-wrapper {
@@ -91,9 +93,9 @@
   display: flex;
   align-items: center;
   background: #F8F9FA;
-  border-radius: 12px;
-  padding: 0 16px;
-  height: 56px;
+  border-radius: 0.75rem; /* 12px using rem */
+  padding: 0 1rem; /* 16px using rem */
+  height: 3.5rem; /* 56px using rem */
   border: 1px solid #E5E7EB;
   transition: border-color 0.2s ease;
   width: 100%;
@@ -106,9 +108,9 @@
 }
 
 .input-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
+  width: 1.25rem; /* 20px using rem */
+  height: 1.25rem; /* 20px using rem */
+  margin-right: 0.75rem; /* 12px using rem */
   opacity: 0.5;
 }
 
@@ -127,10 +129,11 @@
   outline: none;
   background: transparent;
   font-family: 'Darker Grotesque', serif;
-  font-size: 16px;
+  font-size: 1rem; /* 16px - Standard input text */
   color: #000000;
   flex: 1;
   height: 100%;
+  line-height: 1.5;
 }
 
 .input-field::placeholder {
@@ -139,17 +142,18 @@
 
 .login-button {
   width: 100%;
-  height: 56px;
+  height: 3.5rem; /* 56px using rem */
   background: #FF4136;
   border: none;
-  border-radius: 12px;
+  border-radius: 0.75rem; /* 12px using rem */
   color: #FFFFFF;
   font-family: 'Darker Grotesque', serif;
-  font-size: 16px;
+  font-size: 1rem; /* 16px - Standard button text */
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  margin: 32px 0 24px 0;
+  margin: 2rem 0 1.5rem 0; /* 32px 0 24px 0 using rem */
+  line-height: 1.5;
 }
 
 .login-button:hover {
@@ -165,11 +169,12 @@
   text-align: left;
   font-family: 'Darker Grotesque', serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0.875rem; /* 14px - Small link text */
   color: #2E3A87;
   text-decoration: none;
   transition: color 0.2s ease;
   width: 100%;
+  line-height: 1.43;
 }
 
 .forgot-password-link:hover {

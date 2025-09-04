@@ -1,7 +1,437 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for modern app typography */
 
-body{
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Base font size for rem calculations */
+}
+
+body {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 600;
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Scale - Modern App Standards */
+h1, .h1 {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 700;
+  font-size: 2.5rem; /* 40px */
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+}
+
+h2, .h2 {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 600;
+  font-size: 2rem; /* 32px */
+  line-height: 1.25;
+  margin: 0 0 0.875rem 0;
+}
+
+h3, .h3 {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 600;
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.33;
+  margin: 0 0 0.75rem 0;
+}
+
+h4, .h4 {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 600;
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.4;
+  margin: 0 0 0.625rem 0;
+}
+
+h5, .h5 {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 600;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.44;
+  margin: 0 0 0.5rem 0;
+}
+
+h6, .h6 {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 600;
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
+  margin: 0 0 0.5rem 0;
+}
+
+/* Body text variations */
+.text-lg {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.56;
+}
+
+.text-base {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
+}
+
+.text-sm {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.43;
+}
+
+.text-xs {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1.33;
+}
+
+/* Font weights */
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
+}
+
+/* Common UI components */
+button, .btn {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+input, textarea, select {
+  font-family: 'Darker Grotesque', serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+label {
+  font-family: 'Darker Grotesque', serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.43;
+}
+
+/* Remove default margins from common elements */
+p, ul, ol, dl, blockquote, pre, table, fieldset, figure {
+  margin: 0 0 1rem 0;
+}
+
+/* Links */
+a {
+  font-family: 'Darker Grotesque', serif;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* Lists */
+ul, ol {
+  font-family: 'Darker Grotesque', serif;
+}
+
+/* Tables */
+table {
+  font-family: 'Darker Grotesque', serif;
+}
+
+th, td {
+  font-family: 'Darker Grotesque', serif;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #2E3A87;
+  outline-offset: 2px;
+}
+
+/* Remove outline from navigation elements */
+.nav-item:focus,
+.navbar-nav .nav-item:focus,
+.nav-btn:focus,
+button.nav-btn:focus,
+a.nav-item:focus {
+  outline: none;
+}
+
+/* Specific font family overrides (excluding icon fonts) */
+body, p, div:not([class*="fa-"]):not([class*="icon"]), 
+span:not([class*="fa-"]):not([class*="icon"]), 
+a:not([class*="fa-"]):not([class*="icon"]), 
+li:not([class*="fa-"]):not([class*="icon"]), 
+td, th, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Text content elements */
+.ng-binding:not([class*="fa-"]):not([class*="icon"]), 
+.ng-scope:not([class*="fa-"]):not([class*="icon"]) {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Specific overrides for elements that commonly use system fonts (excluding icons) */
+code:not([class*="fa-"]):not([class*="icon"]), 
+kbd:not([class*="fa-"]):not([class*="icon"]), 
+samp:not([class*="fa-"]):not([class*="icon"]), 
+pre:not([class*="fa-"]):not([class*="icon"]) {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Form elements that might inherit system fonts */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="number"], 
+input[type="tel"], 
+input[type="url"], 
+input[type="search"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+textarea, 
+select, 
+option {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Button elements */
+button, 
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"] {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Angular Material and other component libraries */
+.mat-form-field, 
+.mat-input-element, 
+.mat-select, 
+.mat-option, 
+.mat-button, 
+.mat-raised-button, 
+.mat-flat-button,
+.ng-select,
+.ng-option {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Common class names that might override fonts */
+.form-control,
+.btn,
+.nav,
+.navbar,
+.card,
+.modal,
+.dropdown,
+.tooltip,
+.popover {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Browser and system element overrides */
+input:not([type]), 
+input[type="text"], 
+input[type="password"], 
+input[type="email"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="url"], 
+input[type="number"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+textarea,
+select,
+option,
+optgroup {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Developer tools and debugging elements */
+::placeholder {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+::-webkit-input-placeholder {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+::-moz-placeholder {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+:-ms-input-placeholder {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* Any remaining system elements */
+/* Removed - was too broad and breaking icon fonts */
+
+/* Preserve icon fonts */
+[class*="fa-"], [class*="icon"], i[class*="fa-"], i[class*="icon"],
+.fa, .fas, .far, .fal, .fab, .fad {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "FontAwesome" !important;
+}
+
+/* Ensure text content uses our font */
+.text-content, .content-text, .user-text,
+p:not([class*="fa-"]):not([class*="icon"]),
+span:not([class*="fa-"]):not([class*="icon"]):not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad) {
+  font-family: 'Darker Grotesque', serif !important;
+}
+
+/* CSS custom properties for font family */
+:root {
+  --font-family-primary: 'Darker Grotesque', serif;
+  --font-family-base: 'Darker Grotesque', serif;
+  --font-family-sans-serif: 'Darker Grotesque', serif;
+  --font-family-serif: 'Darker Grotesque', serif;
+  --font-family-monospace: 'Darker Grotesque', serif;
+}
+
+/* Media queries to ensure consistent fonts across devices (excluding icons) */
+@media screen, print, handheld, projection, tv {
+  body, p, div:not([class*="fa-"]):not([class*="icon"]), 
+  span:not([class*="fa-"]):not([class*="icon"]):not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad) {
+    font-family: 'Darker Grotesque', serif !important;
+  }
+}
+
+/* High DPI display overrides (excluding icons) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body, p, div:not([class*="fa-"]):not([class*="icon"]), 
+  span:not([class*="fa-"]):not([class*="icon"]):not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad) {
+    font-family: 'Darker Grotesque', serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Unified Custom Scrollbar Design */
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 0.5rem; /* 8px - Modern thin scrollbar */
+  height: 0.5rem; /* 8px for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 0.25rem; /* 4px */
+  margin: 0.125rem; /* 2px margin from container */
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #e9ecef, #dee2e6);
+  border-radius: 0.25rem; /* 4px */
+  border: 0.0625rem solid #f8f9fa; /* 1px border for definition */
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #adb5bd, #868e96);
+  transform: scale(1.1);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, #6c757d, #495057);
+}
+
+::-webkit-scrollbar-corner {
+  background: #f8f9fa;
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #dee2e6 #f8f9fa;
+}
+
+/* Custom scrollbar for specific containers */
+.custom-scrollbar-primary {
+  scrollbar-color: #FF4136 #f8f9fa;
+}
+
+.custom-scrollbar-primary::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #FF4136, #e53935);
+}
+
+.custom-scrollbar-primary::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #e53935, #d32f2f);
+}
+
+/* Dark scrollbar variant */
+.custom-scrollbar-dark {
+  scrollbar-color: #495057 #2d3436;
+}
+
+.custom-scrollbar-dark::-webkit-scrollbar-track {
+  background: #2d3436;
+}
+
+.custom-scrollbar-dark::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #495057, #343a40);
+  border-color: #2d3436;
+}
+
+.custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #6c757d, #495057);
+}
+
+/* Invisible scrollbar for clean designs */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Container-specific scrollbar improvements */
+.overflow-auto, .overflow-y-auto, .overflow-x-auto {
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar for modal and overlay content */
+.modal-content, .overlay-content, .dropdown-content {
+  scrollbar-color: #adb5bd #f1f3f4;
+}
+
+.modal-content::-webkit-scrollbar-thumb,
+.overlay-content::-webkit-scrollbar-thumb,
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #adb5bd, #868e96);
+  border-radius: 0.375rem; /* 6px for rounded modals */
 }

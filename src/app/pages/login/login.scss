@@ -15,14 +15,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 2.5rem; /* 40px using rem */
   box-sizing: border-box;
 }
 
 .auth-sidebar p {
   font-family: 'Darker Grotesque', serif;
-  font-weight: 900;
-  font-size: 52px;
+  font-weight: 800; /* Using standardized weight */
+  font-size: 3.25rem; /* 52px using rem - Large promotional text */
   line-height: 1.2;
   color: #FFFFFF;
   text-align: left;

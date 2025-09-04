@@ -18,11 +18,11 @@
   background-color: white;
   padding: 0 2rem;
   @include flex-between;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08); /* 2px 8px shadow */
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 70px;
+  height: 4.375rem; /* 70px using rem */
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 
   .navbar-brand {
@@ -40,7 +40,7 @@
       }
       
       img {
-        width: 50px;
+        width: 3.125rem; /* 50px using rem */
         height: auto;
         transition: transform 0.2s ease;
         
@@ -62,12 +62,13 @@
       text-decoration: none;
       color: #6b7280;
       padding: 0.6rem 1.2rem;
-      border-radius: 8px;
+      border-radius: 0.5rem; /* 8px using rem */
       transition: all 0.3s ease;
       font-family: "Darker Grotesque", serif;
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 1rem; /* 16px - Standard navigation text */
       position: relative;
+      line-height: 1.5;
 
       &:hover {
         color: #FF4136;
@@ -116,7 +117,7 @@
     .nav-btn {
       background: none;
       border: none;
-      font-size: 1.1rem;
+      font-size: 1.125rem; /* 18px - Icon size */
       color: #6b7280;
       padding: 0.6rem;
       border-radius: 50%;
@@ -131,37 +132,37 @@
         transform: translateY(-1px);
       }
 
-      .notification-badge {
+        .notification-badge {
         position: absolute;
         top: 2px;
         right: 2px;
         background-color: #FF4136;
         color: white;
         border-radius: 50%;
-        width: 18px;
-        height: 18px;
-        font-size: 0.7rem;
+        width: 1.125rem; /* 18px using rem */
+        height: 1.125rem; /* 18px using rem */
+        font-size: 0.75rem; /* 12px - Small badge text */
         @include flex-center;
         font-weight: 600;
         animation: pulse 2s infinite;
-      }
-
-      &.profile-btn {
+        line-height: 1;
+      }      &.profile-btn {
         padding: 0.4rem;
         
         .profile-initials {
           @include flex-center;
-          width: 36px;
-          height: 36px;
+          width: 2.25rem; /* 36px using rem */
+          height: 2.25rem; /* 36px using rem */
           background: linear-gradient(135deg, #FF4136, #e53935);
           color: white;
           border-radius: 50%;
-          font-size: 0.9rem;
+          font-size: 0.875rem; /* 14px - Profile initials */
           font-weight: 600;
           font-family: "Darker Grotesque", serif;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.03125rem; /* 0.5px using rem */
           transition: all 0.3s ease;
-          box-shadow: 0 2px 8px rgba(255, 65, 54, 0.3);
+          box-shadow: 0 0.125rem 0.5rem rgba(255, 65, 54, 0.3); /* 2px 8px shadow */
+          line-height: 1;
         }
 
         &:hover .profile-initials {
@@ -236,6 +237,16 @@
         }      .notifications-list {
         max-height: 400px;
         overflow-y: auto;
+        /* Custom scrollbar styling - primary variant */
+        scrollbar-color: #FF4136 #f8f9fa;
+        
+        &::-webkit-scrollbar-thumb {
+          background: linear-gradient(135deg, #FF4136, #e53935);
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(135deg, #e53935, #d32f2f);
+        }
       }
 
       .notification-item {
