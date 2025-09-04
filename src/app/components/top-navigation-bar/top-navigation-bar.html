@@ -80,7 +80,7 @@
         <span class="profile-initials">{{ getUserInitials() }}</span>
       </button>
       <div class="dropdown-menu">
-        <div class="dropdown-item">
+        <div class="dropdown-item" (click)="signOut()">
           <i class="fas fa-sign-out-alt"></i>
           Sign Out
         </div>

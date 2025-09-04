@@ -123,4 +123,9 @@ export class TopNavigationBar implements OnInit, OnDestroy {
     return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
   }
 
+  signOut() {
+    // Navigate to login page
+    this.router.navigate(['/login']);
+  }
+
 }
