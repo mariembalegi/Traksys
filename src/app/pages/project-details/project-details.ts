@@ -8,7 +8,6 @@ import {Task} from '../../models/task';
 import {Dialog} from '@angular/cdk/dialog';
 import {AddEditPieceModal} from '../../components/add-edit-piece-modal/add-edit-piece-modal';
 import {AddEditTaskModal} from '../../components/add-edit-task-modal/add-edit-task-modal';
-import {Material} from '../../models/material';
 
 @Component({
   selector: 'app-project-details',
@@ -258,8 +257,6 @@ export class ProjectDetails implements OnInit {
       description: "Base plate for CNC machine housing.",
       designFile: "/designs/housing_base.dxf",
       designPicture: "https://picsum.photos/200/120?random=1",
-      materialId: "m1",
-      materialQuantity: 2,
       quantity: 10,
       progress: 80,
       status: "In Progress",
@@ -272,8 +269,6 @@ export class ProjectDetails implements OnInit {
       description: "Top cover for CNC machine housing.",
       designFile: "/designs/housing_cover.dxf",
       designPicture: "https://picsum.photos/200/120?random=2",
-      materialId: "m2",
-      materialQuantity: 5,
       quantity: 10,
       progress: 50,
       status: "In Progress",
@@ -287,8 +282,6 @@ export class ProjectDetails implements OnInit {
       description: "Steel joint for robotic arm.",
       designFile: "/designs/arm_joint.dxf",
       designPicture: "https://picsum.photos/200/120?random=3",
-      materialId: "m2",
-      materialQuantity: 3,
       quantity: 15,
       progress: 10,
       status: "To Do",
@@ -302,8 +295,6 @@ export class ProjectDetails implements OnInit {
       description: "Main valve body casting.",
       designFile: "/designs/valve_body.dxf",
       designPicture: "https://picsum.photos/200/120?random=4",
-      materialId: "m3",
-      materialQuantity: 8,
       quantity: 10,
       progress: 85,
       status: "In Progress",
@@ -316,8 +307,6 @@ export class ProjectDetails implements OnInit {
       description: "Precision valve seat component.",
       designFile: "/designs/valve_seat.dxf",
       designPicture: "https://picsum.photos/200/120?random=5",
-      materialId: "m2",
-      materialQuantity: 1,
       quantity: 10,
       progress: 90,
       status: "In Progress",
@@ -331,8 +320,6 @@ export class ProjectDetails implements OnInit {
       description: "Custom suspension mounting bracket.",
       designFile: "/designs/suspension_bracket.dxf",
       designPicture: "https://picsum.photos/200/120?random=6",
-      materialId: "m1",
-      materialQuantity: 2,
       quantity: 50,
       progress: 45,
       status: "In Progress",
@@ -346,8 +333,6 @@ export class ProjectDetails implements OnInit {
       description: "Aerospace wing support strut.",
       designFile: "/designs/wing_strut.dxf",
       designPicture: "https://picsum.photos/200/120?random=7",
-      materialId: "m4",
-      materialQuantity: 12,
       quantity: 8,
       progress: 30,
       status: "In Progress",
@@ -360,8 +345,6 @@ export class ProjectDetails implements OnInit {
       description: "Control surface mounting hardware.",
       designFile: "/designs/control_mount.dxf",
       designPicture: "https://picsum.photos/200/120?random=8",
-      materialId: "m4",
-      materialQuantity: 6,
       quantity: 16,
       progress: 25,
       status: "To Do",
@@ -375,8 +358,6 @@ export class ProjectDetails implements OnInit {
       description: "Corrosion-resistant propeller hub.",
       designFile: "/designs/prop_hub.dxf",
       designPicture: "https://picsum.photos/200/120?random=9",
-      materialId: "m5",
-      materialQuantity: 15,
       quantity: 4,
       progress: 70,
       status: "In Progress",
@@ -390,8 +371,6 @@ export class ProjectDetails implements OnInit {
       description: "Base component for surgical instruments.",
       designFile: "/designs/surgical_base.dxf",
       designPicture: "https://picsum.photos/200/120?random=10",
-      materialId: "m6",
-      materialQuantity: 0.5,
       quantity: 100,
       progress: 95,
       status: "Completed",
@@ -404,8 +383,6 @@ export class ProjectDetails implements OnInit {
       description: "Medical device protective housing.",
       designFile: "/designs/device_housing.dxf",
       designPicture: "https://picsum.photos/200/120?random=11",
-      materialId: "m6",
-      materialQuantity: 1.2,
       quantity: 50,
       progress: 100,
       status: "Completed",
@@ -419,8 +396,6 @@ export class ProjectDetails implements OnInit {
       description: "Industrial construction clamp.",
       designFile: "/designs/heavy_clamp.dxf",
       designPicture: "https://picsum.photos/200/120?random=12",
-      materialId: "m3",
-      materialQuantity: 4,
       quantity: 25,
       progress: 55,
       status: "In Progress",
@@ -434,8 +409,6 @@ export class ProjectDetails implements OnInit {
       description: "Wind turbine blade mounting system.",
       designFile: "/designs/blade_mount.dxf",
       designPicture: "https://picsum.photos/200/120?random=13",
-      materialId: "m7",
-      materialQuantity: 20,
       quantity: 12,
       progress: 40,
       status: "In Progress",
@@ -448,8 +421,6 @@ export class ProjectDetails implements OnInit {
       description: "Wind generator protective housing.",
       designFile: "/designs/gen_housing.dxf",
       designPicture: "https://picsum.photos/200/120?random=14",
-      materialId: "m3",
-      materialQuantity: 50,
       quantity: 3,
       progress: 35,
       status: "In Progress",
@@ -463,8 +434,6 @@ export class ProjectDetails implements OnInit {
       description: "Stainless steel conveyor part.",
       designFile: "/designs/conveyor_comp.dxf",
       designPicture: "https://picsum.photos/200/120?random=15",
-      materialId: "m5",
-      materialQuantity: 3,
       quantity: 30,
       progress: 80,
       status: "In Progress",
@@ -478,8 +447,6 @@ export class ProjectDetails implements OnInit {
       description: "Precision cutting tool component.",
       designFile: "/designs/cutting_head.dxf",
       designPicture: "https://picsum.photos/200/120?random=16",
-      materialId: "m8",
-      materialQuantity: 0.8,
       quantity: 15,
       progress: 25,
       status: "To Do",
@@ -492,8 +459,6 @@ export class ProjectDetails implements OnInit {
       description: "Ergonomic tool handle design.",
       designFile: "/designs/tool_handle.dxf",
       designPicture: "https://picsum.photos/200/120?random=17",
-      materialId: "m1",
-      materialQuantity: 0.5,
       quantity: 15,
       progress: 20,
       status: "To Do",
@@ -507,8 +472,6 @@ export class ProjectDetails implements OnInit {
       description: "Military vehicle armor component.",
       designFile: "/designs/armor_plate.dxf",
       designPicture: "https://picsum.photos/200/120?random=18",
-      materialId: "m9",
-      materialQuantity: 25,
       quantity: 20,
       progress: 60,
       status: "In Progress",
@@ -522,8 +485,6 @@ export class ProjectDetails implements OnInit {
       description: "Precision antenna mounting system.",
       designFile: "/designs/antenna_mount.dxf",
       designPicture: "https://picsum.photos/200/120?random=19",
-      materialId: "m1",
-      materialQuantity: 1.5,
       quantity: 40,
       progress: 35,
       status: "In Progress",
@@ -536,8 +497,6 @@ export class ProjectDetails implements OnInit {
       description: "RF signal processing housing.",
       designFile: "/designs/signal_housing.dxf",
       designPicture: "https://picsum.photos/200/120?random=20",
-      materialId: "m2",
-      materialQuantity: 2.5,
       quantity: 20,
       progress: 30,
       status: "In Progress",
@@ -551,8 +510,6 @@ export class ProjectDetails implements OnInit {
       description: "Laboratory reaction vessel.",
       designFile: "/designs/chem_vessel.dxf",
       designPicture: "https://picsum.photos/200/120?random=21",
-      materialId: "m10",
-      materialQuantity: 8,
       quantity: 12,
       progress: 90,
       status: "In Progress",
@@ -566,8 +523,6 @@ export class ProjectDetails implements OnInit {
       description: "High-pressure safety valve.",
       designFile: "/designs/pressure_valve.dxf",
       designPicture: "https://picsum.photos/200/120?random=22",
-      materialId: "m11",
-      materialQuantity: 18,
       quantity: 6,
       progress: 15,
       status: "To Do",
@@ -580,8 +535,6 @@ export class ProjectDetails implements OnInit {
       description: "Heavy-duty pipeline connection.",
       designFile: "/designs/pipeline_conn.dxf",
       designPicture: "https://picsum.photos/200/120?random=23",
-      materialId: "m11",
-      materialQuantity: 5,
       quantity: 24,
       progress: 10,
       status: "To Do",
@@ -998,32 +951,6 @@ export class ProjectDetails implements OnInit {
     }
   ];
 
-  materials: Material[] = [
-    {
-      id: "m1",
-      material: "Aluminium",
-      type: "6061",
-      quantity: 120,
-      shape: "Cylindrical Bar",
-      last_updated: new Date("2025-08-20"),
-      diameter: 50,
-      length: 2000,
-      pieceIds: ["pc1"]
-    },
-    {
-      id: "m2",
-      material: "Steel",
-      type: "C55",
-      quantity: 80,
-      shape: "Plate",
-      last_updated: new Date("2025-08-18"),
-      x: 1000,
-      y: 500,
-      thickness: 20,
-      pieceIds: ["pc2", "pc3"]
-    }
-  ];
-
   selectedProject: any;
   lineOpenSet: Set<string> = new Set();
   dialog1=inject(Dialog);
@@ -1069,10 +996,6 @@ export class ProjectDetails implements OnInit {
   getResourceName(customerId: string): string {
     const resource = this.resources.find(r => r.id === customerId);
     return resource ? resource.name : "";
-  }
-  getMaterial(materialId: string): Material | undefined {
-    const material = this.materials.find(m => m.id === materialId);
-    return material ;
   }
 
   deletePiece(index: number) {

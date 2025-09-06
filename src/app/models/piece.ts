@@ -7,9 +7,6 @@ export interface Piece {
   designFile: string;
   designPicture: string;
 
-  materialId: string;      // FK → Material
-  materialQuantity: number;
-
   quantity: number;
   progress: number;
   status: 'To Do' | 'In Progress' | 'Completed' | 'Blocked';

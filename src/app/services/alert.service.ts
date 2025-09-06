@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface Alert {
   id: number;
-  type: 'low-stock' | 'critical-stock' | 'maintenance';
+  type: 'maintenance';
   title: string;
   message: string;
   severity: 'high' | 'medium' | 'low';
