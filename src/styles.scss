@@ -435,3 +435,24 @@ html {
   background: linear-gradient(135deg, #adb5bd, #868e96);
   border-radius: 0.375rem; /* 6px for rounded modals */
 }
+
+/* Angular CDK Dialog Overrides */
+.cdk-overlay-container {
+  .cdk-overlay-pane {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  
+  .cdk-dialog-container {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  
+  .cdk-overlay-backdrop {
+    background: rgba(0, 0, 0, 0.5) !important;
+  }
+}

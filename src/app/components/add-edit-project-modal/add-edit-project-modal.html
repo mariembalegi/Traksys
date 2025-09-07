@@ -1,82 +1,166 @@
 <div class="add-edit-project-modal">
+
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading customers...</p>
+    </div>
+  }
+
+  <!-- Toast Error Message -->
+  @if (errorMessage) {
+    <div class="toast-error">
+      <div class="toast-content">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>{{ errorMessage }}</span>
+        <button class="toast-close" (click)="clearError()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Main Form - Always visible when not loading -->
+  @if (!isLoading) {
   <div class="header">
-    <h1>project registration</h1>
+    <h1>{{ isEditMode ? 'Edit Project' : 'Project Registration' }}</h1>
     <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
   </div>
-  <form>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading customers...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage && !isLoading" class="error-container">
+    <div class="error-message">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+    <button (click)="loadCustomers()" class="retry-btn">Retry</button>
+  </div>
+
+  <!-- Main Form -->
+  <form *ngIf="!isLoading && !errorMessage" (ngSubmit)="onSubmit()">
     <div class="name-customer-input">
-      <label class="name-input">Name:<input type="text"/></label>
+      <label class="name-input">
+        Name: <span class="required">*</span>
+        <input
+          type="text"
+          [(ngModel)]="projectData.name"
+          name="name"
+          required
+          placeholder="Enter project name"/>
+      </label>
       <label class="customer-input">
-        <div class="title">Customer:<i class="fa-solid fa-plus fa-2xs" style="color: #374151;" (click)="addCustomerModal()"></i></div>
+        <div class="title">
+          Customer: <span class="required">*</span>
+          <i class="fa-solid fa-plus fa-2xs" style="color: #374151;" (click)="addCustomerModal()"></i>
+        </div>
         <ng-select
           [items]="customers"
           bindLabel="name"
-          bindValue="_id">
+          bindValue="_id"
+          [(ngModel)]="projectData.customerId"
+          name="customerId"
+          placeholder="Select a customer"
+          (ngModelChange)="onCustomerChange($event)"
+          required>
         </ng-select>
       </label>
     </div>
-    <div class="description-input">
-      <label for="project">Description:
-        <textarea cols="30" id="project" name="project" rows="3"></textarea>
-      </label>
-    </div>
-    <div class="delivery-date-input">
-      <label for="delivery"> Delivery Date:
-        <input id="delivery" name="delivery" type="date"/>
-      </label>
 
+    <div class="description-input">
+      <label for="description">
+        Description:
+        <textarea
+          id="description"
+          name="description"
+          rows="3"
+          [(ngModel)]="projectData.description"
+          placeholder="Enter project description"></textarea>
+      </label>
     </div>
+
+    <div class="delivery-date-input">
+      <label for="delivery">
+        Delivery Date: <span class="required">*</span>
+        <input
+          id="delivery"
+          name="delivery"
+          type="date"
+          [(ngModel)]="deliveryDateString"
+          required/>
+      </label>
+    </div>
+
     <div class="invoice-amount-input">
       <div class="money-input">
-        <label for="money">Invoice Amount:
-          <input id="money" type="number"/>
+        <label for="invoiceAmount">
+          Invoice Amount:
+          <input
+            id="invoiceAmount"
+            type="number"
+            name="invoiceAmount"
+            [(ngModel)]="projectData.invoiceAmount"
+            min="0"
+            step="0.01"
+            placeholder="0.00"/>
         </label>
       </div>
       <div class="currency-input">
-        <label for="currency">Currency:
+        <label for="currency">
+          Currency:
           <ng-select
             [items]="currencies"
             bindLabel="code"
             bindValue="code"
-          >
+            [(ngModel)]="projectData.currency"
+            name="currency"
+            placeholder="Select currency">
           </ng-select>
         </label>
       </div>
     </div>
+
     <div class="form-group">
       <div class="file-input">
-        <label for="designFile">Design File:</label>
+        <label for="designFile">Design File (Optional):</label>
         <input
           accept=".sldprt,.sldasm,.step,.stp,.iges,.igs"
           class="form-input"
           id="designFile"
           name="designFile"
           type="file"
-        >
-        <small class="form-help">Accepted formats: SolidWorks (.sldprt, .sldasm), STEP (.step, .stp), IGES (.iges,
-          .igs)</small>
+          (change)="onDesignFileChange($event)">
+        <small class="form-help">Accepted formats: SolidWorks (.sldprt, .sldasm), STEP (.step, .stp), IGES (.iges, .igs)</small>
       </div>
       <div class="picture-input">
-        <label for="designFile">Design Picture:</label>
+        <label for="designPicture">Design Picture (Optional):</label>
         <input
           accept=".jpg,.jpeg,.png,.gif,.bmp,.webp,.svg"
           class="form-input"
-          id="designFile"
-          name="designFile"
+          id="designPicture"
+          name="designPicture"
           type="file"
-        >
-        <small class="form-help">Accepted formats: JPEG (.jpg, .jpeg), PNG (.png), GIF (.gif), BMP (.bmp), WebP (.webp),
-          SVG (.svg)</small>
+          (change)="onDesignPictureChange($event)">
+        <small class="form-help">Accepted formats: JPEG (.jpg, .jpeg), PNG (.png), GIF (.gif), BMP (.bmp), WebP (.webp), SVG (.svg)</small>
       </div>
-
     </div>
+
     <div class="modal-actions">
-      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button" [disabled]="isSaving">
         Cancel
       </button>
-      <button class="btn btn-primary" type="submit">
-        Save
+      <button class="btn btn-primary" type="submit" [disabled]="isSaving || !isFormValid">
+        <span *ngIf="isSaving">{{ isEditMode ? 'Updating...' : 'Saving...' }}</span>
+        <span *ngIf="!isSaving">{{ isEditMode ? 'Update' : 'Save' }}</span>
       </button>
     </div>
   </form>
+  } <!-- End @if (!isLoading) -->
 </div>

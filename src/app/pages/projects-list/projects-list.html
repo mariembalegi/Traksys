@@ -10,97 +10,186 @@
       </button>
     </div>
   </div>
-  <div class="search-controls">
-    <div class="search-group">
-      <div class="search-input">
-        <input placeholder="Search a Project" type="text" [(ngModel)]="searchText" (ngModelChange)="applyFilters()"/>
-        <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #777777;"></i>
-      </div>
-      <div class="select-input">
-        <ng-select
-          [items]="customers"
-          bindLabel="name"
-          bindValue="id"
-          placeholder="Owned By Anyone" 
-          [(ngModel)]="selectedCustomer"
-          (ngModelChange)="applyFilters()"
-          [clearable]="true">
-        </ng-select>
-      </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading projects...</p>
     </div>
-    <div class="action-button">
-      <div class="filter-dropdown">
-        <button (click)="toggleFilterStatus()" class="btn-filter">
-          <i class="fas fa-filter"></i>
+  }
+
+  <!-- Error State -->
+  @if (errorMessage && !isLoading) {
+    <div class="error-container">
+      <div class="error-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+      <button (click)="loadData()" class="retry-btn">Retry</button>
+    </div>
+  }
+
+  <!-- Main Content -->
+  @if (!isLoading && !errorMessage) {
+    <div class="search-controls">
+      <div class="search-group">
+        <div class="search-input">
+          <input 
+            placeholder="Search by project name or description" 
+            type="text" 
+            [(ngModel)]="searchText" 
+            (ngModelChange)="onSearchChange()"
+            (keyup.enter)="applyFilters()"/>
+          <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #777777;"></i>
+        </div>
+        <div class="select-input">
+          <ng-select
+            [items]="customers"
+            bindLabel="name"
+            bindValue="_id"
+            placeholder="Filter by customer" 
+            [(ngModel)]="selectedCustomer"
+            (ngModelChange)="applyFilters()"
+            [clearable]="true">
+          </ng-select>
+        </div>
+      </div>
+      <div class="action-button">
+        <button (click)="clearFilters()" class="btn-clear" title="Clear all filters">
+          <i class="fas fa-times"></i>
         </button>
-        <div class="dropdown-menu" [class.show]="isFilterDropdownOpen">
-          <div class="dropdown-item" 
-               [class.active]="filterStatus === 'all'"
-               (click)="setFilterStatus('all')">
-            All
-          </div>
-          <div class="dropdown-item" 
-               [class.active]="filterStatus === 'open'"
-               (click)="setFilterStatus('open')">
-            Open
-          </div>
-          <div class="dropdown-item" 
-               [class.active]="filterStatus === 'closed'"
-               (click)="setFilterStatus('closed')">
-            Closed
+        <div class="filter-dropdown">
+          <button (click)="toggleFilterStatus()" class="btn-filter" title="Filter by status">
+            <i class="fas fa-filter"></i>
+          </button>
+          <div class="dropdown-menu" [class.show]="isFilterDropdownOpen">
+            <div class="dropdown-item" 
+                 [class.active]="filterStatus === 'all'"
+                 (click)="setFilterStatus('all')">
+              All Projects
+            </div>
+            <div class="dropdown-item" 
+                 [class.active]="filterStatus === 'open'"
+                 (click)="setFilterStatus('open')">
+              Open Projects
+            </div>
+            <div class="dropdown-item" 
+                 [class.active]="filterStatus === 'closed'"
+                 (click)="setFilterStatus('closed')">
+              Closed Projects
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="projects-table">
-    <div class="table-container">
-      <table>
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Design</th>
-          <th>Description</th>
-          <th>Customer</th>
-          <th>Progress</th>
-          <th>Opened</th>
-          <th>Delivery Date</th>
-          <th>Invoice Amount</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let project of pagedProjects; let i = index" [routerLink]="['/dashboard/projects/project-details', project.id]">
-          <td>{{ project.id }}</td>
-          <td>{{ project.name }}</td>
-          <td><img [src]="project.designPicture" alt="{{ project.name }} design" class="design-img"/></td>
-          <td>{{ project.description }}</td>
-          <td>{{ getCustomerName(project.customerId) }}</td>
-          <td><div class="progress-container">
-            <div class="progress-bar" [style.width.%]="project.progress"> <span class="progress-text">{{ project.progress }}%</span></div>
-          </div></td>
-          <td>{{ project.opened | date:'shortDate' }}</td>
-          <td>{{ project.delivery | date:'shortDate' }}</td>
-          <td>{{ formatCurrency(project.invoiceAmount, project.currency) }}</td>
-          <td class="actions">
-            <button class="btn-icon" >
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn-icon btn-delete" (click)="deleteProject(i); $event.stopPropagation()">
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    
+    <!-- Filter Summary -->
+    @if (hasActiveFilters()) {
+      <div class="filter-summary">
+        <div class="filter-tags">
+          @if (searchText) {
+            <span class="filter-tag">
+              Search: "{{ searchText }}"
+              <i class="fas fa-times" (click)="clearSearch()"></i>
+            </span>
+          }
+          @if (selectedCustomer) {
+            <span class="filter-tag">
+              Customer: {{ getSelectedCustomerName() }}
+              <i class="fas fa-times" (click)="clearCustomerFilter()"></i>
+            </span>
+          }
+          @if (filterStatus !== 'all') {
+            <span class="filter-tag">
+              Status: {{ getFilterStatusLabel() }}
+              <i class="fas fa-times" (click)="clearStatusFilter()"></i>
+            </span>
+          }
+        </div>
+        <div class="results-count">
+          Showing {{ filteredProjects.length }} of {{ projects.length }} projects
+        </div>
+      </div>
+    }
+    
+    <div class="projects-table">
+      <div class="table-container">
+        <table>
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Design</th>
+            <th>Description</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Progress</th>
+            <th>Opened</th>
+            <th>Delivery Date</th>
+            <th>Invoice Amount</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          @for (project of pagedProjects; track project._id; let i = $index) {
+            <tr [routerLink]="['/dashboard/projects/project-details', project._id]">
+              <td>{{ project._id }}</td>
+              <td class="project-name">{{ project.name }}</td>
+              <td><img [src]="project.designPicture" [alt]="project.name + ' design'" class="design-img" onerror="this.src='/placeholder-design.png'"/></td>
+              <td class="description">{{ truncateText(project.description, 60) }}</td>
+              <td>{{ getCustomerName(project.customerId) }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="getStatusBadgeClass(project.isOpen)">
+                  {{ getStatusText(project.isOpen) }}
+                </span>
+              </td>
+              <td><div class="progress-container">
+                <div class="progress-bar" [style.width.%]="project.progress"> 
+                  <span class="progress-text">{{ project.progress }}%</span>
+                </div>
+              </div></td>
+              <td>{{ project.opened | date:'shortDate' }}</td>
+              <td>{{ project.delivery | date:'shortDate' }}</td>
+              <td class="invoice-amount">{{ formatCurrency(project.invoiceAmount, project.currency) }}</td>
+              <td class="actions">
+                <button class="btn-icon" (click)="editProject(project, $event)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-icon btn-delete" (click)="deleteProject(i); $event.stopPropagation()">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+          <!-- Empty state when no projects -->
+          @if (pagedProjects.length === 0 && !isLoading) {
+            <tr class="empty-row">
+              <td colspan="11" class="empty-state">
+                <div class="empty-content">
+                  <i class="fas fa-folder-open"></i>
+                  <h3>No projects found</h3>
+                  <p>{{ filteredProjects.length === 0 ? 'Create your first project or adjust your filters' : 'No projects match your search criteria' }}</p>
+                  @if (filteredProjects.length === 0) {
+                    <button (click)="addEditModal()" class="btn-create">
+                      <i class="fas fa-plus"></i>
+                      Create Project
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  <div class="paginator-controls">
-    <app-paginator
-      [items]="filteredProjects"
-      [itemsPerPage]="itemsPerPage"
-      (pageChange)="onPageChange($event)">
-    </app-paginator>
-  </div>
+    <div class="paginator-controls">
+      <app-paginator
+        [items]="filteredProjects"
+        [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)">
+      </app-paginator>
+    </div>
+  } <!-- End main content -->
 </div>

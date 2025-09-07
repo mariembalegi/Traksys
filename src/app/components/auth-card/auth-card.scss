@@ -164,6 +164,15 @@
   background: #CC2E24;
 }
 
+.login-button:disabled {
+  background: #CCCCCC;
+  cursor: not-allowed;
+}
+
+.login-button:disabled:hover {
+  background: #CCCCCC;
+}
+
 .forgot-password-link {
   display: block;
   text-align: left;
@@ -179,4 +188,16 @@
 
 .forgot-password-link:hover {
   color: #1E2A5F;
+}
+
+.error-message {
+  background: #FEE2E2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Darker Grotesque', serif;
+  font-size: 0.875rem;
+  text-align: center;
 }

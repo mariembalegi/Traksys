@@ -4,7 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
 
 export interface Customer {
-  id: string;
+  _id: string;
   name: string;
   email?: string;
   phone?: string;
@@ -43,7 +43,7 @@ export class CustomersService extends BaseApiService {
     }).pipe(catchError(this.handleError));
   }
 
-  createCustomer(customerData: Omit<Customer, 'id' | 'projectIds' | 'createdAt' | 'updatedAt'>): Observable<Customer> {
+  createCustomer(customerData: Omit<Customer, '_id' | 'projectIds' | 'createdAt' | 'updatedAt'>): Observable<Customer> {
     return this.http.post<Customer>(`${this.apiUrl}/customers`, customerData, {
       headers: this.getAuthHeaders()
     }).pipe(catchError(this.handleError));

@@ -42,33 +42,55 @@
       }
     }
   }
-  form{
+  form {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    label{
+    gap: 15px;
+
+    .form-group {
       width: 100%;
-      font-weight: 600;
-      color: #374151;
-      letter-spacing: 0.025em;
-      font-family: "Darker Grotesque", serif;
-      font-size: 0.875rem;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-    }
-    .name-customer-input {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-      input {
-        width: 100%; // Full width of the container
+
+      label {
+        width: 100%;
+        font-weight: 600;
+        color: #374151;
+        letter-spacing: 0.025em;
+        font-family: "Darker Grotesque", serif;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        .required {
+          color: #ef4444;
+          font-weight: 500;
+        }
+      }
+
+      input, textarea {
+        width: 100%;
         outline: none;
         border-radius: 6px;
         border: 1px solid #e2e8f0;
-        padding: 10px 10px 9px 10px;
+        padding: 10px;
         box-sizing: border-box;
+        font-family: "Darker Grotesque", serif;
+        font-size: 0.9rem;
+
+        &:focus {
+          border-color: #FF4136;
+          box-shadow: 0 0 0 3px rgba(255, 65, 54, 0.1);
+        }
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
       }
     }
+
     .modal-actions {
       width: 100%;
       display: flex;
@@ -115,6 +137,26 @@
           }
         }
       }
+    }
+  }
+
+  .error-message {
+    width: 100%;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: "Darker Grotesque", serif;
+    font-size: 0.875rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      font-size: 1rem;
     }
   }
 }

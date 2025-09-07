@@ -7,6 +7,7 @@ import {ProjectDetails} from './pages/project-details/project-details';
 import {ToDoList} from './pages/to-do-list/to-do-list';
 import {Login} from './pages/login/login';
 import {Resources} from './pages/resources/resources';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: Dashboard,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',

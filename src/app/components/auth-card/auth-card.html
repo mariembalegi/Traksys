@@ -16,7 +16,10 @@
       <label for="email" class="input-label">Email</label>
       <div class="input-wrapper">
         <div class="input-icon email-icon"></div>
-        <input type="email" id="email" class="input-field" placeholder="Jane.Doe@company.com" required/>
+        <input type="email" id="email" class="input-field" 
+               placeholder="Jane.Doe@company.com" 
+               [(ngModel)]="loginRequest.email" 
+               required/>
       </div>
     </div>
     
@@ -25,12 +28,25 @@
       <label for="password" class="input-label">Password</label>
       <div class="input-wrapper">
         <div class="input-icon password-icon"></div>
-        <input type="password" id="password" class="input-field" placeholder="Enter your Password" required/>
+        <input type="password" id="password" class="input-field" 
+               placeholder="Enter your Password" 
+               [(ngModel)]="loginRequest.password" 
+               required/>
       </div>
     </div>
     
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+    
     <!-- Sign In Button -->
-    <button class="login-button" (click)="onLogin()">Sign In</button>
+    <button class="login-button" 
+            (click)="onLogin()" 
+            [disabled]="isLoading">
+      <span *ngIf="isLoading">Signing In...</span>
+      <span *ngIf="!isLoading">Sign In</span>
+    </button>
     
     <!-- Forgot Password Link -->
     <a href="#" class="forgot-password-link">Forgot Password?</a>

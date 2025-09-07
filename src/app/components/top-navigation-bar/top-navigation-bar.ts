@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {NgClass, NgFor, NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import { NotificationService, Notification } from '../../services/notification.service';
+import { AuthService, User } from '../../core/services/auth.service';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -28,13 +29,14 @@ export class TopNavigationBar implements OnInit, OnDestroy {
   unreadCount: number = 0;
   isNotificationOpen: boolean = false;
   private notificationSubscription: Subscription = new Subscription();
+  private userSubscription: Subscription = new Subscription();
   
-  // User profile data - you can replace this with actual user data from a service
-  userName: string = 'Jane Doe';
+  currentUser: User | null = null;
 
   constructor(
     public router: Router,
     private notificationService: NotificationService,
+    private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -42,6 +44,10 @@ export class TopNavigationBar implements OnInit, OnDestroy {
     this.notificationSubscription = this.notificationService.notifications$.subscribe(notifications => {
       this.notifications = notifications;
       this.unreadCount = notifications.filter(n => !n.read).length;
+    });
+
+    this.userSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
     });
 
     // Close notification dropdown when clicking outside - only in browser
@@ -58,6 +64,7 @@ export class TopNavigationBar implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.notificationSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   isActive(route:string): boolean {
@@ -111,20 +118,39 @@ export class TopNavigationBar implements OnInit, OnDestroy {
   }
 
   getUserInitials(): string {
-    if (!this.userName) return 'U';
+    if (!this.currentUser) return 'U';
     
-    const names = this.userName.trim().split(' ');
-    if (names.length === 1) {
-      return names[0].charAt(0).toUpperCase();
+    const firstName = this.currentUser.firstName || '';
+    const lastName = this.currentUser.lastName || '';
+    
+    if (!firstName && !lastName) {
+      return this.currentUser.username.charAt(0).toUpperCase();
     }
     
-    // Take first letter of first name and first letter of last name
-    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+    const firstInitial = firstName.charAt(0).toUpperCase();
+    const lastInitial = lastName.charAt(0).toUpperCase();
+    
+    return firstInitial + lastInitial;
+  }
+
+  getUserName(): string {
+    if (!this.currentUser) return 'User';
+    
+    return `${this.currentUser.firstName} ${this.currentUser.lastName}`.trim() || this.currentUser.username;
   }
 
   signOut() {
-    // Navigate to login page
-    this.router.navigate(['/login']);
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        // Even if logout fails on server, clear local state
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
 }

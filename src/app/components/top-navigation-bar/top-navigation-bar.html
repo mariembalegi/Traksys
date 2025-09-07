@@ -76,6 +76,11 @@
         <span class="profile-initials">{{ getUserInitials() }}</span>
       </button>
       <div class="dropdown-menu">
+        <div class="user-info">
+          <div class="user-name">{{ getUserName() }}</div>
+          <div class="user-email" *ngIf="currentUser">{{ currentUser.email }}</div>
+        </div>
+        <div class="dropdown-divider"></div>
         <div class="dropdown-item" (click)="signOut()">
           <i class="fas fa-sign-out-alt"></i>
           Sign Out

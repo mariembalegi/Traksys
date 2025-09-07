@@ -1,18 +1,72 @@
 <div class="add-customer-modal">
   <div class="header">
-    <h1>project registration</h1>
+    <h1>Add New Customer</h1>
     <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
   </div>
-  <form>
-    <div class="name-customer-input">
-      <label class="name-input">Name:<input type="text"/></label>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">
+        Name: <span class="required">*</span>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          [(ngModel)]="customerData.name"
+          required
+          placeholder="Enter customer name"/>
+      </label>
     </div>
+
+    <div class="form-group">
+      <label for="email">
+        Email:
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="customerData.email"
+          placeholder="customer@example.com"/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">
+        Phone:
+        <input
+          id="phone"
+          type="tel"
+          name="phone"
+          [(ngModel)]="customerData.phone"
+          placeholder="+1234567890"/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="address">
+        Address:
+        <textarea
+          id="address"
+          name="address"
+          rows="3"
+          [(ngModel)]="customerData.address"
+          placeholder="Enter customer address"></textarea>
+      </label>
+    </div>
+
     <div class="modal-actions">
-      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button" [disabled]="isSaving">
         Cancel
       </button>
-      <button class="btn btn-primary" type="submit">
-        Save
+      <button class="btn btn-primary" type="submit" [disabled]="isSaving">
+        <span *ngIf="isSaving">Saving...</span>
+        <span *ngIf="!isSaving">Save</span>
       </button>
     </div>
   </form>

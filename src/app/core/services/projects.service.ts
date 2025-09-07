@@ -5,7 +5,7 @@ import { BaseApiService } from './base-api.service';
 import { Customer } from './customers.service';
 
 export interface Project {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   designPicture?: string;

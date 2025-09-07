@@ -1,141 +1,159 @@
 <div class="project-details">
-  <div class="action-section">
-    <div class="right-section">
-      <div class="return-btn">
-        <button (click)="goBack()" ><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i></button>
-      </div>
-      <div class="project-name">
-        <h1>{{ selectedProject.name }} - #{{ projectId }}</h1>
-      </div>
-    </div>
-    <div class="add-piece-btn">
-      <button (click)="AddEditPieceModal()"><span class="btn-text">Add Piece</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
-    </div>
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading project details...</p>
   </div>
-  <div class="progress-container">
-    <div [style.width.%]="selectedProject.progress" class="progress-bar">
-      <span class="progress-text">{{ selectedProject.progress }}%</span>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage && !isLoading" class="error-container">
+    <div class="error-message">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ errorMessage }}</span>
     </div>
+    <button (click)="loadProjectDetails()" class="retry-btn">Retry</button>
   </div>
-  <div class="details">
-    <div class="right-details">
-      <div class="action-btn">
-        <button (click)="expandAll()">Expand All<img alt="expandall-btn" src="expandall.png"></button>
-        <button  (click)="collapseAll()">Collapse All<img alt="collapseall-btn" src="collapseall.png"></button>
+
+  <!-- Main Content -->
+  <div *ngIf="!isLoading && !errorMessage && selectedProject">
+    <div class="action-section">
+      <div class="right-section">
+        <div class="return-btn">
+          <button (click)="goBack()" ><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i></button>
+        </div>
+        <div class="project-name">
+          <h1>{{ selectedProject.project.name }} - #{{ projectId }}</h1>
+        </div>
       </div>
-      <div class="dates">
-        <div class="kickoff"><span>Kickoff: </span>{{ selectedProject.opened | date: 'dd/MM/yyyy' }}</div>
-        <div class="delivery-date"><span>Delivery: </span>{{ selectedProject.delivery | date: 'dd/MM/yyyy' }}</div>
+      <div class="add-piece-btn">
+        <button (click)="AddEditPieceModal()"><span class="btn-text">Add Piece</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
       </div>
     </div>
-    <div class="design-picture">
-      <img alt="design-picture" src="{{selectedProject.designPicture}}">
+    <div class="progress-container">
+      <div [style.width.%]="selectedProject.project.progress" class="progress-bar">
+        <span class="progress-text">{{ selectedProject.project.progress }}%</span>
+      </div>
     </div>
-  </div>
-  <div class="table-pieces">
-    <table>
-      <thead>
-      <tr>
-        <th>Reference</th>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Progress</th>
-        <th>Description</th>
-        <th>Quantity</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <ng-container *ngFor="let piece of pieces; let i = index">
-        <tr (click)="toggleDropdown(piece.reference)" [class.open]="isOpen(piece.reference)">
-          <td class="reference">
-            <span>{{ isOpen(piece.reference)  ? '▼' : '▶' }}</span>
-            <span>{{ piece.reference }}</span>
-          </td>
-          <td class="picture-piece">
-            <img src="{{ piece.designPicture }}" alt="piece design"> <span>{{ piece.name }}</span>
-          </td>
-          <td>{{ piece.status }}</td>
-          <td><div class="progress-container">
-            <div class="progress-bar" [style.width.%]="piece.progress"> <span class="progress-text">{{ piece.progress }}%</span></div>
-          </div></td>
-          <td>{{ piece.description }}</td>
-          <td>{{ piece.quantity }}</td>
-          <td class="actions">
-            <button class="btn-icon" >
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn-icon btn-delete" (click)="deletePiece(i)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
+    <div class="details">
+      <div class="right-details">
+        <div class="action-btn">
+          <button (click)="expandAll()">Expand All<img alt="expandall-btn" src="expandall.png"></button>
+          <button  (click)="collapseAll()">Collapse All<img alt="collapseall-btn" src="collapseall.png"></button>
+        </div>
+        <div class="dates">
+          <div class="kickoff"><span>Kickoff: </span>{{ selectedProject.project.opened | date: 'dd/MM/yyyy' }}</div>
+          <div class="delivery-date"><span>Delivery: </span>{{ selectedProject.project.delivery | date: 'dd/MM/yyyy' }}</div>
+        </div>
+      </div>
+      <div class="design-picture">
+        <img alt="design-picture" src="{{selectedProject.project.designPicture}}">
+      </div>
+    </div>
+    <div class="table-pieces">
+      <table>
+        <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Progress</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Action</th>
         </tr>
-        <ng-container *ngIf="isOpen(piece.reference)">
-          <tr>
-            <td colspan="9" class="nested-table-container">
-              <div class="nested-content-wrapper">
-                <div class="add-task-btn">
-                  <button (click)="AddEditTaskModal()"><span class="btn-text">Add Task</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
-                </div>
-                <table class="nested-table">
-                <thead>
-                <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Status</th>
-                  <th>Progress</th>
-                  <th>Description</th>
-                  <th>Quantity</th>
-                  <th>Estimated Time</th>
-                  <th>Time Spent</th>
-                  <th>Resources</th>
-                  <th>Due Date</th>
-                  <th>Actual Finish Date</th>
-                  <th>Created By</th>
-                  <th>Creation Date</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let task of tasks">
-                  <td>
-                    <i class="fa-solid fa-grip-vertical" style="color: #000000;"></i>
-                  </td>
-                  <td>{{ task.name }}</td>
-                  <td>{{ task.status }}</td>
-                  <td><div class="progress-container">
-                    <div class="progress-bar" [style.width.%]="task.progress"> <span class="progress-text">{{ task.progress }}%</span></div>
-                  </div></td>
-                  <td>{{ task.description }}</td>
-                  <td>{{ task.quantity }}</td>
-                  <td>{{ task.estimatedTime }}</td>
-                  <td>{{ task.spentTime }}</td>
-                  <td>
-                        <span *ngFor="let resId of task.resourceIds; let last = last">
-                          {{ getResourceName(resId) }}<span *ngIf="!last">, </span>
-                        </span>
-                  </td>
-                  <td>{{ task.dueDate | date:'dd/MM/yyyy' }}</td>
-                  <td>{{ task.actualFinishDate | date:'dd/MM/yyyy' }}</td>
-                  <td>{{ getResourceName(task.createdBy) }}</td>
-                  <td>{{ task.creationDate | date:'dd/MM/yyyy' }}</td>
-                  <td class="actions">
-                    <button class="btn-icon" >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-icon btn-delete" (click)="deleteTask(i)">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-              </div>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let piece of selectedProject.pieces; let i = index">
+          <tr (click)="toggleDropdown(piece.id)" [class.open]="isOpen(piece.id)">
+            <td class="reference">
+              <span>{{ isOpen(piece.id)  ? '▼' : '▶' }}</span>
+              <span>{{ piece.reference }}</span>
+            </td>
+            <td class="picture-piece">
+              <img src="{{ piece.designPicture }}" alt="piece design"> <span>{{ piece.name }}</span>
+            </td>
+            <td>{{ piece.status }}</td>
+            <td><div class="progress-container">
+              <div class="progress-bar" [style.width.%]="piece.progress"> <span class="progress-text">{{ piece.progress }}%</span></div>
+            </div></td>
+            <td>{{ piece.description }}</td>
+            <td>{{ piece.quantity }}</td>
+            <td class="actions">
+              <button class="btn-icon" >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-icon btn-delete" (click)="deletePiece(i)">
+                <i class="fas fa-trash"></i>
+              </button>
             </td>
           </tr>
+          <ng-container *ngIf="isOpen(piece.id)">
+            <tr>
+              <td colspan="9" class="nested-table-container">
+                <div class="nested-content-wrapper">
+                  <div class="add-task-btn">
+                    <button (click)="AddEditTaskModal()"><span class="btn-text">Add Task</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+                  </div>
+                  <table class="nested-table">
+                  <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Estimated Time</th>
+                    <th>Time Spent</th>
+                    <th>Resources</th>
+                    <th>Due Date</th>
+                    <th>Actual Finish Date</th>
+                    <th>Created By</th>
+                    <th>Creation Date</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let task of selectedProject.tasks">
+                    <td>
+                      <i class="fa-solid fa-grip-vertical" style="color: #000000;"></i>
+                    </td>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.status }}</td>
+                    <td><div class="progress-container">
+                      <div class="progress-bar" [style.width.%]="task.progress"> <span class="progress-text">{{ task.progress }}%</span></div>
+                    </div></td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.quantity }}</td>
+                    <td>{{ task.estimatedTime }}</td>
+                    <td>{{ task.spentTime }}</td>
+                    <td>
+                          <span *ngFor="let resId of task.resourceIds; let last = last">
+                            {{ getResourceName(resId) }}<span *ngIf="!last">, </span>
+                          </span>
+                    </td>
+                    <td>{{ task.dueDate | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ task.actualFinishDate | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ getResourceName(task.createdBy) }}</td>
+                    <td>{{ task.creationDate | date:'dd/MM/yyyy' }}</td>
+                    <td class="actions">
+                      <button class="btn-icon" >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn-icon btn-delete" (click)="deleteTask(i)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
         </ng-container>
-      </ng-container>
-      </tbody>
-    </table>
-  </div>
+        </tbody>
+      </table>
+    </div>
+  </div> <!-- End main content -->
 </div>

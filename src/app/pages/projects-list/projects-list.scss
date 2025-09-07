@@ -2,10 +2,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
-  padding: 16px 24px;
+  gap: 20px;
+  padding: 20px 32px;
   background-color: #f8fafc;
   min-height: 100vh;
+  font-size: 16px;
 
   // Responsive padding
   @media (max-width: 768px) {
@@ -49,7 +50,7 @@
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 32px;
       font-weight: 700;
       font-family: "Darker Grotesque", serif;
       color: #1f2937;
@@ -67,7 +68,7 @@
       span {
         font-weight: 400;
         color: #6b7280;
-        font-size: 20px;
+        font-size: 26px;
 
         @media (max-width: 768px) {
           font-size: 16px;
@@ -83,15 +84,15 @@
       font-family: "Darker Grotesque", serif;
       color: white;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 16px;
       background: #FF4136;
-      padding: 8px 16px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
       box-shadow: 0 2px 4px rgba(255, 65, 54, 0.2);
@@ -174,11 +175,12 @@
         align-items: center;
         border-radius: 6px;
         border: 1px solid #d1d5db;
-        padding: 8px 12px;
+        padding: 10px 12px; // Increased padding to match ng-select
         background: #ffffff;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
         transition: all 0.2s ease;
         min-width: 250px;
+        height: 40px; // Fixed height to match ng-select
 
         // Responsive width
         @media (max-width: 768px) {
@@ -218,12 +220,13 @@
       ::ng-deep .ng-select .ng-select-container {
         border-radius: 6px;
         border: 1px solid #d1d5db;
-        padding: 8px 12px;
+        padding: 6px 12px; // Adjusted padding to achieve 40px total height
         background: #ffffff;
         font-family: "Darker Grotesque", serif;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
         transition: all 0.2s ease;
         min-width: 200px;
+        min-height: 40px; // Fixed height to match search input
 
         // Responsive width
         @media (max-width: 768px) {
@@ -265,9 +268,12 @@
     }
 
     .action-button {
+      display: flex;
+      align-items: center;
+      gap: 8px; // Add spacing between buttons
+      
       // Center on mobile
       @media (max-width: 768px) {
-        display: flex;
         justify-content: center;
         width: 100%;
       }
@@ -288,8 +294,8 @@
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          width: 36px;
-          height: 36px;
+          width: 40px; // Match other button sizes
+          height: 40px; // Match input height
           transition: all 0.2s ease;
           box-shadow: 0 2px 4px rgba(255, 65, 54, 0.2);
 
@@ -392,11 +398,11 @@
       width: 100%;
       border-collapse: collapse;
       font-family: "Darker Grotesque", serif;
-      min-width: 800px; // Ensure table doesn't get too cramped
+      min-width: 900px; // Increase minimum width for new status column
 
       // For mobile, allow horizontal scroll
       @media (max-width: 768px) {
-        min-width: 1000px; // Keep table readable on mobile
+        min-width: 1100px; // Keep table readable on mobile with new column
       }
 
       thead {
@@ -467,6 +473,71 @@
             border-bottom: none;
           }
 
+          &.empty-row {
+            &:hover {
+              background: transparent;
+              transform: none;
+              box-shadow: none;
+            }
+
+            td.empty-state {
+              padding: 3rem 2rem;
+              text-align: center;
+              border: none;
+
+              .empty-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                color: #6b7280;
+
+                i {
+                  font-size: 3rem;
+                  color: #d1d5db;
+                  margin-bottom: 0.5rem;
+                }
+
+                h3 {
+                  margin: 0;
+                  font-size: 1.25rem;
+                  font-weight: 600;
+                  color: #374151;
+                  font-family: "Darker Grotesque", serif;
+                }
+
+                p {
+                  margin: 0;
+                  font-size: 0.875rem;
+                  color: #6b7280;
+                  max-width: 400px;
+                  line-height: 1.5;
+                }
+
+                .btn-create {
+                  background: #FF4136;
+                  color: white;
+                  border: none;
+                  padding: 12px 24px;
+                  border-radius: 8px;
+                  font-weight: 600;
+                  font-family: "Darker Grotesque", serif;
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-top: 0.5rem;
+
+                  &:hover {
+                    background: #E63429;
+                    transform: translateY(-1px);
+                  }
+                }
+              }
+            }
+          }
+
           td {
             padding: 14px 16px;
             font-size: 14px;
@@ -518,6 +589,48 @@
               font-weight: 600;
               color: #FF4136;
               font-size: 13px;
+            }
+
+            &.project-name {
+              font-weight: 600;
+              color: #1f2937;
+              max-width: 150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+
+            &.description {
+              max-width: 200px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              color: #6b7280;
+            }
+
+            &.invoice-amount {
+              font-weight: 600;
+              color: #059669;
+            }
+
+            .status-badge {
+              display: inline-block;
+              padding: 4px 8px;
+              border-radius: 12px;
+              font-size: 11px;
+              font-weight: 600;
+              text-transform: uppercase;
+              letter-spacing: 0.025em;
+
+              &.status-open {
+                background: #dcfce7;
+                color: #166534;
+              }
+
+              &.status-closed {
+                background: #fee2e2;
+                color: #991b1b;
+              }
             }
 
             .design-img {
@@ -648,4 +761,147 @@
     display: flex;
     justify-content: center;
   }
+
+  .loading-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    gap: 1rem;
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid #FF4136;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    p {
+      color: #6b7280;
+      font-size: 1rem;
+    }
+  }
+
+  .error-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    gap: 1rem;
+
+    .error-message {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #dc2626;
+      font-size: 1rem;
+
+      i {
+        font-size: 1.2rem;
+      }
+    }
+
+    .retry-btn {
+      background: #FF4136;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: #e53935;
+      }
+    }
+  }
+
+  // Filter Summary Styles
+  .filter-summary {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .filter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .filter-tag {
+        background: #3b82f6;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 16px;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        i {
+          cursor: pointer;
+          padding: 2px;
+          border-radius: 50%;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.2);
+          }
+        }
+      }
+    }
+
+    .results-count {
+      color: #64748b;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+  }
+
+  // Clear Filters Button
+  .btn-clear {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px; // Match other elements
+    width: 40px;
+    height: 40px; // Match input height
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    i {
+      color: #64748b;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
