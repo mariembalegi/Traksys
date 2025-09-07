@@ -41,8 +41,6 @@
         <th>Status</th>
         <th>Progress</th>
         <th>Description</th>
-        <th>Material</th>
-        <th>Dimension Needed</th>
         <th>Quantity</th>
         <th>Action</th>
       </tr>
@@ -62,14 +60,6 @@
             <div class="progress-bar" [style.width.%]="piece.progress"> <span class="progress-text">{{ piece.progress }}%</span></div>
           </div></td>
           <td>{{ piece.description }}</td>
-          <td>{{ getMaterial(piece.materialId)?.material }} - {{ getMaterial(piece.materialId)?.type }}</td>
-          <td>
-            <span *ngIf="piece.materialQuantity">
-              {{ piece.materialQuantity }}
-              <span *ngIf="getMaterial(piece.materialId)?.shape === 'Cylindrical Bar'">mm</span>
-              <span *ngIf="getMaterial(piece.materialId)?.shape === 'Plate'">mm²</span>
-            </span>
-          </td>
           <td>{{ piece.quantity }}</td>
           <td class="actions">
             <button class="btn-icon" >

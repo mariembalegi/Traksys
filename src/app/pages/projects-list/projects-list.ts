@@ -8,7 +8,6 @@ import {Paginator} from '../../components/paginator/paginator';
 import {Dialog} from '@angular/cdk/dialog';
 import {AddEditProjectModal} from '../../components/add-edit-project-modal/add-edit-project-modal';
 import {RouterLink} from '@angular/router';
-import {Material} from '../../models/material';
 
 
 @Component({
@@ -27,7 +26,6 @@ import {Material} from '../../models/material';
 export class ProjectsList {
   private dialog=inject(Dialog);
   projects: Project[] = [];
-  materials: Material[] = [];
   filteredProjects: Project[] = [];
   customers: Customer[] = [];
   filterStatus: 'all' | 'open' | 'closed' = 'all';
@@ -886,33 +884,6 @@ export class ProjectsList {
         isOpen: true
       }
     ];
-
-    this.materials = [
-      {
-        id: "m1",
-        material: "Aluminium",
-        type: "6061",
-        quantity: 120,
-        shape: "Cylindrical Bar",
-        last_updated: new Date("2025-08-20"),
-        diameter: 50,
-        length: 2000,
-        pieceIds: ["pc1"]
-      },
-      {
-        id: "m2",
-        material: "Steel",
-        type: "C55",
-        quantity: 80,
-        shape: "Plate",
-        last_updated: new Date("2025-08-18"),
-        x: 1000,
-        y: 500,
-        thickness: 20,
-        pieceIds: ["pc2", "pc3"]
-      }
-    ];
-
 
     this.applyFilters();
   }

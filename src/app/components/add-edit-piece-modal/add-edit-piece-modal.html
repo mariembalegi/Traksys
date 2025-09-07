@@ -7,7 +7,7 @@
     <div class="name-quantity-input">
       <div class="name"><label class="name-input">Name:<input type="text"/></label></div>
       <div class="quantity-input">
-        <label for="quantity">Material Quantity:
+        <label for="quantity">Quantity:
           <input type="number"/>
         </label>
       </div>
@@ -15,35 +15,6 @@
     <div class="description-input">
       <label for="piece">Description:
         <textarea cols="30" id="piece" name="piece" rows="3"></textarea>
-      </label>
-    </div>
-    <div class="material-type-input">
-      <div class="material-input">
-        <label for="material-type">Material:
-          <ng-select
-            [items]="materials"
-            bindLabel="material"
-            bindValue="id"
-            placeholder="Select a material"
-          >
-          </ng-select>
-        </label>
-      </div>
-      <div class="type-input">
-        <label for="type">Type:
-          <ng-select
-            [items]="types"
-            bindLabel="name"
-            bindValue="id"
-            placeholder="Select a type"
-          >
-          </ng-select>
-        </label>
-      </div>
-    </div>
-    <div class="quantity-input">
-      <label for="quantity">Dimension Needed:
-        <input type="number"/>
       </label>
     </div>
 

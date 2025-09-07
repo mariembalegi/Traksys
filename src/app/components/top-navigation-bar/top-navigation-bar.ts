@@ -23,7 +23,6 @@ export class TopNavigationBar implements OnInit, OnDestroy {
   @Input() route2 !:string;
   @Input() route3 !:string;
   @Input() route4 !:string;
-  @Input() route5 !:string;
 
   notifications: Notification[] = [];
   unreadCount: number = 0;

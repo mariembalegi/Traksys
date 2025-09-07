@@ -6,7 +6,6 @@ import {ProjectsList} from './pages/projects-list/projects-list';
 import {ProjectDetails} from './pages/project-details/project-details';
 import {ToDoList} from './pages/to-do-list/to-do-list';
 import {Login} from './pages/login/login';
-import {Stock} from './pages/stock/stock';
 import {Resources} from './pages/resources/resources';
 
 export const routes: Routes = [
@@ -47,10 +46,6 @@ export const routes: Routes = [
       {
         path: 'to-do-list',
         component: ToDoList
-      },
-      {
-        path: 'stock',
-        component: Stock
       },
       {
         path: 'resources',

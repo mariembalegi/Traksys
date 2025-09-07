@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEditMaterialModal } from './add-edit-material-modal';
+import { ActiveOperatorCard } from './active-operator-card';
 
-describe('AddEditMaterialModal', () => {
-  let component: AddEditMaterialModal;
-  let fixture: ComponentFixture<AddEditMaterialModal>;
+describe('ActiveOperatorCard', () => {
+  let component: ActiveOperatorCard;
+  let fixture: ComponentFixture<ActiveOperatorCard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddEditMaterialModal]
+      imports: [ActiveOperatorCard]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddEditMaterialModal);
+    fixture = TestBed.createComponent(ActiveOperatorCard);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
