@@ -69,7 +69,10 @@ export class ProjectsList {
         delivery: new Date("2025-09-15"),
         invoiceAmount: 15000,
         currency: "EUR",
-        isOpen: true
+        isOpen: true,
+        createdBy: "admin",
+        createdAt: new Date("2025-08-01"),
+        updatedAt: new Date("2025-08-01")
       },
       {
         id: "p2",

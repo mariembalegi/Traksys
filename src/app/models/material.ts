@@ -1,23 +1,19 @@
-type Shape = "Cylindrical Bar" | "Plate";
-
-export interface Material {       
-  min_length?: number; // minimum length for bars
-  min_area?: number;   // minimum area for plates
+export interface Material {
   id: string;
-  material: string;        // e.g., Aluminium, Steel
-  type: string;            // e.g., C55, 6061, Inox 304
-  quantity: number;        // stock quantity
-  available_length?: number; // for bars, in mm
-  available_area?: number;   // for plates, in square mm
-  shape: Shape;            // "Cylindrical Bar" or "Plate"
+  material: string;
+  type: string;
+  quantity: number;
+  available_length?: number;
+  available_area?: number;
+  min_length?: number;
+  min_area?: number;
+  shape: 'Cylindrical Bar' | 'Plate';
+  diameter?: number;
+  length?: number;
+  x?: number;
+  y?: number;
+  thickness?: number;
+  pieceIds: string[];
   last_updated: Date;
-
-  // Dimensions
-  diameter?: number;       // for Cylindrical Bar
-  length?: number;         // for Cylindrical Bar
-  x?: number;              // for Plate
-  y?: number;              // for Plate
-  thickness?: number;      // for Plate
-
-  pieceIds: string[];      // FKs → Pieces
+  createdAt?: Date;
 }

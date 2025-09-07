@@ -1,7 +1,8 @@
 export interface Comment {
   id: string;
-  taskId: string;          // FK → Task
-  authorId: string;        // FK → Resource or User
+  taskId: string;
+  authorId: string;
   message: string;
   createdAt: Date;
+  updatedAt: Date;
 }

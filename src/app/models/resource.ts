@@ -2,5 +2,10 @@ export interface Resource {
   id: string;
   name: string;
   type: 'Person' | 'Machine';
-  taskIds: string[];       // N..N → Tasks
+  taskIds?: string[];
+  isAvailable?: boolean;
+  maintenanceSchedule?: Date;
+  skills?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -49,11 +49,14 @@ export class ToDoList {
       customerId: "c1",
       pieceIds: ["pc1", "pc2"],
       progress: 65,
-      opened: new Date("2025-08-01"),
+      opened: new Date("2025-08-10"),
       delivery: new Date("2025-09-15"),
       invoiceAmount: 15000,
       currency: "EUR",
-      isOpen: true
+      isOpen: true,
+      createdBy: "user1",
+      createdAt: new Date("2025-08-10"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "p2",
@@ -63,19 +66,22 @@ export class ToDoList {
       designFile: "/designs/robotic_arm.dxf",
       customerId: "c2",
       pieceIds: ["pc3"],
-      progress: 20,
-      opened: new Date("2025-08-10"),
+      progress: 30,
+      opened: new Date("2025-08-15"),
       delivery: new Date("2025-10-01"),
-      invoiceAmount: 8000,
+      invoiceAmount: 25000,
       currency: "EUR",
-      isOpen: true
+      isOpen: true,
+      createdBy: "user1",
+      createdAt: new Date("2025-08-15"),
+      updatedAt: new Date("2025-08-25")
     }
   ];
 
   resources: Resource[] = [
-    { id: "r1", name: "CNC Operator", type: "Person", taskIds: ["t1", "t4"] },
-    { id: "r2", name: "Lathe Machine", type: "Machine", taskIds: ["t1"] },
-    { id: "r3", name: "Welder", type: "Person", taskIds: ["t3"] }
+    { id: "r1", name: "CNC Operator", type: "Person", taskIds: ["t1", "t4"], isAvailable: true, createdAt: new Date("2025-08-01"), updatedAt: new Date("2025-08-25") },
+    { id: "r2", name: "Lathe Machine", type: "Machine", taskIds: ["t1"], isAvailable: true, createdAt: new Date("2025-08-01"), updatedAt: new Date("2025-08-25") },
+    { id: "r3", name: "Welder", type: "Person", taskIds: ["t3"], isAvailable: true, createdAt: new Date("2025-08-01"), updatedAt: new Date("2025-08-25") }
   ];
 
   pieces: Piece[] = [
@@ -91,7 +97,10 @@ export class ToDoList {
       quantity: 10,
       progress: 80,
       status: "In Progress",
-      taskIds: ["t1", "t2"]
+      taskIds: ["t1", "t2"],
+      projectId: "p1",
+      createdAt: new Date("2025-08-10"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "pc2",
@@ -105,7 +114,10 @@ export class ToDoList {
       quantity: 20,
       progress: 50,
       status: "In Progress",
-      taskIds: ["t3"]
+      taskIds: ["t3"],
+      projectId: "p1",
+      createdAt: new Date("2025-08-10"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "pc3",
@@ -119,7 +131,10 @@ export class ToDoList {
       quantity: 15,
       progress: 10,
       status: "To Do",
-      taskIds: ["t4"]
+      taskIds: ["t4"],
+      projectId: "p2",
+      createdAt: new Date("2025-08-15"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "pc4",
@@ -133,7 +148,10 @@ export class ToDoList {
       quantity: 5,
       progress: 20,
       status: "In Progress",
-      taskIds: ["t5"]
+      taskIds: ["t5"],
+      projectId: "p1",
+      createdAt: new Date("2025-08-20"),
+      updatedAt: new Date("2025-08-25")
     }
   ];
 
@@ -153,7 +171,8 @@ export class ToDoList {
       dueDate: new Date("2025-08-25"),
       actualFinishDate: undefined,
       createdBy: "r1",
-      creationDate: new Date("2025-08-15")
+      creationDate: new Date("2025-08-15"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "t2",
@@ -170,7 +189,8 @@ export class ToDoList {
       dueDate: new Date("2025-08-28"),
       actualFinishDate: undefined,
       createdBy: "r1",
-      creationDate: new Date("2025-08-16")
+      creationDate: new Date("2025-08-16"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "t3",
@@ -187,7 +207,8 @@ export class ToDoList {
       dueDate: new Date("2025-09-05"),
       actualFinishDate: undefined,
       createdBy: "r3",
-      creationDate: new Date("2025-08-18")
+      creationDate: new Date("2025-08-18"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "t4",
@@ -204,7 +225,8 @@ export class ToDoList {
       dueDate: new Date("2025-09-10"),
       actualFinishDate: undefined,
       createdBy: "r1",
-      creationDate: new Date("2025-08-20")
+      creationDate: new Date("2025-08-20"),
+      updatedAt: new Date("2025-08-25")
     },
     {
       id: "t5",
@@ -221,7 +243,8 @@ export class ToDoList {
       dueDate: new Date("2025-08-26"),
       actualFinishDate: undefined,
       createdBy: "r1",
-      creationDate: new Date("2025-08-25")
+      creationDate: new Date("2025-08-25"),
+      updatedAt: new Date("2025-08-25")
     }
   ];
 
@@ -231,28 +254,32 @@ export class ToDoList {
       taskId: "t1",
       authorId: "r1",
       message: "Cutting process started successfully. Material preparation complete.",
-      createdAt: new Date("2025-08-15T10:00:00")
+      createdAt: new Date("2025-08-15T10:00:00"),
+      updatedAt: new Date("2025-08-15T10:00:00")
     },
     {
       id: "cm2",
       taskId: "t3",
       authorId: "r3",
       message: "Welding in progress, waiting for quality check.",
-      createdAt: new Date("2025-08-18T14:30:00")
+      createdAt: new Date("2025-08-18T14:30:00"),
+      updatedAt: new Date("2025-08-18T14:30:00")
     },
     {
       id: "cm3",
       taskId: "t1",
       authorId: "r2",
       message: "CNC machine calibration completed. Ready for cutting operation.",
-      createdAt: new Date("2025-08-15T08:30:00")
+      createdAt: new Date("2025-08-15T08:30:00"),
+      updatedAt: new Date("2025-08-15T08:30:00")
     },
     {
       id: "cm4",
       taskId: "t3",
       authorId: "r3",
       message: "First pass welding completed. Need to check for defects before second pass.",
-      createdAt: new Date("2025-08-19T09:15:00")
+      createdAt: new Date("2025-08-19T09:15:00"),
+      updatedAt: new Date("2025-08-19T09:15:00")
     }
   ];
 
@@ -297,7 +324,8 @@ export class ToDoList {
         taskId: this.selectedTask.id,
         authorId: this.selectedResourceId || 'r1', // Use selected resource or default
         message: commentText,
-        createdAt: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date()
       };
       
       this.comments.push(newComment);

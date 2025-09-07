@@ -1,5 +1,10 @@
 export interface Customer {
   id: string;
   name: string;
-  projectIds: string[];    // FKs → Projects
+  email?: string;
+  phone?: string;
+  address?: string;
+  projectIds?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
