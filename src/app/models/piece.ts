@@ -5,8 +5,8 @@ export interface Piece {
   description: string;
   designFile?: string;
   designPicture?: string;
-  materialId: string;
-  materialQuantity: number;
+  materialId?: string;
+  materialQuantity?: number;
   quantity: number;
   progress: number;
   status: 'To Do' | 'In Progress' | 'Completed' | 'Blocked';
