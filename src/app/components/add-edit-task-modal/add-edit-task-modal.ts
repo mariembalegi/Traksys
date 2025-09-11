@@ -5,9 +5,9 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { TasksService } from '../../core/services/tasks.service';
 import { ResourcesService } from '../../core/services/resources.service';
-import { PiecesService } from '../../core/services/pieces.service';
 import { AuthService } from '../../core/services/auth.service';
-import {Resource} from '../../models/resource';
+import { Resource } from '../../models/resource';
+import { Piece } from '../../models/piece';
 
 @Component({
   selector: 'app-add-edit-task-modal',
@@ -24,21 +24,24 @@ export class AddEditTaskModal implements OnInit {
   private formBuilder = inject(FormBuilder);
   private tasksService = inject(TasksService);
   private resourcesService = inject(ResourcesService);
-  private piecesService = inject(PiecesService);
   private authService = inject(AuthService);
   public data = inject(DIALOG_DATA, {optional: true});
 
   taskForm!: FormGroup;
   resources: Resource[] = [];
-  pieces: any[] = [];
+  selectedPiece?: Piece;
   isLoading = false;
   isEdit = false;
 
   ngOnInit() {
     this.isEdit = this.data?.isEdit || false;
+    this.selectedPiece = this.data?.piece;
+    
+    console.log('Modal data:', this.data); // Debug log
+    console.log('Selected piece:', this.selectedPiece); // Debug log
+    
     this.initForm();
     this.loadResources();
-    this.loadPieces();
 
     if (this.isEdit && this.data?.task) {
       this.populateForm(this.data.task);
@@ -46,17 +49,21 @@ export class AddEditTaskModal implements OnInit {
   }
 
   initForm() {
+    // Use pieceId from data first, then fallback to selectedPiece id
+    const pieceId = this.data?.pieceId || this.selectedPiece?.id || '';
+    
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      description: [''],
+      description: ['', [Validators.required]],
       estimatedTime: [0, [Validators.required, Validators.min(0)]],
       quantity: [1, [Validators.required, Validators.min(1)]],
       status: ['To Do'],
       progress: [0],
       spentTime: [0],
       resourceIds: [[]],
-      pieceId: [this.data?.pieceId || ''],
-      dueDate: ['', [Validators.required]]
+      pieceId: [pieceId],
+      dueDate: ['', [Validators.required]],
+      actualFinishDate: ['']
     });
   }
 
@@ -71,19 +78,6 @@ export class AddEditTaskModal implements OnInit {
     });
   }
 
-  loadPieces() {
-    if (this.data?.projectId) {
-      this.piecesService.getPieces({ projectId: this.data.projectId }).subscribe({
-        next: (response) => {
-          this.pieces = response.pieces;
-        },
-        error: (error) => {
-          console.error('Error loading pieces:', error);
-        }
-      });
-    }
-  }
-
   populateForm(task: any) {
     this.taskForm.patchValue({
       name: task.name,
@@ -95,7 +89,8 @@ export class AddEditTaskModal implements OnInit {
       spentTime: task.spentTime,
       resourceIds: task.resourceIds || [],
       pieceId: task.pieceId,
-      dueDate: task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : ''
+      dueDate: task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '',
+      actualFinishDate: task.actualFinishDate ? new Date(task.actualFinishDate).toISOString().split('T')[0] : ''
     });
   }
 
@@ -105,15 +100,42 @@ export class AddEditTaskModal implements OnInit {
       
       try {
         const currentUser = this.authService.getCurrentUser();
-        const taskData = {
-          ...this.taskForm.value,
-          dueDate: new Date(this.taskForm.value.dueDate),
-          createdBy: currentUser?.id || 'unknown-user'
-        };
-
+        const formValue = this.taskForm.value;
+        
         if (this.isEdit) {
-          await this.tasksService.updateTask(this.data.task.id, taskData).toPromise();
+          // For editing, include all fields except pieceId
+          const taskData = {
+            name: formValue.name,
+            description: formValue.description,
+            estimatedTime: formValue.estimatedTime,
+            spentTime: formValue.spentTime || 0,
+            quantity: formValue.quantity,
+            progress: formValue.progress || 0,
+            status: formValue.status,
+            resourceIds: formValue.resourceIds || [],
+            dueDate: new Date(formValue.dueDate),
+            actualFinishDate: formValue.actualFinishDate ? new Date(formValue.actualFinishDate) : undefined
+          };
+          
+          const taskId = this.data?.task?.id || this.data?.task?._id;
+          if (!taskId) {
+            console.error('Task data:', this.data?.task);
+            throw new Error('Task ID is required for updates');
+          }
+          
+          await this.tasksService.updateTask(taskId, taskData).toPromise();
         } else {
+          // For creating, only send the essential fields
+          const taskData: any = {
+            name: formValue.name,
+            description: formValue.description,
+            estimatedTime: formValue.estimatedTime,
+            quantity: formValue.quantity,
+            resourceIds: formValue.resourceIds || [],
+            pieceId: formValue.pieceId || this.selectedPiece?.id || this.data?.pieceId,
+            dueDate: new Date(formValue.dueDate)
+          };
+          
           await this.tasksService.createTask(taskData).toPromise();
         }
 

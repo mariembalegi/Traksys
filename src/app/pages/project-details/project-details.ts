@@ -30,6 +30,7 @@ export class ProjectDetails implements OnInit {
   projectId!: string;
   selectedProject: ApiProjectDetails | null = null;
   pieces: any[] = [];
+  pieceTasks: Map<string, any[]> = new Map(); // Store tasks by pieceId
   isLoading = false;
   isRefreshing = false;
   errorMessage = '';
@@ -64,7 +65,6 @@ export class ProjectDetails implements OnInit {
         this.isLoading = false;
         this.isRefreshing = false;
         this.selectedProject = projectDetails;
-        console.log('Project details loaded:', projectDetails); // Debug log
       },
       error: (error) => {
         this.isLoading = false;
@@ -86,11 +86,21 @@ export class ProjectDetails implements OnInit {
     });
   }
 
+  loadTasksForPiece(pieceId: string) {
+    this.tasksService.getTasks({ pieceId: pieceId }).subscribe({
+      next: (response) => {
+        this.pieceTasks.set(pieceId, response.tasks);
+      },
+      error: (error) => {
+        console.error('Error loading tasks for piece:', error);
+      }
+    });
+  }
+
   loadPieces() {
     this.piecesService.getPieces({ projectId: this.projectId }).subscribe({
       next: (response) => {
         this.pieces = response.pieces;
-        console.log('Pieces loaded for project:', this.pieces);
       },
       error: (error) => {
         console.error('Error loading pieces:', error);
@@ -107,12 +117,18 @@ export class ProjectDetails implements OnInit {
       this.lineOpenSet.delete(id);
     } else {
       this.lineOpenSet.add(id);
+      // Load tasks when piece is opened
+      this.loadTasksForPiece(id);
     }
   }
 
   expandAll() {
     if (this.pieces) {
-      this.lineOpenSet = new Set(this.pieces.map(p => p.id));
+      this.lineOpenSet = new Set(this.pieces.map(p => p._id));
+      // Load tasks for all pieces when expanding all
+      this.pieces.forEach(piece => {
+        this.loadTasksForPiece(piece._id);
+      });
     }
   }
 
@@ -130,8 +146,7 @@ export class ProjectDetails implements OnInit {
   }
 
   getTasksForPiece(pieceId: string): any[] {
-    if (!this.selectedProject?.tasks) return [];
-    return this.selectedProject.tasks.filter(task => task.pieceId === pieceId);
+    return this.pieceTasks.get(pieceId) || [];
   }
 
   protected AddEditPieceModal() {
@@ -144,7 +159,6 @@ export class ProjectDetails implements OnInit {
 
     dialogRef.closed.subscribe(result => {
       if (result === 'saved') {
-        console.log('Piece added successfully, refreshing project details...'); // Debug log
         this.loadProjectDetails(); // Refresh the project details
         this.loadPieces(); // Refresh the pieces list
         this.toastService.showSuccess('Piece added successfully');
@@ -162,8 +176,9 @@ export class ProjectDetails implements OnInit {
     });
 
     dialogRef.closed.subscribe(result => {
-      if (result === 'saved') {
-        this.loadProjectDetails(); // Refresh the project details
+      if (result === 'saved' && pieceId) {
+        // Refresh tasks for the specific piece
+        this.loadTasksForPiece(pieceId);
         this.toastService.showSuccess('Task added successfully');
       }
     });
@@ -180,7 +195,6 @@ export class ProjectDetails implements OnInit {
 
     dialogRef.closed.subscribe(result => {
       if (result === 'saved') {
-        console.log('Piece updated successfully, refreshing pieces...'); // Debug log
         this.loadPieces(); // Refresh the pieces list
         this.toastService.showSuccess('Piece updated successfully');
       }
@@ -192,13 +206,16 @@ export class ProjectDetails implements OnInit {
       data: { 
         task: task,
         projectId: this.projectId,
+        pieceId: task.pieceId,
         isEdit: true 
       }
     });
 
     dialogRef.closed.subscribe(result => {
       if (result === 'saved') {
-        this.loadProjectDetails();
+        if (task.pieceId) {
+          this.loadTasksForPiece(task.pieceId._id);
+        }
         this.toastService.showSuccess('Task updated successfully');
       }
     });
@@ -206,7 +223,7 @@ export class ProjectDetails implements OnInit {
 
   deletePiece(piece: any) {
     if (confirm(`Are you sure you want to delete the piece "${piece.name}"?`)) {
-      this.piecesService.deletePiece(piece.id).subscribe({
+      this.piecesService.deletePiece(piece._id).subscribe({
         next: () => {
           console.log('Piece deleted successfully, refreshing pieces...'); // Debug log
           this.loadPieces(); // Refresh the pieces list

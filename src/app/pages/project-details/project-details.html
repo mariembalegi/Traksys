@@ -64,9 +64,9 @@
         </thead>
         <tbody>
         <ng-container *ngFor="let piece of pieces; let i = index">
-          <tr (click)="toggleDropdown(piece.id)" [class.open]="isOpen(piece.id)">
+          <tr (click)="toggleDropdown(piece._id)" [class.open]="isOpen(piece._id)">
             <td class="reference">
-              <span>{{ isOpen(piece.id)  ? '▼' : '▶' }}</span>
+              <span>{{ isOpen(piece._id)  ? '▼' : '▶' }}</span>
               <span>{{ piece.reference }}</span>
             </td>
             <td class="picture-piece">
@@ -87,12 +87,12 @@
               </button>
             </td>
           </tr>
-          <ng-container *ngIf="isOpen(piece.id)">
+          <ng-container *ngIf="isOpen(piece._id)">
             <tr>
               <td colspan="9" class="nested-table-container">
                 <div class="nested-content-wrapper">
                   <div class="add-task-btn">
-                    <button (click)="AddEditTaskModal(piece.id)"><span class="btn-text">Add Task</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+                    <button (click)="AddEditTaskModal(piece._id)"><span class="btn-text">Add Task</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
                   </div>
                   <table class="nested-table">
                   <thead>
@@ -114,7 +114,7 @@
                   </tr>
                   </thead>
                                     <tbody>
-                  <tr *ngFor="let task of getTasksForPiece(piece.id)">
+                  <tr *ngFor="let task of getTasksForPiece(piece._id)">
                     <td>
                       <i class="fa-solid fa-grip-vertical" style="color: #000000;"></i>
                     </td>
@@ -134,7 +134,7 @@
                     </td>
                     <td>{{ task.dueDate | date:'dd/MM/yyyy' }}</td>
                     <td>{{ task.actualFinishDate | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ getResourceName(task.createdBy) }}</td>
+                    <td>{{ task.createdBy.firstName + ' ' + task.createdBy.lastName }}</td>
                     <td>{{ task.creationDate | date:'dd/MM/yyyy' }}</td>
                     <td class="actions">
                       <button class="btn-icon" (click)="editTask(task)">
@@ -145,7 +145,7 @@
                       </button>
                     </td>
                   </tr>
-                  <tr *ngIf="getTasksForPiece(piece.id).length === 0">
+                  <tr *ngIf="getTasksForPiece(piece._id).length === 0">
                     <td colspan="14" class="no-tasks-message">
                       No tasks assigned to this piece. Click "Add Task" to create one.
                     </td>
