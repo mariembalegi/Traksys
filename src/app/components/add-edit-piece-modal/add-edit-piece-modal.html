@@ -1,21 +1,75 @@
 <div class="add-edit-piece-modal">
   <div class="header">
-    <h1>project registration</h1>
+    <h1>{{ isEdit ? 'EDIT PIECE' : 'PIECE REGISTRATION' }}</h1>
     <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
   </div>
-  <form>
+  <form [formGroup]="pieceForm" (ngSubmit)="onSubmit()">
     <div class="name-quantity-input">
-      <div class="name"><label class="name-input">Name:<input type="text"/></label></div>
-      <div class="quantity-input">
-        <label for="quantity">Quantity:
-          <input type="number"/>
-        </label>
+      <label class="name-input">
+        Reference:
+        <input type="text" formControlName="reference" placeholder="Enter piece reference" required/>
+        <div *ngIf="pieceForm.get('reference')?.invalid && pieceForm.get('reference')?.touched" class="error">
+          Reference is required
+        </div>
+      </label>
+      <label class="name-input">
+        Name:
+        <input type="text" formControlName="name" placeholder="Enter piece name" required/>
+        <div *ngIf="pieceForm.get('name')?.invalid && pieceForm.get('name')?.touched" class="error">
+          Name is required
+        </div>
+      </label>
+      <label class="quantity-input">
+        Quantity:
+        <input type="number" formControlName="quantity" placeholder="0" min="1" required/>
+        <div *ngIf="pieceForm.get('quantity')?.invalid && pieceForm.get('quantity')?.touched" class="error">
+          Quantity must be at least 1
+        </div>
+      </label>
+    </div>
+    
+    <div class="description-input">
+      <label for="piece">
+        Description:
+        <textarea cols="30" id="piece" formControlName="description" rows="3" placeholder="Enter piece description"></textarea>
+      </label>
+    </div>
+
+    <div class="material-section">
+      <div class="material-input">
+        <div class="title">
+          Material:
+          <i class="fa-solid fa-plus fa-2xs" style="color: #374151;" (click)="addMaterialModal()"></i>
+        </div>
+        <select id="materialId" formControlName="materialId" class="form-input">
+          <option value="">Select Material</option>
+          <option *ngFor="let material of materials" [value]="material.id">
+            {{ material.material }} - {{ material.type }} ({{ material.shape }})
+          </option>
+        </select>
+      </div>
+      <div class="material-quantity-input">
+        <label for="materialQuantity">Material Quantity:</label>
+        <input type="number" id="materialQuantity" formControlName="materialQuantity" 
+               class="form-input" min="0" step="0.1" placeholder="0">
       </div>
     </div>
-    <div class="description-input">
-      <label for="piece">Description:
-        <textarea cols="30" id="piece" name="piece" rows="3"></textarea>
-      </label>
+
+    <div *ngIf="isEdit" class="status-progress-section">
+      <div class="status-input">
+        <label for="status">Status:</label>
+        <select id="status" formControlName="status" class="form-input">
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="Blocked">Blocked</option>
+        </select>
+      </div>
+      <div class="progress-input">
+        <label for="progress">Progress (%):</label>
+        <input type="number" id="progress" formControlName="progress" 
+               class="form-input" min="0" max="100" placeholder="0">
+      </div>
     </div>
 
     <div class="form-group">
@@ -27,30 +81,31 @@
           id="designFile"
           name="designFile"
           type="file"
+          (change)="onFileSelected($event, 'designFile')"
         >
-        <small class="form-help">Accepted formats: SolidWorks (.sldprt, .sldasm), STEP (.step, .stp), IGES (.iges,
-          .igs)</small>
+        <small class="form-help">Accepted formats: SolidWorks (.sldprt, .sldasm), STEP (.step, .stp), IGES (.iges, .igs)</small>
       </div>
       <div class="picture-input">
-        <label for="designFile">Design Picture:</label>
+        <label for="designPicture">Design Picture:</label>
         <input
           accept=".jpg,.jpeg,.png,.gif,.bmp,.webp,.svg"
           class="form-input"
-          id="designFile"
-          name="designFile"
+          id="designPicture"
+          name="designPicture"
           type="file"
+          (change)="onFileSelected($event, 'designPicture')"
         >
-        <small class="form-help">Accepted formats: JPEG (.jpg, .jpeg), PNG (.png), GIF (.gif), BMP (.bmp), WebP (.webp),
-          SVG (.svg)</small>
+        <small class="form-help">Accepted formats: JPEG (.jpg, .jpeg), PNG (.png), GIF (.gif), BMP (.bmp), WebP (.webp), SVG (.svg)</small>
       </div>
-
     </div>
+    
     <div class="modal-actions">
-      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button" [disabled]="isLoading">
         Cancel
       </button>
-      <button class="btn btn-primary" type="submit">
-        Save
+      <button class="btn btn-primary" type="submit" [disabled]="pieceForm.invalid || isLoading">
+        <span *ngIf="isLoading">{{ isEdit ? 'Updating...' : 'Saving...' }}</span>
+        <span *ngIf="!isLoading">{{ isEdit ? 'Update' : 'Save' }}</span>
       </button>
     </div>
   </form>

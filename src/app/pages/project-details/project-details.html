@@ -15,7 +15,7 @@
   </div>
 
   <!-- Main Content -->
-  <div *ngIf="!isLoading && !errorMessage && selectedProject">
+  <div *ngIf="!isLoading && !errorMessage && selectedProject" class="w-100">
     <div class="action-section">
       <div class="right-section">
         <div class="return-btn">
@@ -79,10 +79,10 @@
             <td>{{ piece.description }}</td>
             <td>{{ piece.quantity }}</td>
             <td class="actions">
-              <button class="btn-icon" >
+              <button class="btn-icon" (click)="editPiece(piece)">
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="btn-icon btn-delete" (click)="deletePiece(i)">
+              <button class="btn-icon btn-delete" (click)="deletePiece(piece)">
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -92,7 +92,7 @@
               <td colspan="9" class="nested-table-container">
                 <div class="nested-content-wrapper">
                   <div class="add-task-btn">
-                    <button (click)="AddEditTaskModal()"><span class="btn-text">Add Task</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
+                    <button (click)="AddEditTaskModal(piece.id)"><span class="btn-text">Add Task</span> <i class="fa-solid fa-plus" style="color: #ffffff;"></i></button>
                   </div>
                   <table class="nested-table">
                   <thead>
@@ -113,8 +113,8 @@
                     <th>Action</th>
                   </tr>
                   </thead>
-                  <tbody>
-                  <tr *ngFor="let task of selectedProject.tasks">
+                                    <tbody>
+                  <tr *ngFor="let task of getTasksForPiece(piece.id)">
                     <td>
                       <i class="fa-solid fa-grip-vertical" style="color: #000000;"></i>
                     </td>
@@ -137,12 +137,17 @@
                     <td>{{ getResourceName(task.createdBy) }}</td>
                     <td>{{ task.creationDate | date:'dd/MM/yyyy' }}</td>
                     <td class="actions">
-                      <button class="btn-icon" >
+                      <button class="btn-icon" (click)="editTask(task)">
                         <i class="fas fa-edit"></i>
                       </button>
-                      <button class="btn-icon btn-delete" (click)="deleteTask(i)">
+                      <button class="btn-icon btn-delete" (click)="deleteTask(task)">
                         <i class="fas fa-trash"></i>
                       </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="getTasksForPiece(piece.id).length === 0">
+                    <td colspan="14" class="no-tasks-message">
+                      No tasks assigned to this piece. Click "Add Task" to create one.
                     </td>
                   </tr>
                   </tbody>

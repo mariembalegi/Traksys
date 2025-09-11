@@ -104,4 +104,46 @@ export class NotificationService {
     const notifications = this.notifications.value.filter(n => n.id !== notificationId);
     this.notifications.next(notifications);
   }
+
+  showSuccess(message: string) {
+    const notification: Notification = {
+      id: `success_${Date.now()}`,
+      title: 'Success',
+      message: message,
+      timestamp: new Date(),
+      type: 'success',
+      read: false
+    };
+
+    const currentNotifications = this.notifications.value;
+    this.notifications.next([notification, ...currentNotifications]);
+  }
+
+  showError(message: string) {
+    const notification: Notification = {
+      id: `error_${Date.now()}`,
+      title: 'Error',
+      message: message,
+      timestamp: new Date(),
+      type: 'warning',
+      read: false
+    };
+
+    const currentNotifications = this.notifications.value;
+    this.notifications.next([notification, ...currentNotifications]);
+  }
+
+  showInfo(message: string) {
+    const notification: Notification = {
+      id: `info_${Date.now()}`,
+      title: 'Information',
+      message: message,
+      timestamp: new Date(),
+      type: 'info',
+      read: false
+    };
+
+    const currentNotifications = this.notifications.value;
+    this.notifications.next([notification, ...currentNotifications]);
+  }
 }

@@ -4,9 +4,9 @@
   display: flex;
   flex-wrap: wrap;
   border-radius: 14px;
-  width: 400px;
-  min-width: 200px;
-  height: 500px;
+  width: 500px;
+  min-width: 400px;
+  max-height: 85vh;
   overflow-y: auto;
   margin: 20px;
   scrollbar-width: thin;
@@ -102,6 +102,7 @@
       width: 100%;
       display: flex;
       flex-wrap: wrap;
+      margin-bottom: 15px;
 
       label {
         width: 100%;
@@ -113,26 +114,90 @@
         border: 1px solid #e2e8f0;
         border-radius: 6px;
         box-sizing: border-box;
+        padding: 10px;
+        font-family: "Darker Grotesque", serif;
+        resize: vertical;
+        min-height: 80px;
       }
+    }
+
+    .quantity-piece-section {
+      width: 100%;
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+
+      .quantity-input, .piece-input {
+        flex: 1;
+      }
+
+      input, select, .form-select {
+        width: 100%;
+        outline: none;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        padding: 10px 10px 8px 10px;
+        box-sizing: border-box;
+        font-family: "Darker Grotesque", serif;
+        background: white;
+      }
+    }
+
+    .status-progress-section {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+
+      .status-input, .progress-input, .spent-time-input {
+        flex: 1;
+      }
+
+      input, select, .form-select {
+        width: 100%;
+        outline: none;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        padding: 10px 10px 8px 10px;
+        box-sizing: border-box;
+        font-family: "Darker Grotesque", serif;
+        background: white;
+      }
+    }
+
+    .error {
+      color: #ef4444;
+      font-size: 11px;
+      margin-top: 2px;
+      font-weight: normal;
     }
 
     .time{
       width: 100%;
       display: flex;
       justify-content: space-between;
-      gap:10px;
+      gap: 15px;
+      margin-bottom: 15px;
+
+      .due-date, .estimated-time {
+        flex: 1;
+      }
+
       input {
-        width: 100%; // Full width of the container
+        width: 100%;
         outline: none;
         border-radius: 6px;
         border: 1px solid #e2e8f0;
         padding: 10px 10px 8px 10px;
         box-sizing: border-box;
-
+        font-family: "Darker Grotesque", serif;
+        background: white;
       }
     }
+
     .resources{
       width: 100%;
+      margin-bottom: 20px;
     }
     ng-select {
       width: 100%; // Full width of the container

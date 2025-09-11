@@ -9,6 +9,10 @@ import {Dialog} from '@angular/cdk/dialog';
 import {AddEditPieceModal} from '../../components/add-edit-piece-modal/add-edit-piece-modal';
 import {AddEditTaskModal} from '../../components/add-edit-task-modal/add-edit-task-modal';
 import { ProjectsService, ProjectDetails as ApiProjectDetails } from '../../core/services/projects.service';
+import { PiecesService } from '../../core/services/pieces.service';
+import { TasksService } from '../../core/services/tasks.service';
+import { ResourcesService } from '../../core/services/resources.service';
+import { ToastService } from '../../services/toast.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -27,18 +31,24 @@ export class ProjectDetails implements OnInit {
   selectedProject: ApiProjectDetails | null = null;
   isLoading = false;
   errorMessage = '';
+  resources: Resource[] = [];
 
   lineOpenSet: Set<string> = new Set();
   dialog1=inject(Dialog);
   dialog2=inject(Dialog);
   
   private projectsService = inject(ProjectsService);
+  private piecesService = inject(PiecesService);
+  private tasksService = inject(TasksService);
+  private resourcesService = inject(ResourcesService);
+  private toastService = inject(ToastService);
 
   constructor(private location: Location, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.projectId = this.route.snapshot.paramMap.get('id')!;
     this.loadProjectDetails();
+    this.loadResources();
   }
 
   loadProjectDetails() {
@@ -54,6 +64,17 @@ export class ProjectDetails implements OnInit {
         this.isLoading = false;
         this.errorMessage = 'Failed to load project details';
         console.error('Error loading project details:', error);
+      }
+    });
+  }
+
+  loadResources() {
+    this.resourcesService.getResources().subscribe({
+      next: (response) => {
+        this.resources = response.resources;
+      },
+      error: (error) => {
+        console.error('Error loading resources:', error);
       }
     });
   }
@@ -85,26 +106,109 @@ export class ProjectDetails implements OnInit {
   }
 
   getResourceName(resourceId: string): string {
-    // This would need to be implemented with a resources service
-    // For now, return the ID
-    return resourceId;
+    const resource = this.resources.find(r => r.id === resourceId);
+    return resource ? resource.name : resourceId;
+  }
+
+  getTasksForPiece(pieceId: string): any[] {
+    if (!this.selectedProject?.tasks) return [];
+    return this.selectedProject.tasks.filter(task => task.pieceId === pieceId);
   }
 
   protected AddEditPieceModal() {
-    this.dialog1.open(AddEditPieceModal);
+    const dialogRef = this.dialog1.open(AddEditPieceModal, {
+      data: { 
+        projectId: this.projectId,
+        isEdit: false 
+      }
+    });
+
+    dialogRef.closed.subscribe(result => {
+      if (result === 'saved') {
+        this.loadProjectDetails(); // Refresh the project details
+        this.toastService.showSuccess('Piece added successfully');
+      }
+    });
   }
 
-  protected AddEditTaskModal() {
-    this.dialog2.open(AddEditTaskModal);
+  protected AddEditTaskModal(pieceId?: string) {
+    const dialogRef = this.dialog2.open(AddEditTaskModal, {
+      data: { 
+        projectId: this.projectId,
+        pieceId: pieceId || null,
+        isEdit: false 
+      }
+    });
+
+    dialogRef.closed.subscribe(result => {
+      if (result === 'saved') {
+        this.loadProjectDetails(); // Refresh the project details
+        this.toastService.showSuccess('Task added successfully');
+      }
+    });
   }
 
-  deletePiece(index: number) {
-    // This would need to be implemented with pieces service
-    console.log('Delete piece at index:', index);
+  editPiece(piece: any) {
+    const dialogRef = this.dialog1.open(AddEditPieceModal, {
+      data: { 
+        piece: piece,
+        projectId: this.projectId,
+        isEdit: true 
+      }
+    });
+
+    dialogRef.closed.subscribe(result => {
+      if (result === 'saved') {
+        this.loadProjectDetails();
+        this.toastService.showSuccess('Piece updated successfully');
+      }
+    });
   }
 
-  deleteTask(index: number) {
-    // This would need to be implemented with tasks service
-    console.log('Delete task at index:', index);
+  editTask(task: any) {
+    const dialogRef = this.dialog2.open(AddEditTaskModal, {
+      data: { 
+        task: task,
+        projectId: this.projectId,
+        isEdit: true 
+      }
+    });
+
+    dialogRef.closed.subscribe(result => {
+      if (result === 'saved') {
+        this.loadProjectDetails();
+        this.toastService.showSuccess('Task updated successfully');
+      }
+    });
+  }
+
+  deletePiece(piece: any) {
+    if (confirm(`Are you sure you want to delete the piece "${piece.name}"?`)) {
+      this.piecesService.deletePiece(piece.id).subscribe({
+        next: () => {
+          this.loadProjectDetails();
+          this.toastService.showSuccess('Piece deleted successfully');
+        },
+        error: (error) => {
+          console.error('Error deleting piece:', error);
+          // Error toast will be shown by the global error interceptor
+        }
+      });
+    }
+  }
+
+  deleteTask(task: any) {
+    if (confirm(`Are you sure you want to delete the task "${task.name}"?`)) {
+      this.tasksService.deleteTask(task.id).subscribe({
+        next: () => {
+          this.loadProjectDetails();
+          this.toastService.showSuccess('Task deleted successfully');
+        },
+        error: (error) => {
+          console.error('Error deleting task:', error);
+          // Error toast will be shown by the global error interceptor
+        }
+      });
+    }
   }
 }

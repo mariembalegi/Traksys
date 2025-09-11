@@ -1,0 +1,173 @@
+<div class="add-material-modal">
+  <div class="header">
+    <h1>ADD MATERIAL</h1>
+    <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
+  </div>
+  
+  <form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+    <div class="basic-info-section">
+      <div class="material-name-input">
+        <label for="material">
+          Material Name:
+          <input type="text" id="material" formControlName="material" 
+                 placeholder="Enter material name" required/>
+          <div *ngIf="materialForm.get('material')?.invalid && materialForm.get('material')?.touched" class="error">
+            Material name is required
+          </div>
+        </label>
+      </div>
+      
+      <div class="material-type-input">
+        <label for="type">
+          Material Type:
+          <input type="text" id="type" formControlName="type" 
+                 placeholder="e.g., Steel, Aluminum, Plastic" required/>
+          <div *ngIf="materialForm.get('type')?.invalid && materialForm.get('type')?.touched" class="error">
+            Material type is required
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="shape-quantity-section">
+      <div class="shape-input">
+        <label for="shape">
+          Shape:
+          <select id="shape" formControlName="shape" class="form-input" required>
+            <option value="">Select Shape</option>
+            <option *ngFor="let shape of shapes" [value]="shape.value">
+              {{ shape.label }}
+            </option>
+          </select>
+          <div *ngIf="materialForm.get('shape')?.invalid && materialForm.get('shape')?.touched" class="error">
+            Shape is required
+          </div>
+        </label>
+      </div>
+      
+      <div class="quantity-input">
+        <label for="quantity">
+          Quantity:
+          <input type="number" id="quantity" formControlName="quantity" 
+                 min="0" step="0.1" placeholder="0" required/>
+          <div *ngIf="materialForm.get('quantity')?.invalid && materialForm.get('quantity')?.touched" class="error">
+            Quantity is required and must be 0 or greater
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Cylindrical Bar specific fields -->
+    <div *ngIf="selectedShape === 'Cylindrical Bar'" class="cylindrical-bar-section">
+      <h3>Cylindrical Bar Properties</h3>
+      <div class="cylindrical-inputs">
+        <div class="diameter-input">
+          <label for="diameter">
+            Diameter (mm):
+            <input type="number" id="diameter" formControlName="diameter" 
+                   min="0.1" step="0.1" placeholder="0.0"/>
+            <div *ngIf="materialForm.get('diameter')?.invalid && materialForm.get('diameter')?.touched" class="error">
+              Diameter is required and must be greater than 0
+            </div>
+          </label>
+        </div>
+        
+        <div class="length-input">
+          <label for="length">
+            Total Length (mm):
+            <input type="number" id="length" formControlName="length" 
+                   min="0.1" step="0.1" placeholder="0.0"/>
+            <div *ngIf="materialForm.get('length')?.invalid && materialForm.get('length')?.touched" class="error">
+              Length is required and must be greater than 0
+            </div>
+          </label>
+        </div>
+      </div>
+      
+      <div class="cylindrical-availability">
+        <div class="available-length-input">
+          <label for="available_length">
+            Available Length (mm):
+            <input type="number" id="available_length" formControlName="available_length" 
+                   min="0" step="0.1" placeholder="0.0"/>
+          </label>
+        </div>
+        
+        <div class="min-length-input">
+          <label for="min_length">
+            Min Length (mm):
+            <input type="number" id="min_length" formControlName="min_length" 
+                   min="0" step="0.1" placeholder="0.0"/>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plate specific fields -->
+    <div *ngIf="selectedShape === 'Plate'" class="plate-section">
+      <h3>Plate Properties</h3>
+      <div class="plate-dimensions">
+        <div class="x-input">
+          <label for="x">
+            Width (X) (mm):
+            <input type="number" id="x" formControlName="x" 
+                   min="0.1" step="0.1" placeholder="0.0"/>
+            <div *ngIf="materialForm.get('x')?.invalid && materialForm.get('x')?.touched" class="error">
+              Width is required and must be greater than 0
+            </div>
+          </label>
+        </div>
+        
+        <div class="y-input">
+          <label for="y">
+            Height (Y) (mm):
+            <input type="number" id="y" formControlName="y" 
+                   min="0.1" step="0.1" placeholder="0.0"/>
+            <div *ngIf="materialForm.get('y')?.invalid && materialForm.get('y')?.touched" class="error">
+              Height is required and must be greater than 0
+            </div>
+          </label>
+        </div>
+        
+        <div class="thickness-input">
+          <label for="thickness">
+            Thickness (mm):
+            <input type="number" id="thickness" formControlName="thickness" 
+                   min="0.1" step="0.1" placeholder="0.0"/>
+            <div *ngIf="materialForm.get('thickness')?.invalid && materialForm.get('thickness')?.touched" class="error">
+              Thickness is required and must be greater than 0
+            </div>
+          </label>
+        </div>
+      </div>
+      
+      <div class="plate-availability">
+        <div class="available-area-input">
+          <label for="available_area">
+            Available Area (mm²):
+            <input type="number" id="available_area" formControlName="available_area" 
+                   min="0" step="0.1" placeholder="0.0"/>
+          </label>
+        </div>
+        
+        <div class="min-area-input">
+          <label for="min_area">
+            Min Area (mm²):
+            <input type="number" id="min_area" formControlName="min_area" 
+                   min="0" step="0.1" placeholder="0.0"/>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button" [disabled]="isLoading">
+        Cancel
+      </button>
+      <button class="btn btn-primary" type="submit" [disabled]="materialForm.invalid || isLoading">
+        <span *ngIf="isLoading">Adding...</span>
+        <span *ngIf="!isLoading">Add Material</span>
+      </button>
+    </div>
+  </form>
+</div>

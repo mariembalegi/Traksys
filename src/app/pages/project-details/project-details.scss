@@ -132,6 +132,11 @@ $border-radius-xl: 14px;
   flex-wrap: wrap;
   gap: 10px;
   padding: 10px 20px;
+  width: 100%;
+
+  .w-100{
+      width: 100%;
+  }
 
   // ===================================
   // SECTION ACTIONS EN-TÊTE
@@ -707,4 +712,13 @@ $border-radius-xl: 14px;
       gap: 15px;
     }
   }
+}
+
+// No tasks message styling
+.no-tasks-message {
+  text-align: center;
+  color: $text-light;
+  font-style: italic;
+  padding: 20px !important;
+  background-color: $hover-gray;
 }

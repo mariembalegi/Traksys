@@ -1,42 +1,119 @@
 <div class="add-edit-task-modal">
   <div class="header">
-    <h1>project registration</h1>
+    <h1>{{ isEdit ? 'EDIT TASK' : 'TASK REGISTRATION' }}</h1>
     <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
   </div>
-  <form>
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <div class="name-input">
-      <label class="name-input">Name:<input type="text"/></label>
-    </div>
-    <div class="description-input">
-      <label for="piece">Description:
-        <textarea cols="30" id="piece" name="piece" rows="3"></textarea>
+      <label class="name-input">
+        Name:
+        <input type="text" formControlName="name" placeholder="Enter task name" required/>
+        <div *ngIf="taskForm.get('name')?.invalid && taskForm.get('name')?.touched" class="error">
+          Task name is required
+        </div>
       </label>
     </div>
+
+    <div class="description-input">
+      <label for="description">
+        Description:
+        <textarea cols="30" id="description" formControlName="description" rows="3" placeholder="Enter task description"></textarea>
+      </label>
+    </div>
+
+    <div class="quantity-piece-section">
+      <div class="quantity-input">
+        <label>
+          Quantity:
+          <input type="number" formControlName="quantity" min="1" placeholder="1" required/>
+          <div *ngIf="taskForm.get('quantity')?.invalid && taskForm.get('quantity')?.touched" class="error">
+            Quantity must be at least 1
+          </div>
+        </label>
+      </div>
+      <div class="piece-input">
+        <label>
+          Piece:
+          <select formControlName="pieceId" class="form-select">
+            <option value="">Select Piece (Optional)</option>
+            <option *ngFor="let piece of pieces" [value]="piece.id">
+              {{ piece.reference }} - {{ piece.name }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
+
     <div class="time">
       <div class="due-date">
-        <label>Due Date:<input type="date"/></label>
+        <label>
+          Due Date:
+          <input type="date" formControlName="dueDate" required/>
+          <div *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched" class="error">
+            Due date is required
+          </div>
+        </label>
       </div>
       <div class="estimated-time">
-        <label >Estimated Time:<input type="text"/></label>
+        <label>
+          Estimated Time (hours):
+          <input type="number" formControlName="estimatedTime" min="0" step="0.5" placeholder="0" required/>
+          <div *ngIf="taskForm.get('estimatedTime')?.invalid && taskForm.get('estimatedTime')?.touched" class="error">
+            Estimated time is required
+          </div>
+        </label>
       </div>
     </div>
+
+    <div *ngIf="isEdit" class="status-progress-section">
+      <div class="status-input">
+        <label>
+          Status:
+          <select formControlName="status" class="form-select">
+            <option value="To Do">To Do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="On Hold">On Hold</option>
+          </select>
+        </label>
+      </div>
+      <div class="progress-input">
+        <label>
+          Progress (%):
+          <input type="number" formControlName="progress" min="0" max="100" placeholder="0"/>
+        </label>
+      </div>
+      <div class="spent-time-input">
+        <label>
+          Time Spent (hours):
+          <input type="number" formControlName="spentTime" min="0" step="0.5" placeholder="0"/>
+        </label>
+      </div>
+    </div>
+
     <div class="resources">
-      <label> Resources
-      <ng-select
-        [items]="resources"
-        bindLabel="name"
-        bindValue="id"
-        [multiple]="true"
-      >
-      </ng-select>
+      <label>
+        Resources:
+        <ng-select
+          [items]="resources"
+          bindLabel="name"
+          bindValue="id"
+          [multiple]="true"
+          formControlName="resourceIds"
+          placeholder="Select resources"
+          [clearable]="true"
+        >
+        </ng-select>
       </label>
     </div>
+
     <div class="modal-actions">
-      <button (click)="closeModal()" class="btn btn-secondary" type="button">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button" [disabled]="isLoading">
         Cancel
       </button>
-      <button class="btn btn-primary" type="submit">
-        Save
+      <button class="btn btn-primary" type="submit" [disabled]="taskForm.invalid || isLoading">
+        <span *ngIf="isLoading">{{ isEdit ? 'Updating...' : 'Saving...' }}</span>
+        <span *ngIf="!isLoading">{{ isEdit ? 'Update' : 'Save' }}</span>
       </button>
     </div>
   </form>

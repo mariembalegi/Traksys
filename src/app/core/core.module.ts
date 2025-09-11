@@ -20,6 +20,7 @@ import { ReportsService } from './services/reports.service';
 import { UploadService } from './services/upload.service';
 import { WebSocketService } from './services/websocket.service';
 import { LoadingService } from './services/loading.service';
+import { ToastService } from '../services/toast.service';
 
 // Interceptors
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -54,6 +55,7 @@ import { AuthGuard } from './guards/auth.guard';
     UploadService,
     WebSocketService,
     LoadingService,
+    ToastService,
     
     // Guards
     AuthGuard,

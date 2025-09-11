@@ -1,39 +1,86 @@
+// Remove Angular CDK Dialog default styles
+:host {
+  display: block;
+}
+
+::ng-deep .cdk-overlay-container {
+  .cdk-overlay-backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .cdk-overlay-pane {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  
+  .cdk-dialog-container {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
 .add-edit-piece-modal {
   background-color: #FFFFFF;
-  padding: 10px 20px 20px 20px;
+  padding: 24px 32px 32px 32px;
   display: flex;
   flex-wrap: wrap;
-  border-radius: 14px;
-  width: 400px;
-  min-width: 200px;
-  height: 500px;
+  border-radius: 16px;
+  width: 600px;
+  max-width: 90vw;
+  min-width: 500px;
+  max-height: 85vh;
   overflow-y: auto;
   margin: 20px;
   scrollbar-width: thin;
   scrollbar-color: #c0c0c0 transparent;
-
-  .scroll-container::-webkit-scrollbar {
-    width: 8px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: none !important;
+  outline: none !important;
+  
+  &:focus {
+    outline: none !important;
+    border: none !important;
   }
 
-  .scroll-container::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 14px;
+  // Mobile responsiveness
+  @media (max-width: 768px) {
+    width: 95vw;
+    min-width: 300px;
+    padding: 20px 24px 24px 24px;
+    margin: 10px;
+    border-radius: 12px;
   }
 
-  .scroll-container::-webkit-scrollbar-thumb {
-    background-color: #c0c0c0;
-    border-radius: 14px;
-    border: 2px solid transparent;
-    background-clip: content-box;
+  @media (max-width: 480px) {
+    width: 98vw;
+    min-width: 280px;
+    padding: 16px 20px 20px 20px;
+    margin: 5px;
+    border-radius: 8px;
   }
 
-  .scroll-container::-webkit-scrollbar-thumb:hover {
-    background-color: #a0a0a0;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
 
-  .scroll-container::-webkit-scrollbar-corner {
-    background: transparent;
+  &::-webkit-scrollbar-track {
+    background: #f9fafb;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #9ca3af;
+    }
   }
 
   .header {
@@ -48,24 +95,32 @@
       color: #374151;
       letter-spacing: 0.025em;
       font-family: "Darker Grotesque", serif;
-      font-size: 20px;
+      font-size: 28px;
       margin-bottom: 0.5rem;
       text-transform: uppercase;
+
+      @media (max-width: 768px) {
+        font-size: 24px;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 20px;
+      }
     }
 
     i {
       margin-top: 13px;
-      border-radius: 50%; // make it circular
-      padding: 6px; // space around the icon
-      cursor: pointer; // show it's clickable
-      transition: all 0.2s ease; // smooth hover effect
+      border-radius: 50%;
+      padding: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
 
       &:hover {
-        transform: scale(1.1); // small zoom effect
+        transform: scale(1.1);
       }
 
       &:active {
-        transform: scale(0.95); // "press" effect
+        transform: scale(0.95);
       }
     }
   }
@@ -73,37 +128,84 @@
   form {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 
     label {
       font-weight: 600;
       color: #374151;
       letter-spacing: 0.025em;
       font-family: "Darker Grotesque", serif;
-      font-size: 0.875rem;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
       text-transform: uppercase;
 
+      &.title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: #FF4136;
+        text-decoration: none;
+        position: relative;
+
+        &:hover {
+          color: #e53935;
+          transform: translateY(-1px);
+        }
+
+        &::after {
+          content: "+";
+          font-size: 18px;
+          font-weight: bold;
+          color: #FF4136;
+          transition: all 0.2s ease;
+        }
+
+        &:hover::after {
+          color: #e53935;
+          transform: scale(1.1);
+        }
+      }
     }
 
     .name-quantity-input {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
-      gap:10px;
-      .name{
-        flex:1
-      }
-      .quantity-input{
-        flex:1;
-      }
-      input {
-        width: 100%; // Full width of the container
-        outline: none;
-        border-radius: 6px;
-        border: 1px solid #e2e8f0;
-        padding: 10px 10px 8px 10px;
-        box-sizing: border-box;
+      gap: 16px;
+      margin-bottom: 20px;
 
+      .name-input {
+        flex: 1;
+        
+        input {
+          width: 100%;
+          outline: none;
+          border-radius: 8px;
+          border: 1px solid #e2e8f0;
+          padding: 14px 16px;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-family: "Darker Grotesque", serif;
+          min-height: 52px;
+        }
+      }
+
+      .quantity-input {
+        flex: 1;
+        
+        input {
+          width: 100%;
+          outline: none;
+          border-radius: 8px;
+          border: 1px solid #e2e8f0;
+          padding: 14px 16px;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-family: "Darker Grotesque", serif;
+          min-height: 52px;
+        }
       }
     }
 
@@ -111,6 +213,7 @@
       width: 100%;
       display: flex;
       flex-wrap: wrap;
+      margin-bottom: 20px;
 
       label {
         width: 100%;
@@ -120,68 +223,88 @@
         width: 100%;
         outline: none;
         border: 1px solid #e2e8f0;
-        border-radius: 6px;
+        border-radius: 8px;
         box-sizing: border-box;
+        padding: 14px 16px;
+        font-size: 16px;
+        font-family: "Darker Grotesque", serif;
+        resize: vertical;
+        min-height: 100px;
       }
     }
 
-    .material-type-input {
+    .material-section {
       width: 100%;
       display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
 
       .material-input {
-        flex: 1;
+        flex: 2;
+        min-width: 200px;
       }
 
-      .type-input {
+      .material-quantity-input {
         flex: 1;
+        min-width: 150px;
       }
-    }
-    .quantity-input{
-      width: 100%;
-      input {
-        width: 100%; // Full width of the container
+
+      label {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+
+      .form-input {
+        width: 100%;
         outline: none;
-        border-radius: 6px;
+        border-radius: 8px;
         border: 1px solid #e2e8f0;
-        padding: 10px 10px 8px 10px;
+        padding: 14px 16px;
         box-sizing: border-box;
-
+        font-size: 16px;
+        font-family: "Darker Grotesque", serif;
+        min-height: 52px;
+        background: white;
       }
     }
-    ng-select {
-      width: 100%; // Full width of the container
-    }
 
-    // Target ng-select internal elements if needed
-    ::ng-deep .ng-select {
+    .status-progress-section {
       width: 100%;
-    }
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
 
-    ::ng-deep .ng-select .ng-select-container {
-      border-radius: 6px;
-      border: 1px solid #e2e8f0;
-      padding: 8px 10px;
-      background: #FFFFFF;
-      font-family: "Darker Grotesque", serif;
-    }
-
-    ::ng-deep .ng-select .ng-select-container .ng-placeholder {
-      color: #777;
-      font-family: "Darker Grotesque", serif;
-    }
-
-    ::ng-deep .ng-select .ng-select-container .ng-value {
-      font-family: 'darker Grotesque', serif;
-    }
-
-    ::ng-deep .ng-select .ng-dropdown-panel .ng-option {
-      font-family: 'darker Grotesque', serif;
-
-      &:hover {
-        background: #f5f5f5;
+      .status-input, .progress-input {
+        flex: 1;
+        min-width: 150px;
       }
+
+      label {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+
+      .form-input {
+        width: 100%;
+        outline: none;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        padding: 14px 16px;
+        box-sizing: border-box;
+        font-size: 16px;
+        font-family: "Darker Grotesque", serif;
+        min-height: 52px;
+        background: white;
+      }
+    }
+
+    .error {
+      color: #ef4444;
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: normal;
     }
 
     .form-group {
@@ -190,68 +313,68 @@
       margin-bottom: 1.5rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 16px;
+
+      .file-input, .picture-input {
+        flex: 1;
+        min-width: 250px;
+      }
 
       label {
         width: 100%;
-
-        &::after {
-          content: " *";
-          color: #ef4444;
-          font-weight: 500;
-        }
+        margin-bottom: 8px;
       }
 
       .form-input {
         position: relative;
         width: 100%;
-        padding: 0.75rem 1rem;
+        padding: 14px 16px;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
         background: #ffffff;
-        font-size: 0.875rem;
+        font-size: 16px;
         color: #374151;
         transition: all 0.2s ease-in-out;
         cursor: pointer;
         box-sizing: border-box;
+        min-height: 52px;
+        display: flex;
+        align-items: center;
 
-
-        // Style pour le bouton de fichier
         &::file-selector-button {
           background: #FF4136;
           color: white;
           border: none;
-          padding: 0.5rem 1rem;
+          padding: 8px 16px;
           border-radius: 6px;
-          font-weight: 500;
-          font-size: 0.813rem;
+          font-weight: 600;
+          font-size: 14px;
+          font-family: "Darker Grotesque", serif;
           cursor: pointer;
-          margin-right: 0.75rem;
+          margin-right: 12px;
           transition: all 0.2s ease;
 
           &:hover {
-            background-color: #FF4136;
+            background-color: #e53935;
             transform: translateY(-1px);
-            color: #fff;
-            transition: all 0.2s ease;
           }
         }
 
-        // Fallback pour les navigateurs plus anciens
         &::-webkit-file-upload-button {
           background: #FF4136;
           color: white;
           border: none;
-          padding: 0.5rem 1rem;
+          padding: 8px 16px;
           border-radius: 6px;
-          font-weight: 500;
-          font-size: 0.813rem;
+          font-weight: 600;
+          font-size: 14px;
+          font-family: "Darker Grotesque", serif;
           cursor: pointer;
-          margin-right: 0.75rem;
+          margin-right: 12px;
           transition: all 0.2s ease;
 
           &:hover {
-            background: #FF4136;
+            background: #e53935;
             transform: translateY(-1px);
           }
         }
@@ -260,19 +383,19 @@
       .form-help {
         display: flex;
         align-items: center;
-        margin-top: 0.5rem;
-        font-size: 0.75rem;
+        margin-top: 8px;
+        font-size: 12px;
         color: #6b7280;
         line-height: 1.4;
+        width: 100%;
 
         &::before {
           content: "📋";
-          margin-right: 0.5rem;
-          font-size: 0.875rem;
+          margin-right: 6px;
+          font-size: 14px;
         }
       }
 
-      // État d'erreur
       &.error {
         .form-input {
           border-color: #ef4444;
@@ -292,7 +415,6 @@
         }
       }
 
-      // État de succès
       &.success {
         .form-input {
           border-color: #10b981;
@@ -308,7 +430,6 @@
         }
       }
 
-      // Animation de drop zone
       &.drag-over {
         .form-input {
           border-color: #3b82f6;
@@ -324,25 +445,32 @@
       display: flex;
       justify-content: flex-end;
       gap: 1rem;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
 
       .btn {
-        padding: 10px 15px;
+        padding: 14px 24px;
         border: none;
-        border-radius: 6px;
-        font-weight: 500;
+        border-radius: 8px;
+        font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.9rem;
+        font-size: 16px;
+        font-family: "Darker Grotesque", serif;
+        min-width: 120px;
+        justify-content: center;
 
         &.btn-secondary {
           background-color: #fff;
           color: #374151;
+          border: 1px solid #e5e7eb;
 
           &:hover {
-            background-color: #ccc;
+            background-color: #f9fafb;
             transform: translateY(-1px);
           }
         }
