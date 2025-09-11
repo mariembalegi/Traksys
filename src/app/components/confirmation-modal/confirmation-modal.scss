@@ -1,0 +1,99 @@
+.confirmation-modal {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  min-width: 400px;
+  max-width: 500px;
+  overflow: hidden;
+
+  .modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e0e0e0;
+
+    &.header-danger {
+      background: linear-gradient(135deg, #ff4757, #ff3838);
+      color: white;
+    }
+
+    &.header-warning {
+      background: linear-gradient(135deg, #ffa726, #ff9800);
+      color: white;
+    }
+
+    &.header-info {
+      background: linear-gradient(135deg, #42a5f5, #2196f3);
+      color: white;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .modal-body {
+    padding: 24px;
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #666;
+    }
+  }
+
+  .modal-footer {
+    padding: 16px 24px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 80px;
+
+      &.btn-secondary {
+        background: #e0e0e0;
+        color: #666;
+
+        &:hover {
+          background: #d5d5d5;
+        }
+      }
+
+      &.btn-danger {
+        background: #ff4757;
+        color: white;
+
+        &:hover {
+          background: #ff3838;
+        }
+      }
+
+      &.btn-warning {
+        background: #ffa726;
+        color: white;
+
+        &:hover {
+          background: #ff9800;
+        }
+      }
+
+      &.btn-info {
+        background: #42a5f5;
+        color: white;
+
+        &:hover {
+          background: #2196f3;
+        }
+      }
+    }
+  }
+}

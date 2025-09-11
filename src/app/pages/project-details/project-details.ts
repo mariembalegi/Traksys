@@ -8,6 +8,7 @@ import {Task} from '../../models/task';
 import {Dialog} from '@angular/cdk/dialog';
 import {AddEditPieceModal} from '../../components/add-edit-piece-modal/add-edit-piece-modal';
 import {AddEditTaskModal} from '../../components/add-edit-task-modal/add-edit-task-modal';
+import {ConfirmationModal} from '../../components/confirmation-modal/confirmation-modal';
 import { ProjectsService, ProjectDetails as ApiProjectDetails } from '../../core/services/projects.service';
 import { PiecesService } from '../../core/services/pieces.service';
 import { TasksService } from '../../core/services/tasks.service';
@@ -39,6 +40,7 @@ export class ProjectDetails implements OnInit {
   lineOpenSet: Set<string> = new Set();
   dialog1=inject(Dialog);
   dialog2=inject(Dialog);
+  dialog3=inject(Dialog); // For confirmation modal
   
   private projectsService = inject(ProjectsService);
   private piecesService = inject(PiecesService);
@@ -222,33 +224,60 @@ export class ProjectDetails implements OnInit {
   }
 
   deletePiece(piece: any) {
-    if (confirm(`Are you sure you want to delete the piece "${piece.name}"?`)) {
-      this.piecesService.deletePiece(piece._id).subscribe({
-        next: () => {
-          console.log('Piece deleted successfully, refreshing pieces...'); // Debug log
-          this.loadPieces(); // Refresh the pieces list
-          this.toastService.showSuccess('Piece deleted successfully');
-        },
-        error: (error) => {
-          console.error('Error deleting piece:', error);
-          // Error toast will be shown by the global error interceptor
-        }
-      });
-    }
+    const dialogRef = this.dialog3.open(ConfirmationModal, {
+      data: {
+        title: 'Delete Piece',
+        message: `Are you sure you want to delete the piece "${piece.name}"? This action cannot be undone.`,
+        confirmText: 'Delete',
+        cancelText: 'Cancel',
+        type: 'danger'
+      }
+    });
+
+    dialogRef.closed.subscribe(result => {
+      if (result === true) {
+        this.piecesService.deletePiece(piece._id).subscribe({
+          next: () => {
+            console.log('Piece deleted successfully, refreshing pieces...'); // Debug log
+            this.loadPieces(); // Refresh the pieces list
+            this.toastService.showSuccess('Piece deleted successfully');
+          },
+          error: (error) => {
+            console.error('Error deleting piece:', error);
+            // Error toast will be shown by the global error interceptor
+          }
+        });
+      }
+    });
   }
 
   deleteTask(task: any) {
-    if (confirm(`Are you sure you want to delete the task "${task.name}"?`)) {
-      this.tasksService.deleteTask(task.id).subscribe({
-        next: () => {
-          this.loadProjectDetails();
-          this.toastService.showSuccess('Task deleted successfully');
-        },
-        error: (error) => {
-          console.error('Error deleting task:', error);
-          // Error toast will be shown by the global error interceptor
-        }
-      });
-    }
+    const dialogRef = this.dialog3.open(ConfirmationModal, {
+      data: {
+        title: 'Delete Task',
+        message: `Are you sure you want to delete the task "${task.name}"? This action cannot be undone.`,
+        confirmText: 'Delete',
+        cancelText: 'Cancel',
+        type: 'danger'
+      }
+    });
+
+    dialogRef.closed.subscribe(result => {
+      if (result === true) {
+        this.tasksService.deleteTask(task.id).subscribe({
+          next: () => {
+            // Refresh tasks for the specific piece this task belongs to
+            if (task.pieceId) {
+              this.loadTasksForPiece(task.pieceId);
+            }
+            this.toastService.showSuccess('Task deleted successfully');
+          },
+          error: (error) => {
+            console.error('Error deleting task:', error);
+            // Error toast will be shown by the global error interceptor
+          }
+        });
+      }
+    });
   }
 }
