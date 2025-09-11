@@ -63,7 +63,7 @@
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let piece of selectedProject.pieces; let i = index">
+        <ng-container *ngFor="let piece of pieces; let i = index">
           <tr (click)="toggleDropdown(piece.id)" [class.open]="isOpen(piece.id)">
             <td class="reference">
               <span>{{ isOpen(piece.id)  ? '▼' : '▶' }}</span>

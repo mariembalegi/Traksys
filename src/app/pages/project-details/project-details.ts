@@ -29,7 +29,9 @@ import { Location } from '@angular/common';
 export class ProjectDetails implements OnInit {
   projectId!: string;
   selectedProject: ApiProjectDetails | null = null;
+  pieces: any[] = [];
   isLoading = false;
+  isRefreshing = false;
   errorMessage = '';
   resources: Resource[] = [];
 
@@ -48,20 +50,25 @@ export class ProjectDetails implements OnInit {
   ngOnInit() {
     this.projectId = this.route.snapshot.paramMap.get('id')!;
     this.loadProjectDetails();
+    this.loadPieces();
     this.loadResources();
   }
 
   loadProjectDetails() {
     this.isLoading = true;
+    this.isRefreshing = true;
     this.errorMessage = '';
 
     this.projectsService.getProject(this.projectId).subscribe({
       next: (projectDetails) => {
         this.isLoading = false;
+        this.isRefreshing = false;
         this.selectedProject = projectDetails;
+        console.log('Project details loaded:', projectDetails); // Debug log
       },
       error: (error) => {
         this.isLoading = false;
+        this.isRefreshing = false;
         this.errorMessage = 'Failed to load project details';
         console.error('Error loading project details:', error);
       }
@@ -79,6 +86,18 @@ export class ProjectDetails implements OnInit {
     });
   }
 
+  loadPieces() {
+    this.piecesService.getPieces({ projectId: this.projectId }).subscribe({
+      next: (response) => {
+        this.pieces = response.pieces;
+        console.log('Pieces loaded for project:', this.pieces);
+      },
+      error: (error) => {
+        console.error('Error loading pieces:', error);
+      }
+    });
+  }
+
   goBack() {
     this.location.back();
   }
@@ -92,8 +111,8 @@ export class ProjectDetails implements OnInit {
   }
 
   expandAll() {
-    if (this.selectedProject?.pieces) {
-      this.lineOpenSet = new Set(this.selectedProject.pieces.map(p => p.id));
+    if (this.pieces) {
+      this.lineOpenSet = new Set(this.pieces.map(p => p.id));
     }
   }
 
@@ -125,7 +144,9 @@ export class ProjectDetails implements OnInit {
 
     dialogRef.closed.subscribe(result => {
       if (result === 'saved') {
+        console.log('Piece added successfully, refreshing project details...'); // Debug log
         this.loadProjectDetails(); // Refresh the project details
+        this.loadPieces(); // Refresh the pieces list
         this.toastService.showSuccess('Piece added successfully');
       }
     });
@@ -159,7 +180,8 @@ export class ProjectDetails implements OnInit {
 
     dialogRef.closed.subscribe(result => {
       if (result === 'saved') {
-        this.loadProjectDetails();
+        console.log('Piece updated successfully, refreshing pieces...'); // Debug log
+        this.loadPieces(); // Refresh the pieces list
         this.toastService.showSuccess('Piece updated successfully');
       }
     });
@@ -186,7 +208,8 @@ export class ProjectDetails implements OnInit {
     if (confirm(`Are you sure you want to delete the piece "${piece.name}"?`)) {
       this.piecesService.deletePiece(piece.id).subscribe({
         next: () => {
-          this.loadProjectDetails();
+          console.log('Piece deleted successfully, refreshing pieces...'); // Debug log
+          this.loadPieces(); // Refresh the pieces list
           this.toastService.showSuccess('Piece deleted successfully');
         },
         error: (error) => {
