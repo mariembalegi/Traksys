@@ -4,7 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
 
 export interface Task {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   estimatedTime: number;
@@ -64,7 +64,7 @@ export class TasksService extends BaseApiService {
     }).pipe(catchError(this.handleError));
   }
 
-  createTask(taskData: Omit<Task, 'id' | 'commentIds' | 'creationDate' | 'updatedAt'>): Observable<Task> {
+  createTask(taskData: Omit<Task, '_id' | 'commentIds' | 'creationDate' | 'updatedAt'>): Observable<Task> {
     return this.http.post<Task>(`${this.apiUrl}/tasks`, taskData, {
       headers: this.getAuthHeaders()
     }).pipe(catchError(this.handleError));

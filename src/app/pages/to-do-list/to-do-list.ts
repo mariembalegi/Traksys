@@ -39,240 +39,15 @@ export class ToDoList {
   selectedTaskComments: Comment[] = [];
   selectedProject: Project | null = null;
 
-  projects: Project[] = [
-    {
-      id: "p1",
-      name: "CNC Machine Housing",
-      description: "Project for producing CNC machine housing parts.",
-      designPicture: "https://picsum.photos/200/120?random=5",
-      designFile: "/designs/cnc_project.dxf",
-      customerId: "c1",
-      pieceIds: ["pc1", "pc2"],
-      progress: 65,
-      opened: new Date("2025-08-10"),
-      delivery: new Date("2025-09-15"),
-      invoiceAmount: 15000,
-      currency: "EUR",
-      isOpen: true,
-      createdBy: "user1",
-      createdAt: new Date("2025-08-10"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "p2",
-      name: "Robotic Arm",
-      description: "Fabrication of components for robotic arm prototype.",
-      designPicture: "https://picsum.photos/200/120?random=5",
-      designFile: "/designs/robotic_arm.dxf",
-      customerId: "c2",
-      pieceIds: ["pc3"],
-      progress: 30,
-      opened: new Date("2025-08-15"),
-      delivery: new Date("2025-10-01"),
-      invoiceAmount: 25000,
-      currency: "EUR",
-      isOpen: true,
-      createdBy: "user1",
-      createdAt: new Date("2025-08-15"),
-      updatedAt: new Date("2025-08-25")
-    }
-  ];
+  projects: Project[] = [];
 
-  resources: Resource[] = [
-    { id: "r1", name: "CNC Operator", type: "Person", taskIds: ["t1", "t4"], isAvailable: true, createdAt: new Date("2025-08-01"), updatedAt: new Date("2025-08-25") },
-    { id: "r2", name: "Lathe Machine", type: "Machine", taskIds: ["t1"], isAvailable: true, createdAt: new Date("2025-08-01"), updatedAt: new Date("2025-08-25") },
-    { id: "r3", name: "Welder", type: "Person", taskIds: ["t3"], isAvailable: true, createdAt: new Date("2025-08-01"), updatedAt: new Date("2025-08-25") }
-  ];
+  resources: Resource[] = [];
 
-  pieces: Piece[] = [
-    {
-      id: "pc1",
-      reference: "HSG-001",
-      name: "Housing Base",
-      description: "Base plate for CNC machine housing.",
-      designFile: "/designs/housing_base.dxf",
-      designPicture: "/img/housing_base.png",
-      quantity: 10,
-      progress: 80,
-      status: "In Progress",
-      taskIds: ["t1", "t2"],
-      projectId: "p1",
-      createdAt: new Date("2025-08-10"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "pc2",
-      reference: "HSG-002",
-      name: "Side Panel",
-      description: "Steel side panel for CNC machine.",
-      designFile: "/designs/side_panel.dxf",
-      designPicture: "/img/side_panel.png",
-      quantity: 20,
-      progress: 50,
-      status: "In Progress",
-      taskIds: ["t3"],
-      projectId: "p1",
-      createdAt: new Date("2025-08-10"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "pc3",
-      reference: "RB-001",
-      name: "Arm Joint",
-      description: "Steel joint for robotic arm.",
-      designFile: "/designs/arm_joint.dxf",
-      designPicture: "/img/arm_joint.png",
-      quantity: 15,
-      progress: 10,
-      status: "To Do",
-      taskIds: ["t4"],
-      projectId: "p2",
-      createdAt: new Date("2025-08-15"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "pc4",
-      reference: "TEST-001",
-      name: "Test Component",
-      description: "Test component for timer functionality.",
-      designFile: "/designs/test_component.dxf",
-      designPicture: "/img/test_component.png",
-      quantity: 5,
-      progress: 20,
-      status: "In Progress",
-      taskIds: ["t5"],
-      projectId: "p1",
-      createdAt: new Date("2025-08-20"),
-      updatedAt: new Date("2025-08-25")
-    }
-  ];
+  pieces: Piece[] = [];
 
-  tasks: Task[] = [
-    {
-      id: "t1",
-      name: "Cut Base Plate",
-      description: "Cut aluminium bar to base plate dimensions.",
-      estimatedTime: 5,
-      spentTime: 4,
-      quantity: 10,
-      progress: 80,
-      status: "In Progress",
-      resourceIds: ["r1", "r2"],
-      commentIds: ["cm1", "cm3", "cm5"],
-      pieceId: "pc1",
-      dueDate: new Date("2025-08-25"),
-      actualFinishDate: undefined,
-      createdBy: "r1",
-      creationDate: new Date("2025-08-15"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "t2",
-      name: "Drill Holes",
-      description: "Drill mounting holes into base plate.",
-      estimatedTime: 3,
-      spentTime: 0,
-      quantity: 10,
-      progress: 0,
-      status: "To Do",
-      resourceIds: ["r1"],
-      commentIds: [],
-      pieceId: "pc1",
-      dueDate: new Date("2025-08-28"),
-      actualFinishDate: undefined,
-      createdBy: "r1",
-      creationDate: new Date("2025-08-16"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "t3",
-      name: "Weld Side Panel",
-      description: "Weld side panel for CNC housing.",
-      estimatedTime: 6,
-      spentTime: 2,
-      quantity: 20,
-      progress: 30,
-      status: "In Progress",
-      resourceIds: ["r3"],
-      commentIds: ["cm2", "cm4"],
-      pieceId: "pc2",
-      dueDate: new Date("2025-09-05"),
-      actualFinishDate: undefined,
-      createdBy: "r3",
-      creationDate: new Date("2025-08-18"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "t4",
-      name: "Polish Joint",
-      description: "Surface finishing for robotic arm joint.",
-      estimatedTime: 4,
-      spentTime: 0,
-      quantity: 15,
-      progress: 0,
-      status: "To Do",
-      resourceIds: ["r1"],
-      commentIds: [],
-      pieceId: "pc3",
-      dueDate: new Date("2025-09-10"),
-      actualFinishDate: undefined,
-      createdBy: "r1",
-      creationDate: new Date("2025-08-20"),
-      updatedAt: new Date("2025-08-25")
-    },
-    {
-      id: "t5",
-      name: "Test Timer Task",
-      description: "A test task to check timer functionality with 1 minute spent time.",
-      estimatedTime: 1/60, // 1 minute estimated (in hours)
-      spentTime: 1/60, // 1 minute spent (in hours)
-      quantity: 5,
-      progress: 20,
-      status: "In Progress",
-      resourceIds: ["r1"],
-      commentIds: [],
-      pieceId: "pc1",
-      dueDate: new Date("2025-08-26"),
-      actualFinishDate: undefined,
-      createdBy: "r1",
-      creationDate: new Date("2025-08-25"),
-      updatedAt: new Date("2025-08-25")
-    }
-  ];
+  tasks: Task[] = [];
 
   comments: Comment[] = [
-    {
-      id: "cm1",
-      taskId: "t1",
-      authorId: "r1",
-      message: "Cutting process started successfully. Material preparation complete.",
-      createdAt: new Date("2025-08-15T10:00:00"),
-      updatedAt: new Date("2025-08-15T10:00:00")
-    },
-    {
-      id: "cm2",
-      taskId: "t3",
-      authorId: "r3",
-      message: "Welding in progress, waiting for quality check.",
-      createdAt: new Date("2025-08-18T14:30:00"),
-      updatedAt: new Date("2025-08-18T14:30:00")
-    },
-    {
-      id: "cm3",
-      taskId: "t1",
-      authorId: "r2",
-      message: "CNC machine calibration completed. Ready for cutting operation.",
-      createdAt: new Date("2025-08-15T08:30:00"),
-      updatedAt: new Date("2025-08-15T08:30:00")
-    },
-    {
-      id: "cm4",
-      taskId: "t3",
-      authorId: "r3",
-      message: "First pass welding completed. Need to check for defects before second pass.",
-      createdAt: new Date("2025-08-19T09:15:00"),
-      updatedAt: new Date("2025-08-19T09:15:00")
-    }
   ];
 
 
@@ -288,18 +63,18 @@ export class ToDoList {
 
   openTaskDialog(task: Task) {
     this.selectedTask = task;
-    this.selectedTaskComments = this.comments.filter(comment => comment.taskId === task.id);
+    this.selectedTaskComments = this.comments.filter(comment => comment.taskId === task._id);
     this.selectedProject = this.findProjectForTask(task);
     this.isDialogVisible = true;
   }
 
   findProjectForTask(task: Task): Project | null {
     // Find the piece that contains this task
-    const piece = this.pieces.find(piece => piece.taskIds.includes(task.id));
+    const piece = this.pieces.find(piece => piece.taskIds.includes(task._id));
     if (!piece) return null;
     
     // Find the project that contains this piece
-    return this.projects.find(project => project.pieceIds.includes(piece.id)) || null;
+    return this.projects.find(project => project.pieceIds.includes(piece._id)) || null;
   }
 
   closeTaskDialog() {
@@ -312,8 +87,8 @@ export class ToDoList {
   addComment(commentText: string) {
     if (this.selectedTask) {
       const newComment: Comment = {
-        id: `cm${this.comments.length + 1}`,
-        taskId: this.selectedTask.id,
+        _id: `cm${this.comments.length + 1}`,
+        taskId: this.selectedTask._id,
         authorId: this.selectedResourceId || 'r1', // Use selected resource or default
         message: commentText,
         createdAt: new Date(),
@@ -321,18 +96,18 @@ export class ToDoList {
       };
       
       this.comments.push(newComment);
-      this.selectedTaskComments = this.comments.filter(comment => comment.taskId === this.selectedTask!.id);
-      
+      this.selectedTaskComments = this.comments.filter(comment => comment.taskId === this.selectedTask!._id);
+
       // Update the task's comment count
-      const task = this.tasks.find(t => t.id === this.selectedTask!.id);
+      const task = this.tasks.find(t => t._id === this.selectedTask!._id);
       if (task) {
-        task.commentIds.push(newComment.id);
+        task.commentIds.push(newComment._id);
       }
     }
   }
 
   updateTaskQuantity(event: {taskId: string, producedQuantity: number}) {
-    const task = this.tasks.find(t => t.id === event.taskId);
+    const task = this.tasks.find(t => t._id === event.taskId);
     if (task) {
       // Find the piece that contains this task
       const piece = this.pieces.find(p => p.taskIds.includes(event.taskId));
@@ -363,12 +138,12 @@ export class ToDoList {
 
   // Helper methods to get piece information
   getPieceName(pieceId: string): string {
-    const piece = this.pieces.find(p => p.id === pieceId);
+    const piece = this.pieces.find(p => p._id === pieceId);
     return piece ? piece.name : '';
   }
 
   getPieceReference(pieceId: string): string {
-    const piece = this.pieces.find(p => p.id === pieceId);
+    const piece = this.pieces.find(p => p._id === pieceId);
     return piece ? piece.reference : '';
   }
 }

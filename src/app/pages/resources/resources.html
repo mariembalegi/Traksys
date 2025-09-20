@@ -3,56 +3,85 @@
     <div class="row">
       <i class="fa-solid fa-chart-column blue" style="color: #0749bb;"></i>
       <p class="title">Total Resources</p>
-      <p class="number">10</p>
+      <p class="number">{{ isLoadingStats ? '...' : stats.totalResources }}</p>
     </div>
     <div class="row">
       <i class="fa-solid fa-gear purple" style="color: #a700bd;"></i>
       <p class="title">Machines</p>
-      <p class="number machines">10</p>
+      <p class="number machines">{{ isLoadingStats ? '...' : stats.machines }}</p>
     </div>
     <div class="row">
       <i class="fa-solid fa-user blue" style="color: #0749bb;"></i>
       <p class="title">Operators</p>
-      <p class="number operators">10</p>
+      <p class="number operators">{{ isLoadingStats ? '...' : stats.operators }}</p>
     </div>
   </div>
   <div class="header">
     <div class="row">
       <i class="fa-solid fa-play green" style="color: #05ad6d;"></i>
       <p class="title">Active</p>
-      <p class="number active">10</p>
+      <p class="number active">{{ isLoadingStats ? '...' : stats.active }}</p>
     </div>
     <div class="row">
       <i class="fa-solid fa-pause yellow" style="color: #d1a60a;"></i>
       <p class="title">Idle</p>
-      <p class="number idle">10</p>
+      <p class="number idle">{{ isLoadingStats ? '...' : stats.idle }}</p>
     </div>
     <div class="row">
       <i class="fa-solid fa-triangle-exclamation red" style="color: #FF4136;"></i>
       <p class="title">Maintenance</p>
-      <p class="number maintenance">10</p>
+      <p class="number maintenance">{{ isLoadingStats ? '...' : stats.maintenance }}</p>
     </div>
   </div>
   <div class="activity-status">
     <p>Activity Status</p>
     <div class="status-container">
-      <div class="status">All Resources</div>
-      <div class="status">Active</div>
-      <div class="status">Idle/Available</div>
-      <div class="status">Machines Only</div>
-      <div class="status">Operators Only</div>
-      <div class="status">Maintenance</div>
+      <div class="status" 
+           [class.active]="currentFilter === 'All Resources'"
+           (click)="onFilterChange('All Resources')">All Resources</div>
+      <div class="status" 
+           [class.active]="currentFilter === 'Active'"
+           (click)="onFilterChange('Active')">Active</div>
+      <div class="status" 
+           [class.active]="currentFilter === 'Idle/Available'"
+           (click)="onFilterChange('Idle/Available')">Idle/Available</div>
+      <div class="status" 
+           [class.active]="currentFilter === 'Machines Only'"
+           (click)="onFilterChange('Machines Only')">Machines Only</div>
+      <div class="status" 
+           [class.active]="currentFilter === 'Operators Only'"
+           (click)="onFilterChange('Operators Only')">Operators Only</div>
+      <div class="status" 
+           [class.active]="currentFilter === 'Maintenance'"
+           (click)="onFilterChange('Maintenance')">Maintenance</div>
     </div>
   </div>
   <div class="content">
-    <h1>Resources<span>(7)</span></h1>
+    <h1>Resources<span>({{ isLoadingResources ? '...' : totalResources }})</span></h1>
     <div class="divider"></div>
-    <div class="maintenance-list">
-      <div class="element"><app-maintenance-resource-card></app-maintenance-resource-card></div>
-      <div class="element"><app-active-resource-card></app-active-resource-card></div>
-      <div class="element"><app-available-resource-card></app-available-resource-card></div>
-      <div class="element"><app-available-operator-card></app-available-operator-card></div>
-      <div class="element"><app-active-operator-card></app-active-operator-card></div>
-    </div>
+    
+    @if (isLoadingResources) {
+      <div class="loading">Loading resources...</div>
+    } @else if (filteredResources.length === 0) {
+      <div class="no-resources">No resources found for the selected filter.</div>
+    } @else {
+      <div class="maintenance-list">
+        @for (resource of filteredResources; track resource._id) {
+          <div class="element">
+            @if (isInMaintenance(resource)) {
+              <app-maintenance-resource-card [resource]="resource"></app-maintenance-resource-card>
+            } @else if (resource.type === 'Machine' && isActiveResource(resource)) {
+              <app-active-resource-card [resource]="resource"></app-active-resource-card>
+            } @else if (resource.type === 'Machine' && isAvailableResource(resource)) {
+              <app-available-resource-card [resource]="resource"></app-available-resource-card>
+            } @else if (resource.type === 'Person' && isAvailableResource(resource)) {
+              <app-available-operator-card [resource]="resource"></app-available-operator-card>
+            } @else if (resource.type === 'Person' && isActiveResource(resource)) {
+              <app-active-operator-card [resource]="resource"></app-active-operator-card>
+            }
+          </div>
+        }
+      </div>
+    }
   </div>
 </div>

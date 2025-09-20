@@ -1,5 +1,5 @@
 export interface Resource {
-  id: string;
+  _id: string;
   name: string;
   type: 'Person' | 'Machine';
   taskIds?: string[];

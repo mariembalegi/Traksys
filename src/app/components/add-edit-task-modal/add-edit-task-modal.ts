@@ -50,7 +50,7 @@ export class AddEditTaskModal implements OnInit {
 
   initForm() {
     // Use pieceId from data first, then fallback to selectedPiece id
-    const pieceId = this.data?.pieceId || this.selectedPiece?.id || '';
+    const pieceId = this.data?.pieceId || this.selectedPiece?._id || '';
     
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -132,7 +132,7 @@ export class AddEditTaskModal implements OnInit {
             estimatedTime: formValue.estimatedTime,
             quantity: formValue.quantity,
             resourceIds: formValue.resourceIds || [],
-            pieceId: formValue.pieceId || this.selectedPiece?.id || this.data?.pieceId,
+            pieceId: formValue.pieceId || this.selectedPiece?._id || this.data?.pieceId,
             dueDate: new Date(formValue.dueDate)
           };
           

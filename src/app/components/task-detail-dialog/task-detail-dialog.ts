@@ -50,7 +50,7 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
     if (this.task && this.pieces.length > 0) {
       // Find the piece that contains this task
       this.piece = this.pieces.find(piece => 
-        piece.taskIds.includes(this.task!.id)
+        piece.taskIds.includes(this.task!._id)
       ) || null;
       
       if (this.piece) {
@@ -96,7 +96,7 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
   }
 
   getResourceName(resourceId: string): string {
-    const resource = this.resources.find(r => r.id === resourceId);
+    const resource = this.resources.find(r => r._id === resourceId);
     return resource ? resource.name : 'Unknown';
   }
 
@@ -185,7 +185,7 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
           this.producedQuantity,
           this.totalQuantity,
           'Production Team',
-          this.task.id,
+          this.task._id,
           this.project?.name,
           this.piece?.name
         );
@@ -196,7 +196,7 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
       
       const newProgress = this.calculateProgress();
       this.updateQuantity.emit({
-        taskId: this.task.id,
+        taskId: this.task._id,
         producedQuantity: this.producedQuantity
       });
     }

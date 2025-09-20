@@ -1,5 +1,5 @@
 export interface Piece {
-  id: string;
+  _id: string;
   reference: string;
   name: string;
   description: string;

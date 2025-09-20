@@ -104,6 +104,16 @@
         padding:10px 15px;
         font-family: "Darker Grotesque",serif;
         cursor:pointer;
+        transition: all 0.3s ease;
+        
+        &:hover{
+          background-color:#e0e0e0;
+        }
+        
+        &.active{
+          background-color:#0749bb;
+          color:white;
+        }
       }
     }
   }
@@ -131,6 +141,18 @@
       .element{
         width:100%;
       }
+    }
+    
+    .loading, .no-resources{
+      padding:40px 20px;
+      text-align:center;
+      color:#666;
+      font-family: "Darker Grotesque",serif;
+      font-size:16px;
+    }
+    
+    .loading{
+      color:#0749bb;
     }
   }
 }

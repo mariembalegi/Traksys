@@ -143,7 +143,7 @@ export class ProjectDetails implements OnInit {
   }
 
   getResourceName(resourceId: string): string {
-    const resource = this.resources.find(r => r.id === resourceId);
+    const resource = this.resources.find(r => r._id === resourceId);
     return resource ? resource.name : resourceId;
   }
 
