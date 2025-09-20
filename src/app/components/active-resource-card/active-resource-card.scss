@@ -29,6 +29,41 @@
         font-size: 20px;
       }
     }
+    
+    .right{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        
+        .action-icon {
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+          font-size: 14px;
+
+          &.edit {
+            color: #3b82f6;
+            &:hover {
+              background-color: #eff6ff;
+              color: #1d4ed8;
+            }
+          }
+
+          &.delete {
+            color: #ef4444;
+            &:hover {
+              background-color: #fef2f2;
+              color: #dc2626;
+            }
+          }
+        }
+      }
+    }
   }
   .running-ticket {
     color: darkgreen;
@@ -56,6 +91,21 @@
       margin:0;
       font-weight: bold;
       color: royalblue;
+    }
+    
+    .skills {
+      width: 100%;
+      margin-top: 8px;
+      
+      .skill-label {
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .skill-list {
+        color: #6b7280;
+        font-style: italic;
+      }
     }
   }
 }

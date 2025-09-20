@@ -1,12 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
+import { Dialog } from '@angular/cdk/dialog';
 import { MaintenanceResourceCard } from '../../components/maintenance-resource-card/maintenance-resource-card';
 import { ActiveResourceCard } from '../../components/active-resource-card/active-resource-card';
 import { AvailableResourceCard } from '../../components/available-resource-card/available-resource-card';
 import { AvailableOperatorCard } from '../../components/available-operator-card/available-operator-card';
 import { ActiveOperatorCard } from '../../components/active-operator-card/active-operator-card';
+import { AddEditResourceModal } from '../../components/add-edit-resource-modal/add-edit-resource-modal';
+import { ConfirmationModal } from '../../components/confirmation-modal/confirmation-modal';
 import { ResourcesService, Resource, ResourceStats } from '../../core/services/resources.service';
+import { ToastService } from '../../services/toast.service';
+
+export interface ResourceModalResult {
+  action: 'created' | 'updated';
+  resource: Resource;
+}
 
 @Component({
   selector: 'app-resources',
@@ -44,7 +53,11 @@ export class Resources implements OnInit, OnDestroy {
   isLoadingStats = false;
   isLoadingResources = false;
 
-  constructor(private resourcesService: ResourcesService) {}
+  constructor(
+    private resourcesService: ResourcesService,
+    private dialog: Dialog,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.loadResourceStats();
@@ -157,10 +170,93 @@ export class Resources implements OnInit, OnDestroy {
   }
 
   isActiveResource(resource: Resource): boolean {
-    return resource.isAvailable && resource.taskIds && resource.taskIds.length > 0;
+    return !!(resource.isAvailable && resource.taskIds && resource.taskIds.length > 0);
   }
 
   isAvailableResource(resource: Resource): boolean {
-    return resource.isAvailable && (!resource.taskIds || resource.taskIds.length === 0);
+    return !!(resource.isAvailable && (!resource.taskIds || resource.taskIds.length === 0));
+  }
+
+  // CRUD Operations
+  openAddResourceModal(): void {
+    const dialogRef = this.dialog.open(AddEditResourceModal, {
+      width: '500px',
+      data: { isEdit: false }
+    });
+
+    dialogRef.closed.subscribe((result) => {
+      if (result && (result as ResourceModalResult).action === 'created') {
+        this.toastService.showSuccess('Resource created successfully');
+        this.loadResources(this.currentFilter);
+        this.loadResourceStats();
+      }
+    });
+  }
+
+  openEditResourceModal(resource: Resource): void {
+    const dialogRef = this.dialog.open(AddEditResourceModal, {
+      width: '500px',
+      data: { resource, isEdit: true }
+    });
+
+    dialogRef.closed.subscribe((result) => {
+      if (result && (result as ResourceModalResult).action === 'updated') {
+        this.toastService.showSuccess('Resource updated successfully');
+        this.loadResources(this.currentFilter);
+        this.loadResourceStats();
+      }
+    });
+  }
+
+  confirmDeleteResource(resource: Resource): void {
+    const dialogRef = this.dialog.open(ConfirmationModal, {
+      data: {
+        title: 'Delete Resource',
+        message: `Are you sure you want to delete "${resource.name}"? This action cannot be undone.`,
+        confirmText: 'Delete',
+        cancelText: 'Cancel',
+        type: 'danger'
+      }
+    });
+
+    dialogRef.closed.subscribe((confirmed) => {
+      if (confirmed) {
+        this.deleteResource(resource);
+      }
+    });
+  }
+
+  private deleteResource(resource: Resource): void {
+    this.resourcesService.deleteResource(resource._id).subscribe({
+      next: () => {
+        this.toastService.showSuccess('Resource deleted successfully');
+        this.loadResources(this.currentFilter);
+        this.loadResourceStats();
+      },
+      error: (error) => {
+        console.error('Error deleting resource:', error);
+        this.toastService.showError('Failed to delete resource');
+      }
+    });
+  }
+
+  toggleResourceAvailability(resource: Resource): void {
+    const newAvailability = !resource.isAvailable;
+    this.resourcesService.updateResourceAvailability(
+      resource._id, 
+      newAvailability, 
+      resource.maintenanceSchedule
+    ).subscribe({
+      next: () => {
+        const status = newAvailability ? 'available' : 'unavailable';
+        this.toastService.showSuccess(`Resource marked as ${status}`);
+        this.loadResources(this.currentFilter);
+        this.loadResourceStats();
+      },
+      error: (error) => {
+        console.error('Error updating resource availability:', error);
+        this.toastService.showError('Failed to update resource availability');
+      }
+    });
   }
 }

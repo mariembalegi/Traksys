@@ -124,6 +124,47 @@
     0 2px 4px rgba(0, 0, 0, 0.06);
     border-radius: 14px;
     width:100%;
+    
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      
+      h1{
+        font-family: "Darker Grotesque",serif;
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0;
+      }
+      
+      .add-resource-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #FF4136;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-family: "Darker Grotesque", serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 8px rgba(255, 65, 54, 0.3);
+        
+        &:hover {
+          background: #E63429;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 12px rgba(255, 65, 54, 0.4);
+        }
+        
+        i {
+          font-size: 14px;
+        }
+      }
+    }
+    
     h1{
       font-family: "Darker Grotesque",serif;
       font-size: 16px;

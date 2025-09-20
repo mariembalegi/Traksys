@@ -26,6 +26,41 @@
         font-size: 20px;
       }
     }
+    
+    .right{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        
+        .action-icon {
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+          font-size: 14px;
+
+          &.edit {
+            color: #3b82f6;
+            &:hover {
+              background-color: #eff6ff;
+              color: #1d4ed8;
+            }
+          }
+
+          &.delete {
+            color: #ef4444;
+            &:hover {
+              background-color: #fef2f2;
+              color: #dc2626;
+            }
+          }
+        }
+      }
+    }
   }
   .maintenance-ticket{
     color:darkred;
@@ -50,6 +85,16 @@
     font-family: "Darker Grotesque",serif;
     i{
       margin-top: 3px;
+    }
+    
+    .maintenance-info {
+      width: 100%;
+      margin-top: 8px;
+      
+      p {
+        margin: 4px 0;
+        color: #721c24;
+      }
     }
   }
 }

@@ -2,9 +2,13 @@
   <div class="row">
     <div class="left">
         <i class="fa-solid fa-gear" style="color: #ffffff;"></i>
-      <p>Machine Name</p>
+      <p>{{ resource?.name || 'Machine Name' }}</p>
     </div>
     <div class="right">
+      <div class="actions">
+        <i class="fa-solid fa-edit action-icon edit" (click)="onEdit()" title="Edit Resource"></i>
+        <i class="fa-solid fa-trash action-icon delete" (click)="onDelete()" title="Delete Resource"></i>
+      </div>
       <i class="fa-solid fa-wrench fa-xs" style="color: #FF4136;"></i>
     </div>
   </div>
@@ -12,5 +16,8 @@
   <div class="details">
     <i class="fa-solid fa-wrench fa-xs" style="color: #FF4136;"></i>
     <p>Under maintenance - not available for production</p>
+    <div *ngIf="resource?.maintenanceSchedule" class="maintenance-info">
+      <p><strong>Scheduled:</strong> {{ resource?.maintenanceSchedule | date:'short' }}</p>
+    </div>
   </div>
 </div>

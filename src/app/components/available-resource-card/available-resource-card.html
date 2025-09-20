@@ -2,15 +2,23 @@
   <div class="row">
     <div class="left">
       <i class="fa-solid fa-gear" style="color: #ffffff;"></i>
-      <p>Machine Name</p>
+      <p>{{ resource?.name || 'Machine Name' }}</p>
     </div>
     <div class="right">
+      <div class="actions">
+        <i class="fa-solid fa-edit action-icon edit" (click)="onEdit()" title="Edit Resource"></i>
+        <i class="fa-solid fa-trash action-icon delete" (click)="onDelete()" title="Delete Resource"></i>
+      </div>
       <i class="fa-solid fa-wrench fa-xs" style="color: #FF4136;"></i>
     </div>
   </div>
   <div class="available-ticket">Available</div>
   <div class="details">
-    <p>Available for assignment</p>
+    <p>{{ resource?.isAvailable ? 'Available for assignment' : 'Not available' }}</p>
+    <div *ngIf="resource && resource.skills && resource.skills.length > 0" class="skills">
+      <span class="skill-label">Skills:</span>
+      <span class="skill-list">{{ resource.skills.join(', ') }}</span>
+    </div>
   </div>
 </div>
 

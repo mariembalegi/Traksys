@@ -2,26 +2,29 @@
   <div class="row">
     <div class="left">
       <i class="fa-solid fa-user" style="color: #ffffff;"></i>
-      <p>Operator Name</p>
+      <p>{{ resource?.name || 'Operator Name' }}</p>
     </div>
     <div class="right">
+      <div class="actions">
+        <i class="fa-solid fa-edit action-icon edit" (click)="onEdit()" title="Edit Resource"></i>
+        <i class="fa-solid fa-trash action-icon delete" (click)="onDelete()" title="Delete Resource"></i>
+      </div>
       <i class="fa-solid fa-play fa-xs" style="color: #05ad6d;"></i>
     </div>
   </div>
   <div class="running-ticket">Running</div>
   <div class="details">
     <div class="details-row">
-      <p class="title">Machine:</p>
-      <p>Machine Name</p>
+      <p class="title">Type:</p>
+      <p>{{ resource?.type || 'Person' }}</p>
     </div>
     <div class="details-row">
-      <p class="title">Current Task:</p>
-      <p>Task Name - Piece Name and reference</p>
+      <p class="title">Active Tasks:</p>
+      <p>{{ resource?.taskIds?.length || 0 }}</p>
     </div>
-    <p class="project-name">Project Name</p>
-    <div class="details-row">
-      <p class="title">Started:</p>
-      <p>12/02/2025 8:00 AM</p>
+    <div *ngIf="resource && resource.skills && resource.skills.length > 0" class="skills">
+      <span class="skill-label">Skills:</span>
+      <span class="skill-list">{{ resource.skills.join(', ') }}</span>
     </div>
   </div>
 </div>

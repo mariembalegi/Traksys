@@ -57,7 +57,13 @@
     </div>
   </div>
   <div class="content">
-    <h1>Resources<span>({{ isLoadingResources ? '...' : totalResources }})</span></h1>
+    <div class="content-header">
+      <h1>Resources<span>({{ isLoadingResources ? '...' : totalResources }})</span></h1>
+      <button class="btn btn-primary add-resource-btn" (click)="openAddResourceModal()">
+        <i class="fa-solid fa-plus"></i>
+        Add Resource
+      </button>
+    </div>
     <div class="divider"></div>
     
     @if (isLoadingResources) {
@@ -69,15 +75,30 @@
         @for (resource of filteredResources; track resource._id) {
           <div class="element">
             @if (isInMaintenance(resource)) {
-              <app-maintenance-resource-card [resource]="resource"></app-maintenance-resource-card>
+              <app-maintenance-resource-card 
+                [resource]="resource"
+                (edit)="openEditResourceModal($event)"
+                (delete)="confirmDeleteResource($event)"></app-maintenance-resource-card>
             } @else if (resource.type === 'Machine' && isActiveResource(resource)) {
-              <app-active-resource-card [resource]="resource"></app-active-resource-card>
+              <app-active-resource-card 
+                [resource]="resource"
+                (edit)="openEditResourceModal($event)"
+                (delete)="confirmDeleteResource($event)"></app-active-resource-card>
             } @else if (resource.type === 'Machine' && isAvailableResource(resource)) {
-              <app-available-resource-card [resource]="resource"></app-available-resource-card>
+              <app-available-resource-card 
+                [resource]="resource"
+                (edit)="openEditResourceModal($event)"
+                (delete)="confirmDeleteResource($event)"></app-available-resource-card>
             } @else if (resource.type === 'Person' && isAvailableResource(resource)) {
-              <app-available-operator-card [resource]="resource"></app-available-operator-card>
+              <app-available-operator-card 
+                [resource]="resource"
+                (edit)="openEditResourceModal($event)"
+                (delete)="confirmDeleteResource($event)"></app-available-operator-card>
             } @else if (resource.type === 'Person' && isActiveResource(resource)) {
-              <app-active-operator-card [resource]="resource"></app-active-operator-card>
+              <app-active-operator-card 
+                [resource]="resource"
+                (edit)="openEditResourceModal($event)"
+                (delete)="confirmDeleteResource($event)"></app-active-operator-card>
             }
           </div>
         }

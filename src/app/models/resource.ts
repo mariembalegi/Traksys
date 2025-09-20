@@ -3,7 +3,7 @@ export interface Resource {
   name: string;
   type: 'Person' | 'Machine';
   taskIds?: string[];
-  isAvailable?: boolean;
+  isAvailable: boolean;
   maintenanceSchedule?: Date;
   skills?: string[];
   createdAt?: Date;

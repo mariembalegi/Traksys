@@ -1,0 +1,95 @@
+<div class="add-edit-resource-modal">
+  <div class="header">
+    <h1>{{ modalTitle }}</h1>
+    <i (click)="closeModal()" class="fa-solid fa-xmark" style="color: #000000;"></i>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+    <!-- Basic Information -->
+    <div class="form-group">
+      <label for="name">
+        Name: <span class="required">*</span>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          [(ngModel)]="resourceData.name"
+          required
+          placeholder="Enter resource name"/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="type">
+        Type: <span class="required">*</span>
+        <select
+          id="type"
+          name="type"
+          [(ngModel)]="resourceData.type"
+          required>
+          <option *ngFor="let type of resourceTypes" [value]="type">{{ type }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input
+          type="checkbox"
+          name="isAvailable"
+          [(ngModel)]="resourceData.isAvailable"/>
+        <span class="checkmark"></span>
+        Available for assignment
+      </label>
+    </div>
+
+    <!-- Skills Section (for Person type) -->
+    <div *ngIf="showSkillsSection" class="form-group">
+      <label>Skills:</label>
+      <div class="skills-input">
+        <input
+          type="text"
+          [(ngModel)]="skillInput"
+          name="skillInput"
+          placeholder="Enter a skill and press Enter"
+          (keypress)="onSkillKeyPress($event)"/>
+        <button type="button" (click)="addSkill()" class="btn btn-small">Add</button>
+      </div>
+      
+      <div *ngIf="resourceData.skills && resourceData.skills.length > 0" class="skills-list">
+        <div *ngFor="let skill of resourceData.skills; let i = index" class="skill-tag">
+          <span>{{ skill }}</span>
+          <i (click)="removeSkill(i)" class="fa-solid fa-times"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maintenance Section (for Machine type) -->
+    <div *ngIf="showMaintenanceSection" class="form-group">
+      <label for="maintenanceSchedule">
+        Next Maintenance Schedule:
+        <input
+          id="maintenanceSchedule"
+          type="datetime-local"
+          name="maintenanceSchedule"
+          [(ngModel)]="resourceData.maintenanceSchedule"
+          placeholder="Select maintenance date"/>
+      </label>
+    </div>
+
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn btn-secondary" type="button" [disabled]="isSaving">
+        Cancel
+      </button>
+      <button class="btn btn-primary" type="submit" [disabled]="isSaving">
+        {{ submitButtonText }}
+      </button>
+    </div>
+  </form>
+</div>
