@@ -1,9 +1,16 @@
 <div class="home-page">
+  <div class="page-header">
+    <h1>Dashboard</h1>
+    <button class="refresh-btn" (click)="refreshData()" [disabled]="isLoadingStats">
+      <i class="fa-solid fa-refresh" [class.fa-spin]="isLoadingStats"></i>
+      Refresh
+    </button>
+  </div>
   <div class="numbers">
     <div class="item">
       <div class="left">
         <p>Total Revenue</p>
-        <p>127.470$</p>
+        <p>{{ isLoadingStats ? '...' : hasStatsError ? 'Error' : formatCurrency(totalRevenue) }}</p>
       </div>
       <div class="right">
         <i class="fa-solid fa-dollar-sign" style="color: #57d670;"></i>
@@ -12,14 +19,14 @@
     <div class="item">
       <div class="left">
         <p>Active Projects</p>
-        <p>23</p>
+        <p>{{ isLoadingStats ? '...' : hasStatsError ? 'Error' : formatNumber(activeProjects) }}</p>
       </div>
       <div class="right"><i class="fa-solid fa-folder-open" style="color: #005eff;"></i></div>
     </div>
     <div class="item">
       <div class="left">
         <p>Team Members</p>
-        <p>156</p>
+        <p>{{ isLoadingStats ? '...' : hasStatsError ? 'Error' : formatNumber(teamMembers) }}</p>
       </div>
       <div class="right">
         <i class="fa-solid fa-users" style="color: #8e6cf4;"></i>
@@ -30,47 +37,58 @@
     <div class="recent-activities item">
       <p class="header">Recent Activities</p>
       <div class="activities-part">
-        <div class="activity">
-          <div class="icon"><i class="fa-solid fa-circle fa-2xs" style="color: #f39512;"></i></div>
-          <div class="activity-text">
-            <p>New Project Created</p>
-            <p class="time">2 hours ago</p>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="icon"><i class="fa-solid fa-circle fa-2xs" style="color: #f39512;"></i></div>
-          <div class="activity-text">
-            <p>New Project Created</p>
-            <p class="time">2 hours ago</p>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="icon"><i class="fa-solid fa-circle fa-2xs" style="color: #f39512;"></i></div>
-          <div class="activity-text">
-            <p>New Project Created</p>
-            <p class="time">2 hours ago</p>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="icon"><i class="fa-solid fa-circle fa-2xs" style="color: #f39512;"></i></div>
-          <div class="activity-text">
-            <p>New Project Created</p>
-            <p class="time">2 hours ago</p>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="icon"><i class="fa-solid fa-circle fa-2xs" style="color: #f39512;"></i></div>
-          <div class="activity-text">
-            <p>New Project Created</p>
-            <p class="time">2 hours ago</p>
-          </div>
-        </div>
+        @if (isLoadingActivities) {
+          <div class="loading">Loading activities...</div>
+        } @else if (hasActivitiesError) {
+          <div class="error">Failed to load activities</div>
+        } @else if (recentActivities.length === 0) {
+          <div class="no-data">No recent activities</div>
+        } @else {
+          @for (activity of recentActivities; track trackByActivityId($index, activity)) {
+            <div class="activity">
+              <div class="icon">
+                <i class="fa-solid fa-circle fa-2xs" 
+                   [style.color]="getActivityColor(activity.type)"></i>
+              </div>
+              <div class="activity-text">
+                <p>{{ activity.title }}</p>
+                <p class="time">{{ getTimeAgo(activity.timestamp) }}</p>
+              </div>
+            </div>
+          }
+        }
       </div>
     </div>
     <div class="upcoming-tasks item">
       <div class="header">
         <p>Upcoming Tasks</p>
         <i class="fa-solid fa-calendar" style="color: #f5f5f5;"></i>
+      </div>
+      <div class="tasks-part">
+        @if (isLoadingTasks) {
+          <div class="loading">Loading tasks...</div>
+        } @else if (hasTasksError) {
+          <div class="error">Failed to load tasks</div>
+        } @else if (upcomingTasks.length === 0) {
+          <div class="no-data">No upcoming tasks</div>
+        } @else {
+          @for (task of upcomingTasks; track trackByTaskId($index, task)) {
+            <div class="task-item" [class]="getTaskPriorityClass(getDaysUntilDue(task.dueDate))">
+              <div class="task-info">
+                <div class="task-name">{{ task.name }}</div>
+                <div class="task-details">
+                  <span class="due-date">Due: {{ task.dueDate | date:'MMM dd' }}</span>
+                  <span class="progress">{{ task.progress }}% complete</span>
+                </div>
+              </div>
+              <div class="task-status">
+                <span class="status-badge" [class]="'status-' + task.status.toLowerCase().replace(' ', '-')">
+                  {{ task.status }}
+                </span>
+              </div>
+            </div>
+          }
+        }
       </div>
     </div>
   </div>
@@ -80,20 +98,28 @@
       <i class="fa-solid fa-circle-exclamation" style="color: #cccccc;"></i>
     </div>
     <div class="alerts-container">
-  @for (alert of systemAlerts; track trackByAlertId($index, alert)) {
-        <div class="alert-item" [class]="'severity-' + alert.severity">
-          <div class="alert-icon">
-            <i class="fa-solid" [class]="getAlertIcon(alert.type)" [style.color]="getAlertColor(alert.severity)"></i>
+      @if (isLoadingAlerts) {
+        <div class="loading">Loading alerts...</div>
+      } @else if (hasAlertsError) {
+        <div class="error">Failed to load alerts</div>
+      } @else if (systemAlerts.length === 0) {
+        <div class="no-data">No system alerts</div>
+      } @else {
+        @for (alert of systemAlerts; track trackByAlertId($index, alert)) {
+          <div class="alert-item" [class]="'severity-' + alert.severity">
+            <div class="alert-icon">
+              <i class="fa-solid" [class]="getAlertIcon(alert.type)" [style.color]="getAlertColor(alert.severity)"></i>
+            </div>
+            <div class="alert-content">
+              <div class="alert-title">{{ alert.title }}</div>
+              <div class="alert-message">{{ alert.message }}</div>
+              <div class="alert-timestamp">{{ getTimeAgo(alert.timestamp) }}</div>
+            </div>
+            <div class="alert-badge" [style.background-color]="getAlertColor(alert.severity)">
+              {{ alert.severity.toUpperCase() }}
+            </div>
           </div>
-          <div class="alert-content">
-            <div class="alert-title">{{ alert.title }}</div>
-            <div class="alert-message">{{ alert.message }}</div>
-            <div class="alert-timestamp">{{ getTimeAgo(alert.timestamp) }}</div>
-          </div>
-          <div class="alert-badge" [style.background-color]="getAlertColor(alert.severity)">
-            {{ alert.severity.toUpperCase() }}
-          </div>
-        </div>
+        }
       }
     </div>
   </div>
