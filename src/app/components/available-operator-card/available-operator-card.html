@@ -9,15 +9,18 @@
         <i class="fa-solid fa-edit action-icon edit" (click)="onEdit()" title="Edit Resource"></i>
         <i class="fa-solid fa-trash action-icon delete" (click)="onDelete()" title="Delete Resource"></i>
       </div>
-      <i class="fa-solid fa-pen fa-xs" style="color: #FF4136;"></i>
+      <i class="fa-solid fa-check fa-xs" style="color: #05ad6d;"></i>
     </div>
   </div>
   <div class="available-ticket">Available</div>
   <div class="details">
-    <p>{{ resource?.isAvailable ? 'Available for assignment' : 'Not available' }}</p>
-    <div *ngIf="resource && resource.skills && resource.skills.length > 0" class="skills">
-      <span class="skill-label">Skills:</span>
-      <span class="skill-list">{{ resource.skills.join(', ') }}</span>
+    <div class="availability-row">
+      <i class="fa-solid fa-check fa-xs" style="color: #05ad6d;"></i>
+      <p>Available for assignment</p>
+    </div>
+    <div class="availability-row" *ngIf="resource && resource.skills && resource.skills.length > 0">
+      <span class="icon-spacer"></span>
+      <p class="skills-text">Skills: {{ resource.skills.join(', ') }}</p>
     </div>
   </div>
 </div>

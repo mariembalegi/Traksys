@@ -21,12 +21,13 @@ export class AddEditResourceModal implements OnInit {
   private data = inject(DIALOG_DATA, { optional: true }) as ResourceModalData;
 
   // Form data
-  resourceData: Partial<Resource> = {
+  resourceData: Partial<Resource> & { underMaintenance?: boolean } = {
     name: '',
     type: 'Person',
     isAvailable: true,
     skills: [],
-    maintenanceSchedule: undefined
+    maintenanceSchedule: undefined,
+    underMaintenance: false
   };
 
   isEdit = false;
@@ -41,6 +42,12 @@ export class AddEditResourceModal implements OnInit {
     if (this.data?.resource && this.data?.isEdit) {
       this.isEdit = true;
       this.resourceData = { ...this.data.resource };
+      
+      // For machines, set underMaintenance based on availability status
+      if (this.resourceData.type === 'Machine') {
+        this.resourceData.underMaintenance = !this.resourceData.isAvailable;
+      }
+      
       // Convert skills array to display format if needed
       if (this.resourceData.skills && Array.isArray(this.resourceData.skills)) {
         // Skills are already in array format, keep as is
@@ -62,18 +69,28 @@ export class AddEditResourceModal implements OnInit {
     this.isSaving = true;
     this.errorMessage = '';
 
-    // Prepare data for submission
-    const submitData = {
-      ...this.resourceData,
-      name: this.resourceData.name!.trim(),
-      type: this.resourceData.type as 'Person' | 'Machine',
-      isAvailable: this.resourceData.isAvailable ?? true,
-      skills: this.resourceData.skills || []
-    };
-
     if (this.isEdit && this.data?.resource?._id) {
+      // Prepare data for update (exclude _id, createdAt, updatedAt, taskIds)
+      const updateData: any = {
+        name: this.resourceData.name!.trim(),
+        type: this.resourceData.type as 'Person' | 'Machine',
+        skills: this.resourceData.skills || []
+      };
+
+      // Handle maintenance status for machines
+      if (this.resourceData.type === 'Machine' && this.resourceData.underMaintenance) {
+        updateData.isAvailable = false;
+        updateData.maintenanceSchedule = new Date();
+      } else if (this.resourceData.type === 'Machine' && !this.resourceData.underMaintenance) {
+        updateData.isAvailable = true;
+        updateData.maintenanceSchedule = null;
+      } else {
+        // For persons, use the availability checkbox value
+        updateData.isAvailable = this.resourceData.isAvailable ?? true;
+      }
+
       // Update existing resource
-      this.resourcesService.updateResource(this.data.resource._id, submitData).subscribe({
+      this.resourcesService.updateResource(this.data.resource._id, updateData).subscribe({
         next: (updatedResource) => {
           this.isSaving = false;
           console.log('Resource updated successfully:', updatedResource);
@@ -86,8 +103,26 @@ export class AddEditResourceModal implements OnInit {
         }
       });
     } else {
+      // Prepare data for creation (exclude _id, createdAt, updatedAt, taskIds)
+      const createData: any = {
+        name: this.resourceData.name!.trim(),
+        type: this.resourceData.type as 'Person' | 'Machine',
+        skills: this.resourceData.skills || []
+      };
+
+      // Handle maintenance status for machines
+      if (this.resourceData.type === 'Machine' && this.resourceData.underMaintenance) {
+        createData.isAvailable = false;
+        createData.maintenanceSchedule = new Date();
+      } else if (this.resourceData.type === 'Machine' && !this.resourceData.underMaintenance) {
+        createData.isAvailable = true;
+      } else {
+        // For persons, use the availability checkbox value
+        createData.isAvailable = this.resourceData.isAvailable ?? true;
+      }
+
       // Create new resource
-      this.resourcesService.createResource(submitData as Omit<Resource, '_id' | 'taskIds' | 'createdAt' | 'updatedAt'>).subscribe({
+      this.resourcesService.createResource(createData as Omit<Resource, '_id' | 'taskIds' | 'createdAt' | 'updatedAt'>).subscribe({
         next: (createdResource) => {
           this.isSaving = false;
           console.log('Resource created successfully:', createdResource);

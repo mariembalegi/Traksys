@@ -67,11 +67,10 @@ export class ResourcesService extends BaseApiService {
       r.isAvailable && r.taskIds && r.taskIds.length > 0
     ).length;
     const maintenance = resources.filter(r => 
-      r.maintenanceSchedule && new Date(r.maintenanceSchedule) <= new Date()
+      !r.isAvailable && r.type === 'Machine'
     ).length;
     const idle = resources.filter(r => 
-      r.isAvailable && (!r.taskIds || r.taskIds.length === 0) && 
-      !(r.maintenanceSchedule && new Date(r.maintenanceSchedule) <= new Date())
+      r.isAvailable && (!r.taskIds || r.taskIds.length === 0)
     ).length;
 
     return {

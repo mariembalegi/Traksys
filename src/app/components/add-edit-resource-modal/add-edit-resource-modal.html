@@ -72,14 +72,13 @@
 
     <!-- Maintenance Section (for Machine type) -->
     <div *ngIf="showMaintenanceSection" class="form-group">
-      <label for="maintenanceSchedule">
-        Next Maintenance Schedule:
+      <label class="checkbox-label">
         <input
-          id="maintenanceSchedule"
-          type="datetime-local"
-          name="maintenanceSchedule"
-          [(ngModel)]="resourceData.maintenanceSchedule"
-          placeholder="Select maintenance date"/>
+          type="checkbox"
+          name="underMaintenance"
+          [(ngModel)]="resourceData.underMaintenance"/>
+        <span class="checkmark"></span>
+        Under Maintenance
       </label>
     </div>
 

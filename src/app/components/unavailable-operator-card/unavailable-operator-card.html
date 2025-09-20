@@ -1,22 +1,22 @@
 <div class="card">
   <div class="row">
     <div class="left">
-      <i class="fa-solid fa-gear" style="color: #ffffff;"></i>
-      <p>{{ resource?.name || 'Machine Name' }}</p>
+      <i class="fa-solid fa-user" style="color: #ffffff;"></i>
+      <p>{{ resource?.name || 'Operator Name' }}</p>
     </div>
     <div class="right">
       <div class="actions">
         <i class="fa-solid fa-edit action-icon edit" (click)="onEdit()" title="Edit Resource"></i>
         <i class="fa-solid fa-trash action-icon delete" (click)="onDelete()" title="Delete Resource"></i>
       </div>
-      <i class="fa-solid fa-check fa-xs" style="color: #05ad6d;"></i>
+      <i class="fa-solid fa-times fa-xs" style="color: #ef4444;"></i>
     </div>
   </div>
-  <div class="available-ticket">Available</div>
+  <div class="unavailable-ticket">Unavailable</div>
   <div class="details">
     <div class="availability-row">
-      <i class="fa-solid fa-check fa-xs" style="color: #05ad6d;"></i>
-      <p>Available for assignment</p>
+      <i class="fa-solid fa-times fa-xs" style="color: #ef4444;"></i>
+      <p>Not available for assignment</p>
     </div>
     <div class="availability-row" *ngIf="resource && resource.skills && resource.skills.length > 0">
       <span class="icon-spacer"></span>
@@ -24,4 +24,3 @@
     </div>
   </div>
 </div>
-

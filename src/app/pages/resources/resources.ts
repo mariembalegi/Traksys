@@ -7,6 +7,7 @@ import { ActiveResourceCard } from '../../components/active-resource-card/active
 import { AvailableResourceCard } from '../../components/available-resource-card/available-resource-card';
 import { AvailableOperatorCard } from '../../components/available-operator-card/available-operator-card';
 import { ActiveOperatorCard } from '../../components/active-operator-card/active-operator-card';
+import { UnavailableOperatorCard } from '../../components/unavailable-operator-card/unavailable-operator-card';
 import { AddEditResourceModal } from '../../components/add-edit-resource-modal/add-edit-resource-modal';
 import { ConfirmationModal } from '../../components/confirmation-modal/confirmation-modal';
 import { ResourcesService, Resource, ResourceStats } from '../../core/services/resources.service';
@@ -25,7 +26,8 @@ export interface ResourceModalResult {
     ActiveResourceCard,
     AvailableResourceCard,
     AvailableOperatorCard,
-    ActiveOperatorCard
+    ActiveOperatorCard,
+    UnavailableOperatorCard
   ],
   templateUrl: './resources.html',
   styleUrl: './resources.scss'
@@ -102,6 +104,7 @@ export class Resources implements OnInit, OnDestroy {
       switch (filter) {
         case 'Active':
           params.status = 'active';
+          params.available = true;
           break;
         case 'Idle/Available':
           params.available = true;
@@ -113,7 +116,7 @@ export class Resources implements OnInit, OnDestroy {
           params.type = 'Person';
           break;
         case 'Maintenance':
-          params.status = 'maintenance';
+          params.available = false;
           break;
       }
     }
@@ -161,12 +164,12 @@ export class Resources implements OnInit, OnDestroy {
 
   getMaintenanceResources(): Resource[] {
     return this.filteredResources.filter(resource => 
-      resource.maintenanceSchedule && new Date(resource.maintenanceSchedule) <= new Date()
+      !resource.isAvailable && resource.type === 'Machine'
     );
   }
 
   isInMaintenance(resource: Resource): boolean {
-    return !!(resource.maintenanceSchedule && new Date(resource.maintenanceSchedule) <= new Date());
+    return !resource.isAvailable && resource.type === 'Machine';
   }
 
   isActiveResource(resource: Resource): boolean {

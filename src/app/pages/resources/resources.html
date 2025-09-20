@@ -99,6 +99,11 @@
                 [resource]="resource"
                 (edit)="openEditResourceModal($event)"
                 (delete)="confirmDeleteResource($event)"></app-active-operator-card>
+            } @else if (resource.type === 'Person' && !resource.isAvailable) {
+              <app-unavailable-operator-card 
+                [resource]="resource"
+                (edit)="openEditResourceModal($event)"
+                (delete)="confirmDeleteResource($event)"></app-unavailable-operator-card>
             }
           </div>
         }
