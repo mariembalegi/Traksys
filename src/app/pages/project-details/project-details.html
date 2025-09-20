@@ -129,7 +129,7 @@
                     <td>{{ task.spentTime }}</td>
                     <td>
                           <span *ngFor="let resId of task.resourceIds; let last = last">
-                            {{ getResourceName(resId) }}<span *ngIf="!last">, </span>
+                            {{ resId.name }}<span *ngIf="!last">, </span>
                           </span>
                     </td>
                     <td>{{ task.dueDate | date:'dd/MM/yyyy' }}</td>

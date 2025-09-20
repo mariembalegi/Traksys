@@ -45,6 +45,17 @@
       gap: 15px;
       flex: 1;
 
+      .loading-state, .empty-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        color: #666;
+        font-family: "Darker Grotesque", serif;
+        font-size: 14px;
+        font-style: italic;
+      }
+
       .project {
         display: flex;
         border-radius: 14px;
@@ -146,6 +157,25 @@
       align-items: start;
       overflow-x: hidden;
 
+      .loading-state, .empty-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        color: #666;
+        font-family: "Darker Grotesque", serif;
+        font-size: 16px;
+        font-style: italic;
+        width: 100%;
+      }
+
+      .tasks-board {
+        display: flex;
+        gap: 25px;
+        width: 100%;
+        align-items: start;
+      }
+
       .tasks-container {
         flex: 1;
         min-width: 0;
@@ -162,6 +192,20 @@
           grid-template-columns: 1fr;
           gap: 15px;
           align-content: start;
+        }
+
+        .empty-column {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          color: #999;
+          font-family: "Darker Grotesque", serif;
+          font-size: 14px;
+          font-style: italic;
+          border: 2px dashed #e2e8f0;
+          border-radius: 8px;
+          min-height: 60px;
         }
       }
     }

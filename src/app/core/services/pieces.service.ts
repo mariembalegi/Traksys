@@ -4,21 +4,21 @@ import { catchError } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
 
 export interface Piece {
-  id: string;
+  _id: string;
   reference: string;
   name: string;
   description: string;
   designFile?: string;
   designPicture?: string;
-  materialId: string;
-  materialQuantity: number;
+  materialId?: string;
+  materialQuantity?: number;
   quantity: number;
   progress: number;
   status: 'To Do' | 'In Progress' | 'Completed' | 'Blocked';
   taskIds: string[];
-  projectId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  projectId?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface PiecesResponse {
@@ -59,7 +59,7 @@ export class PiecesService extends BaseApiService {
     }).pipe(catchError(this.handleError));
   }
 
-  createPiece(pieceData: Omit<Piece, 'id' | 'taskIds' | 'createdAt' | 'updatedAt'>): Observable<Piece> {
+  createPiece(pieceData: Omit<Piece, '_id' | 'taskIds' | 'createdAt' | 'updatedAt'>): Observable<Piece> {
     return this.http.post<Piece>(`${this.apiUrl}/pieces`, pieceData, {
       headers: this.getAuthHeaders()
     }).pipe(catchError(this.handleError));

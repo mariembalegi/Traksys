@@ -63,7 +63,7 @@ export class ProjectsService extends BaseApiService {
     }).pipe(catchError(this.handleError));
   }
 
-  createProject(projectData: Omit<Project, 'id' | 'pieceIds' | 'createdAt' | 'updatedAt'>): Observable<Project> {
+  createProject(projectData: Omit<Project, '_id' | 'pieceIds' | 'createdAt' | 'updatedAt'>): Observable<Project> {
     return this.http.post<Project>(`${this.apiUrl}/projects`, projectData, {
       headers: this.getAuthHeaders()
     }).pipe(catchError(this.handleError));

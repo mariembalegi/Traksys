@@ -184,7 +184,7 @@
         <div class="comments-list">
           <div class="comment-item" *ngFor="let comment of comments">
             <div class="comment-header">
-              <span class="author">{{ getResourceName(comment.authorId) }}</span>
+              <span class="author">{{ getAuthorName(comment.authorId) }}</span>
               <span class="timestamp">{{ getTimeAgo(comment.createdAt) }}</span>
             </div>
             <div class="comment-message">{{ comment.message }}</div>

@@ -5,9 +5,15 @@
       <div class="projects-number">{{projects.length}}</div>
     </div>
     <div class="projects-container">
+      <div *ngIf="isLoadingProjects" class="loading-state">
+        Loading projects...
+      </div>
       <div class="project" *ngFor="let project of projects">
-        <img src="{{project.designPicture}}">
+        <img [src]="project.designPicture || '/public/placeholder-design.png'" [alt]="project.name">
         <span>{{project.name}}</span>
+      </div>
+      <div *ngIf="!isLoadingProjects && projects.length === 0" class="empty-state">
+        No projects available
       </div>
     </div>
   </div>
@@ -18,84 +24,106 @@
         <ng-select
           [items]="resources"
           bindLabel="name"
-          bindValue="id"
+          bindValue="_id"
           [(ngModel)]="selectedResourceId"
-          (ngModelChange)="updateTasksByResource($event)">
+          (ngModelChange)="updateTasksByResource($event)"
+          [loading]="isLoadingResources"
+          [clearable]="false"
+          placeholder="Select a resource...">
         </ng-select>
       </div>
-
     </div>
     <div class="content">
-      <div class="tasks-container">
-        <div class="tasks-header">
-          <app-status-header header="To Do" number="{{toDoTasks.length}}"></app-status-header>
-        </div>
-        <div class="tasks-cards" *ngFor="let toDoTask of toDoTasks">
-          <app-task-card
-            [taskName]="toDoTask.name"
-            [taskDescription]="toDoTask.description"
-            [taskDueDate]="toDoTask.dueDate"
-            [taskEstimatedTime]="toDoTask.estimatedTime"
-            [taskCommentsNumber]="toDoTask.commentIds.length"
-            [pieceName]="getPieceName(toDoTask.pieceId || '')"
-            [pieceReference]="getPieceReference(toDoTask.pieceId || '')"
-            (cardClick)="openTaskDialog(toDoTask)"
-          >
-          </app-task-card>
-        </div>
+      <div *ngIf="isLoadingTasks" class="loading-state">
+        Loading tasks...
       </div>
-      <div class="tasks-container">
-        <div class="tasks-header">
-          <app-status-header header="In Progress" number="{{inProgressTasks.length}}"></app-status-header>
-        </div>
-        <div class="tasks-cards" *ngFor="let inProgressTask  of inProgressTasks">
-          <app-task-card
-            [taskName]="inProgressTask.name"
-            [taskDescription]="inProgressTask.description"
-            [taskDueDate]="inProgressTask.dueDate"
-            [taskEstimatedTime]="inProgressTask.estimatedTime"
-            [taskCommentsNumber]="inProgressTask.commentIds.length"
-            [pieceName]="getPieceName(inProgressTask.pieceId || '')"
-            [pieceReference]="getPieceReference(inProgressTask.pieceId || '')"
-            (cardClick)="openTaskDialog(inProgressTask)"
-          >
-          </app-task-card>
-        </div>
+      <div *ngIf="!isLoadingTasks && !selectedResourceId" class="empty-state">
+        Please select a resource to view tasks
       </div>
-      <div class="tasks-container">
-        <div class="tasks-header">
-          <app-status-header header="On Hold" number="{{onHoldTasks.length}}"></app-status-header>
+      <div *ngIf="!isLoadingTasks && selectedResourceId" class="tasks-board">
+        <div class="tasks-container">
+          <div class="tasks-header">
+            <app-status-header header="To Do" number="{{toDoTasks.length}}"></app-status-header>
+          </div>
+          <div class="tasks-cards" *ngFor="let toDoTask of toDoTasks">
+            <app-task-card
+              [taskName]="toDoTask.name"
+              [taskDescription]="toDoTask.description"
+              [taskDueDate]="toDoTask.dueDate"
+              [taskEstimatedTime]="toDoTask.estimatedTime"
+              [taskCommentsNumber]="toDoTask.commentIds.length"
+              [pieceName]="getPieceName(toDoTask.pieceId || '')"
+              [pieceReference]="getPieceReference(toDoTask.pieceId || '')"
+              (cardClick)="openTaskDialog(toDoTask)"
+            >
+            </app-task-card>
+          </div>
+          <div *ngIf="toDoTasks.length === 0" class="empty-column">
+            No tasks to do
+          </div>
         </div>
-        <div class="tasks-cards" *ngFor="let onHoldTask of onHoldTasks">
-          <app-task-card
-            [taskName]="onHoldTask.name"
-            [taskDescription]="onHoldTask.description"
-            [taskDueDate]="onHoldTask.dueDate"
-            [taskEstimatedTime]="onHoldTask.estimatedTime"
-            [taskCommentsNumber]="onHoldTask.commentIds.length"
-            [pieceName]="getPieceName(onHoldTask.pieceId || '')"
-            [pieceReference]="getPieceReference(onHoldTask.pieceId || '')"
-            (cardClick)="openTaskDialog(onHoldTask)"
-          >
-          </app-task-card>
+        <div class="tasks-container">
+          <div class="tasks-header">
+            <app-status-header header="In Progress" number="{{inProgressTasks.length}}"></app-status-header>
+          </div>
+          <div class="tasks-cards" *ngFor="let inProgressTask  of inProgressTasks">
+            <app-task-card
+              [taskName]="inProgressTask.name"
+              [taskDescription]="inProgressTask.description"
+              [taskDueDate]="inProgressTask.dueDate"
+              [taskEstimatedTime]="inProgressTask.estimatedTime"
+              [taskCommentsNumber]="inProgressTask.commentIds.length"
+              [pieceName]="getPieceName(inProgressTask.pieceId || '')"
+              [pieceReference]="getPieceReference(inProgressTask.pieceId || '')"
+              (cardClick)="openTaskDialog(inProgressTask)"
+            >
+            </app-task-card>
+          </div>
+          <div *ngIf="inProgressTasks.length === 0" class="empty-column">
+            No tasks in progress
+          </div>
         </div>
-      </div>
-      <div class="tasks-container">
-        <div class="tasks-header">
-          <app-status-header header="Completed" number="{{completedTasks.length}}"></app-status-header>
+        <div class="tasks-container">
+          <div class="tasks-header">
+            <app-status-header header="On Hold" number="{{onHoldTasks.length}}"></app-status-header>
+          </div>
+          <div class="tasks-cards" *ngFor="let onHoldTask of onHoldTasks">
+            <app-task-card
+              [taskName]="onHoldTask.name"
+              [taskDescription]="onHoldTask.description"
+              [taskDueDate]="onHoldTask.dueDate"
+              [taskEstimatedTime]="onHoldTask.estimatedTime"
+              [taskCommentsNumber]="onHoldTask.commentIds.length"
+              [pieceName]="getPieceName(onHoldTask.pieceId || '')"
+              [pieceReference]="getPieceReference(onHoldTask.pieceId || '')"
+              (cardClick)="openTaskDialog(onHoldTask)"
+            >
+            </app-task-card>
+          </div>
+          <div *ngIf="onHoldTasks.length === 0" class="empty-column">
+            No tasks on hold
+          </div>
         </div>
-        <div class="tasks-cards" *ngFor="let completedTask of completedTasks">
-          <app-task-card
-            [taskName]="completedTask.name"
-            [taskDescription]="completedTask.description"
-            [taskDueDate]="completedTask.dueDate"
-            [taskEstimatedTime]="completedTask.estimatedTime"
-            [taskCommentsNumber]="completedTask.commentIds.length"
-            [pieceName]="getPieceName(completedTask.pieceId || '')"
-            [pieceReference]="getPieceReference(completedTask.pieceId || '')"
-            (cardClick)="openTaskDialog(completedTask)"
-          >
-          </app-task-card>
+        <div class="tasks-container">
+          <div class="tasks-header">
+            <app-status-header header="Completed" number="{{completedTasks.length}}"></app-status-header>
+          </div>
+          <div class="tasks-cards" *ngFor="let completedTask of completedTasks">
+            <app-task-card
+              [taskName]="completedTask.name"
+              [taskDescription]="completedTask.description"
+              [taskDueDate]="completedTask.dueDate"
+              [taskEstimatedTime]="completedTask.estimatedTime"
+              [taskCommentsNumber]="completedTask.commentIds.length"
+              [pieceName]="getPieceName(completedTask.pieceId || '')"
+              [pieceReference]="getPieceReference(completedTask.pieceId || '')"
+              (cardClick)="openTaskDialog(completedTask)"
+            >
+            </app-task-card>
+          </div>
+          <div *ngIf="completedTasks.length === 0" class="empty-column">
+            No completed tasks
+          </div>
         </div>
       </div>
     </div>
@@ -111,6 +139,7 @@
     [project]="selectedProject"
     [isVisible]="isDialogVisible"
     [currentResourceId]="selectedResourceId || 'r1'"
+    [currentUser]="currentUser"
     (closeDialog)="closeTaskDialog()"
     (addComment)="addComment($event)"
     (updateQuantity)="updateTaskQuantity($event)"

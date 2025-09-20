@@ -1,3 +1,5 @@
+import { Resource } from "./resource";
+
 export interface Task {
   _id: string;
   name: string;
@@ -7,7 +9,7 @@ export interface Task {
   quantity: number;
   progress: number;
   status: 'To Do' | 'In Progress' | 'Completed' | 'On Hold';
-  resourceIds: string[];
+  resourceIds:  any [];
   commentIds: string[];
   pieceId?: string;
   dueDate: Date;

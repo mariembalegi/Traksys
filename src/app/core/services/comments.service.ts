@@ -4,7 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
 
 export interface Comment {
-  id: string;
+  _id: string;
   taskId: string;
   authorId: string;
   message: string;

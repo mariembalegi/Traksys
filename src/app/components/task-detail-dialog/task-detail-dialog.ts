@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Task } from '../../models/task';
-import { Comment } from '../../models/comment';
+import { Comment, User } from '../../models/comment';
 import { Resource } from '../../models/resource';
 import { Piece } from '../../models/piece';
 import { Project } from '../../models/project';
@@ -22,6 +22,7 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
   @Input() project: Project | null = null;
   @Input() isVisible: boolean = false;
   @Input() currentResourceId: string = 'r1'; // Current user's resource ID
+  @Input() currentUser: User | null = null; // Current user information
   @Output() closeDialog = new EventEmitter<void>();
   @Output() addComment = new EventEmitter<string>();
   @Output() updateQuantity = new EventEmitter<{taskId: string, producedQuantity: number}>();
@@ -100,13 +101,37 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
     return resource ? resource.name : 'Unknown';
   }
 
+  getAuthorName(authorId: string | any): string {
+    // If authorId is a populated object (from the API response)
+    if (typeof authorId === 'object' && authorId !== null) {
+      return `${authorId.firstName} ${authorId.lastName}`;
+    }
+    
+    // If authorId is a string, check if it's the current user first
+    if (typeof authorId === 'string') {
+      // Check if this is the current user (handle both _id and id fields)
+      if (this.currentUser && (authorId === this.currentUser._id || authorId === this.currentUser.id)) {
+        return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+      }
+      
+      // Otherwise, try to find it in resources (fallback)
+      const resource = this.resources.find(r => r._id === authorId);
+      return resource ? resource.name : 'Unknown User';
+    }
+    
+    return 'Unknown User';
+  }
+
   getTaskResourceNames(): string {
     if (!this.task || !this.task.resourceIds || this.task.resourceIds.length === 0) {
       return 'No resources assigned';
     }
-    
-    const resourceNames = this.task.resourceIds.map(id => this.getResourceName(id));
-    return resourceNames.join(', ');
+
+    const resourceNames: string = this.task.resourceIds.map((res) => {
+      return res.name!;
+    }).join(', ');
+
+    return resourceNames;
   }
 
   formatTime(hours: number): string {
@@ -216,9 +241,10 @@ export class TaskDetailDialog implements OnInit, OnDestroy {
     }
   }
 
-  getTimeAgo(date: Date): string {
+  getTimeAgo(date: Date | string): string {
     const now = new Date();
-    const diffInMs = now.getTime() - date.getTime();
+    const commentDate = typeof date === 'string' ? new Date(date) : date;
+    const diffInMs = now.getTime() - commentDate.getTime();
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
