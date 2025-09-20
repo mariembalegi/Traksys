@@ -251,7 +251,9 @@ export class ProjectDetails implements OnInit {
     });
   }
 
-  deleteTask(task: any) {
+  deleteTask(task: any, pieceId: string) {
+    console.log('Delete task called with:', task, 'for piece:', pieceId); // Debug log
+    
     const dialogRef = this.dialog3.open(ConfirmationModal, {
       data: {
         title: 'Delete Task',
@@ -264,12 +266,14 @@ export class ProjectDetails implements OnInit {
 
     dialogRef.closed.subscribe(result => {
       if (result === true) {
-        this.tasksService.deleteTask(task.id).subscribe({
+        const taskId = task._id || task.id; // Use _id first, fallback to id
+        console.log('Deleting task with ID:', taskId); // Debug log
+        
+        this.tasksService.deleteTask(taskId).subscribe({
           next: () => {
-            // Refresh tasks for the specific piece this task belongs to
-            if (task.pieceId) {
-              this.loadTasksForPiece(task.pieceId);
-            }
+            // Refresh tasks for the specific piece
+            console.log('Task deleted successfully, refreshing piece tasks for:', pieceId);
+            this.loadTasksForPiece(pieceId);
             this.toastService.showSuccess('Task deleted successfully');
           },
           error: (error) => {
