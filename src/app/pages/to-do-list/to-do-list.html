@@ -41,88 +41,124 @@
         Please select a resource to view tasks
       </div>
       <div *ngIf="!isLoadingTasks && selectedResourceId" class="tasks-board">
-        <div class="tasks-container">
-          <div class="tasks-header">
-            <app-status-header header="To Do" number="{{toDoTasks.length}}"></app-status-header>
-          </div>
-          <div class="tasks-cards" *ngFor="let toDoTask of toDoTasks">
-            <app-task-card
-              [taskName]="toDoTask.name"
-              [taskDescription]="toDoTask.description"
-              [taskDueDate]="toDoTask.dueDate"
-              [taskEstimatedTime]="toDoTask.estimatedTime"
-              [taskCommentsNumber]="toDoTask.commentIds.length"
-              [pieceName]="getPieceName(toDoTask.pieceId || '')"
-              [pieceReference]="getPieceReference(toDoTask.pieceId || '')"
-              (cardClick)="openTaskDialog(toDoTask)"
-            >
-            </app-task-card>
-          </div>
-          <div *ngIf="toDoTasks.length === 0" class="empty-column">
-            No tasks to do
-          </div>
-        </div>
-        <div class="tasks-container">
-          <div class="tasks-header">
-            <app-status-header header="In Progress" number="{{inProgressTasks.length}}"></app-status-header>
-          </div>
-          <div class="tasks-cards" *ngFor="let inProgressTask  of inProgressTasks">
-            <app-task-card
-              [taskName]="inProgressTask.name"
-              [taskDescription]="inProgressTask.description"
-              [taskDueDate]="inProgressTask.dueDate"
-              [taskEstimatedTime]="inProgressTask.estimatedTime"
-              [taskCommentsNumber]="inProgressTask.commentIds.length"
-              [pieceName]="getPieceName(inProgressTask.pieceId || '')"
-              [pieceReference]="getPieceReference(inProgressTask.pieceId || '')"
-              (cardClick)="openTaskDialog(inProgressTask)"
-            >
-            </app-task-card>
-          </div>
-          <div *ngIf="inProgressTasks.length === 0" class="empty-column">
-            No tasks in progress
+        <div class="column-wrapper"
+             (dragover)="onDragOver($event)"
+             (dragenter)="onDragEnter($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event, 'To Do')">
+          <div class="tasks-container">
+            <div class="tasks-header">
+              <app-status-header header="To Do" number="{{toDoTasks.length}}"></app-status-header>
+            </div>
+            <div class="tasks-cards" *ngFor="let toDoTask of toDoTasks">
+              <app-task-card
+                draggable="true"
+                (dragstart)="onDragStart($event, toDoTask)"
+                (dragend)="onDragEnd($event)"
+                [taskName]="toDoTask.name"
+                [taskDescription]="toDoTask.description"
+                [taskDueDate]="toDoTask.dueDate"
+                [taskEstimatedTime]="toDoTask.estimatedTime"
+                [taskCommentsNumber]="toDoTask.commentIds.length"
+                [pieceName]="getPieceName(toDoTask.pieceId || '')"
+                [pieceReference]="getPieceReference(toDoTask.pieceId || '')"
+                (cardClick)="openTaskDialog(toDoTask)"
+              >
+              </app-task-card>
+            </div>
+            <div *ngIf="toDoTasks.length === 0" class="empty-column">
+              No tasks to do
+            </div>
           </div>
         </div>
-        <div class="tasks-container">
-          <div class="tasks-header">
-            <app-status-header header="On Hold" number="{{onHoldTasks.length}}"></app-status-header>
-          </div>
-          <div class="tasks-cards" *ngFor="let onHoldTask of onHoldTasks">
-            <app-task-card
-              [taskName]="onHoldTask.name"
-              [taskDescription]="onHoldTask.description"
-              [taskDueDate]="onHoldTask.dueDate"
-              [taskEstimatedTime]="onHoldTask.estimatedTime"
-              [taskCommentsNumber]="onHoldTask.commentIds.length"
-              [pieceName]="getPieceName(onHoldTask.pieceId || '')"
-              [pieceReference]="getPieceReference(onHoldTask.pieceId || '')"
-              (cardClick)="openTaskDialog(onHoldTask)"
-            >
-            </app-task-card>
-          </div>
-          <div *ngIf="onHoldTasks.length === 0" class="empty-column">
-            No tasks on hold
+        <div class="column-wrapper"
+             (dragover)="onDragOver($event)"
+             (dragenter)="onDragEnter($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event, 'In Progress')">
+          <div class="tasks-container">
+            <div class="tasks-header">
+              <app-status-header header="In Progress" number="{{inProgressTasks.length}}"></app-status-header>
+            </div>
+            <div class="tasks-cards" *ngFor="let inProgressTask  of inProgressTasks">
+              <app-task-card
+                draggable="true"
+                (dragstart)="onDragStart($event, inProgressTask)"
+                (dragend)="onDragEnd($event)"
+                [taskName]="inProgressTask.name"
+                [taskDescription]="inProgressTask.description"
+                [taskDueDate]="inProgressTask.dueDate"
+                [taskEstimatedTime]="inProgressTask.estimatedTime"
+                [taskCommentsNumber]="inProgressTask.commentIds.length"
+                [pieceName]="getPieceName(inProgressTask.pieceId || '')"
+                [pieceReference]="getPieceReference(inProgressTask.pieceId || '')"
+                (cardClick)="openTaskDialog(inProgressTask)"
+              >
+              </app-task-card>
+            </div>
+            <div *ngIf="inProgressTasks.length === 0" class="empty-column">
+              No tasks in progress
+            </div>
           </div>
         </div>
-        <div class="tasks-container">
-          <div class="tasks-header">
-            <app-status-header header="Completed" number="{{completedTasks.length}}"></app-status-header>
+        <div class="column-wrapper"
+             (dragover)="onDragOver($event)"
+             (dragenter)="onDragEnter($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event, 'On Hold')">
+          <div class="tasks-container">
+            <div class="tasks-header">
+              <app-status-header header="On Hold" number="{{onHoldTasks.length}}"></app-status-header>
+            </div>
+            <div class="tasks-cards" *ngFor="let onHoldTask of onHoldTasks">
+              <app-task-card
+                draggable="true"
+                (dragstart)="onDragStart($event, onHoldTask)"
+                (dragend)="onDragEnd($event)"
+                [taskName]="onHoldTask.name"
+                [taskDescription]="onHoldTask.description"
+                [taskDueDate]="onHoldTask.dueDate"
+                [taskEstimatedTime]="onHoldTask.estimatedTime"
+                [taskCommentsNumber]="onHoldTask.commentIds.length"
+                [pieceName]="getPieceName(onHoldTask.pieceId || '')"
+                [pieceReference]="getPieceReference(onHoldTask.pieceId || '')"
+                (cardClick)="openTaskDialog(onHoldTask)"
+              >
+              </app-task-card>
+            </div>
+            <div *ngIf="onHoldTasks.length === 0" class="empty-column">
+              No tasks on hold
+            </div>
           </div>
-          <div class="tasks-cards" *ngFor="let completedTask of completedTasks">
-            <app-task-card
-              [taskName]="completedTask.name"
-              [taskDescription]="completedTask.description"
-              [taskDueDate]="completedTask.dueDate"
-              [taskEstimatedTime]="completedTask.estimatedTime"
-              [taskCommentsNumber]="completedTask.commentIds.length"
-              [pieceName]="getPieceName(completedTask.pieceId || '')"
-              [pieceReference]="getPieceReference(completedTask.pieceId || '')"
-              (cardClick)="openTaskDialog(completedTask)"
-            >
-            </app-task-card>
-          </div>
-          <div *ngIf="completedTasks.length === 0" class="empty-column">
-            No completed tasks
+        </div>
+        <div class="column-wrapper"
+             (dragover)="onDragOver($event)"
+             (dragenter)="onDragEnter($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event, 'Completed')">
+          <div class="tasks-container">
+            <div class="tasks-header">
+              <app-status-header header="Completed" number="{{completedTasks.length}}"></app-status-header>
+            </div>
+            <div class="tasks-cards" *ngFor="let completedTask of completedTasks">
+              <app-task-card
+                draggable="true"
+                (dragstart)="onDragStart($event, completedTask)"
+                (dragend)="onDragEnd($event)"
+                [taskName]="completedTask.name"
+                [taskDescription]="completedTask.description"
+                [taskDueDate]="completedTask.dueDate"
+                [taskEstimatedTime]="completedTask.estimatedTime"
+                [taskCommentsNumber]="completedTask.commentIds.length"
+                [pieceName]="getPieceName(completedTask.pieceId || '')"
+                [pieceReference]="getPieceReference(completedTask.pieceId || '')"
+                (cardClick)="openTaskDialog(completedTask)"
+              >
+              </app-task-card>
+            </div>
+            <div *ngIf="completedTasks.length === 0" class="empty-column">
+              No completed tasks
+            </div>
           </div>
         </div>
       </div>

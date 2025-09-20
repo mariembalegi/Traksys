@@ -68,6 +68,11 @@ export class ToDoList implements OnInit, OnDestroy {
   isLoadingTasks = false;
   isLoadingPieces = false;
 
+  // Drag and drop properties
+  draggedTask: Task | null = null;
+  draggedFromStatus: string | null = null;
+  isDragging: boolean = false;
+
   constructor(
     private tasksService: TasksService,
     private projectsService: ProjectsService,
@@ -169,6 +174,11 @@ export class ToDoList implements OnInit, OnDestroy {
   }
 
   openTaskDialog(task: Task) {
+    // Don't open dialog if we're currently dragging
+    if (this.isDragging) {
+      return;
+    }
+    
     this.selectedTask = task;
     this.selectedProject = this.findProjectForTask(task);
     this.isDialogVisible = true;
@@ -335,5 +345,120 @@ export class ToDoList implements OnInit, OnDestroy {
   // Helper method to check if data is loading
   get isLoading(): boolean {
     return this.isLoadingProjects || this.isLoadingResources || this.isLoadingTasks || this.isLoadingPieces;
+  }
+
+  // Drag and drop methods
+  onDragStart(event: DragEvent, task: Task) {
+    this.draggedTask = task;
+    this.draggedFromStatus = task.status;
+    this.isDragging = true;
+    
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/html', task._id);
+    }
+
+    // Add visual feedback
+    const element = event.target as HTMLElement;
+    element.style.opacity = '0.5';
+  }
+
+  onDragEnd(event: DragEvent) {
+    // Reset visual feedback
+    const element = event.target as HTMLElement;
+    element.style.opacity = '1';
+    
+    // Reset drag state
+    this.draggedTask = null;
+    this.draggedFromStatus = null;
+    
+    // Allow clicks after a brief delay
+    setTimeout(() => {
+      this.isDragging = false;
+    }, 100);
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move';
+    }
+  }
+
+  onDragEnter(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Only add drag-over class to column-wrapper elements
+    const element = event.currentTarget as HTMLElement;
+    if (element.classList.contains('column-wrapper')) {
+      element.classList.add('drag-over');
+    }
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.stopPropagation();
+    
+    const element = event.currentTarget as HTMLElement;
+    const rect = element.getBoundingClientRect();
+    
+    // Only remove drag-over if we're actually leaving the element bounds
+    // This prevents flickering when moving between child elements
+    if (
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom
+    ) {
+      element.classList.remove('drag-over');
+    }
+  }
+
+  onDrop(event: DragEvent, newStatus: string) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Remove visual feedback from all columns
+    const columns = document.querySelectorAll('.column-wrapper');
+    columns.forEach(col => col.classList.remove('drag-over'));
+
+    if (!this.draggedTask || this.draggedTask.status === newStatus) {
+      return;
+    }
+
+    // Update task status
+    this.updateTaskStatus(this.draggedTask, newStatus);
+  }
+
+  updateTaskStatus(task: Task, newStatus: string) {
+    const oldStatus = task.status;
+    
+    // Optimistically update the UI
+    task.status = newStatus as 'To Do' | 'In Progress' | 'Completed' | 'On Hold';
+    this.filterTasksByStatus();
+
+    // Call the backend API to update the task
+    this.tasksService.updateTask(task._id, { status: newStatus as 'To Do' | 'In Progress' | 'Completed' | 'On Hold' }).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
+      next: (updatedTask) => {
+        // Update the task with the response from the server
+        const taskIndex = this.tasks.findIndex(t => t._id === task._id);
+        if (taskIndex !== -1) {
+          this.tasks[taskIndex] = updatedTask;
+          this.filterTasksByStatus();
+        }
+        
+        this.toastService.showSuccess(`Task "${task.name}" moved to ${newStatus}`);
+      },
+      error: (error) => {
+        // Revert the optimistic update on error
+        task.status = oldStatus as any;
+        this.filterTasksByStatus();
+        
+        this.toastService.showError(`Failed to update task status: ${error.message || 'Unknown error'}`);
+      }
+    });
   }
 }

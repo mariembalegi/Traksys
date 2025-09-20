@@ -174,11 +174,28 @@
         gap: 25px;
         width: 100%;
         align-items: start;
+        min-height: 500px;
+      }
+
+      // Column wrapper for full-column drop zones
+      .column-wrapper {
+        flex: 1;
+        min-width: 0;
+        min-height: 100%;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        padding: 10px;
+        
+        &.drag-over {
+          background-color: rgba(0, 94, 255, 0.05);
+          border-color: #005eff;
+          box-shadow: 0 0 10px rgba(0, 94, 255, 0.2);
+        }
       }
 
       .tasks-container {
-        flex: 1;
-        min-width: 0;
+        height: 100%;
         display: flex;
         flex-direction: column;
         gap: 15px;
@@ -192,6 +209,16 @@
           grid-template-columns: 1fr;
           gap: 15px;
           align-content: start;
+          cursor: grab;
+          transition: opacity 0.2s ease, transform 0.2s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+          }
+
+          &[draggable="true"]:active {
+            cursor: grabbing;
+          }
         }
 
         .empty-column {
@@ -208,6 +235,21 @@
           min-height: 60px;
         }
       }
+    }
+  }
+
+  // Visual feedback for dragging
+  app-task-card[draggable="true"] {
+    &:hover::before {
+      content: "⋮⋮";
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ccc;
+      font-size: 16px;
+      line-height: 0.5;
+      z-index: 1;
     }
   }
 }
